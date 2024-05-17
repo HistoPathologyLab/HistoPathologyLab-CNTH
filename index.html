@@ -25,7 +25,7 @@
             text-align: center;
         }
         .logo {
-            max-width: 300px; /* Adjust the max-width to control logo size */
+            max-width: 150px; /* Adjust the max-width to control logo size */
             width: 100%;
             margin-bottom: 30px;
         }
@@ -35,24 +35,24 @@
             align-items: center;
         }
         form label {
-            display: block;
-            width: 100%;
-            text-align: left;
+            width: 100%; /* Make labels full width */
+            text-align: center; /* Center align text */
             margin-bottom: 10px;
             font-weight: bold;
             color: darkblue; /* Set label text color to dark blue */
         }
         form input[type="text"],
         form input[type="password"] {
-            width: calc(100% - 20px); /* Adjust width of input fields */
+            width: 80%; /* Adjust width of input fields */
             padding: 7px;
             font-size: 14px;
             margin-bottom: 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            text-align: center; /* Center align text inside inputs */
         }
         form button {
-            width: 70%;
+            width: 50%; /* Adjust button width as needed */
             padding: 8px;
             background-color: #007bff;
             color: #ffffff;
@@ -68,7 +68,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
+        <img src="https://github.com/HistoPathologyLab/HistoPathologyLab-CNTH/blob/main/Logo%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
         <form id="login-form">
             <label for="user-id">User ID:</label>
             <input type="text" id="user-id" name="user-id" required>
