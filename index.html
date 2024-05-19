@@ -37,7 +37,7 @@
         .form-group {
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Align form groups to the left */
+            justify-content: center;
             margin-bottom: 15px; /* Increased margin between form groups */
         }
         form label {
@@ -46,15 +46,16 @@
             color: darkblue;
             text-align: left; /* Align labels to the left */
             font-size: 12px; /* Reduced font size for labels */
-            margin-right: 10px; /* Increased margin between label and input */
-            margin-bottom: 0; /* Remove default margin */
+            display: inline-block; /* Make labels inline */
+            margin: 0; /* Remove default margin */
         }
         form input[type="text"],
         form input[type="password"] {
-            width: calc(50% - 110px); /* Decrease width of input fields */
+            width: calc(50% - 60px); /* Decrease width of input fields */
             padding: 5px; /* Reduced padding for smaller input field size */
             font-size: 14px; /* Reduced font size for input fields */
             border: 1px solid #ccc; /* Added missing semicolon */
+            margin-left: 10px; /* Reduced margin between label and input */
             border-radius: 4px; /* Rounded edges */
         }
         form button {
@@ -66,7 +67,7 @@
             border-radius: 4px;
             cursor: pointer;
             margin-top: 15px; /* Increased margin between input fields and button */
-            margin-left: 10px; /* Increased margin between button and input fields */
+            margin-left: 5px; /* Moved button slightly to the right */
             margin-bottom: 35px; /* Increased margin between button and footer */
         }
         form button:hover {
