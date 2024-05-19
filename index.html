@@ -44,7 +44,7 @@
             font-weight: bold;
             color: darkblue;
             text-align: left; /* Align labels to the left */
-            margin-right: 3px; /* Reduced spacing between label and input */
+            margin-right: 5px; /* Reduced spacing between label and input */
             font-size: 12px; /* Reduced font size for labels */
         }
         form input[type="text"],
@@ -57,7 +57,7 @@
             margin-right: 5px; /* Add margin between input fields */
         }
         form button {
-            width: 50%; /* Adjusted button width */
+            width: calc(100% - 110px); /* Adjusted button width */
             padding: 10px; /* Adjusted button padding */
             background-color: #007bff;
             color: #ffffff;
@@ -65,17 +65,19 @@
             border-radius: 4px;
             cursor: pointer;
             margin-top: 15px; /* Increased margin between input fields and button */
+            margin-bottom: 20px; /* Increased margin between button and footer */
         }
         form button:hover {
             background-color: #0056b3;
         }
         .footer {
             position: absolute;
-            bottom: 20px; /* Position the footer at the bottom of the container */
+            bottom: 0; /* Position the footer at the bottom of the container */
             width: 100%;
             text-align: center;
             font-size: 10px; /* Decreased font size */
             color: #666666;
+            margin-bottom: 10px; /* Added margin at the bottom */
         }
     </style>
 </head>
