@@ -24,6 +24,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             position: relative;
+            margin-bottom: 20px; /* Increased margin between container and footer */
         }
         .logo {
             max-width: 300px; /* Adjust the max-width to control logo size */
@@ -46,20 +47,19 @@
             text-align: left; /* Align labels to the left */
             font-size: 12px; /* Reduced font size for labels */
             display: inline-block; /* Make labels inline */
+            margin: 0; /* Remove default margin */
         }
-
         form input[type="text"],
-	form input[type="password"] {
-            width: calc(100% - 100px); /* Decrease width of input fields */
+        form input[type="password"] {
+            width: calc(50% - 60px); /* Decrease width of input fields */
             padding: 5px; /* Reduced padding for smaller input field size */
             font-size: 14px; /* Reduced font size for input fields */
             border: 1px solid #ccc; /* Added missing semicolon */
             margin-left: 10px; /* Reduced margin between label and input */
             border-radius: 4px; /* Rounded edges */
         }
-
         form button {
-            width: calc(50% - 80px); /* Adjusted button width */
+            width: calc(25% - 40px); /* Adjusted button width */
             padding: 5px; /* Adjusted button padding */
             background-color: #007bff;
             color: #ffffff;
@@ -67,19 +67,19 @@
             border-radius: 4px;
             cursor: pointer;
             margin-top: 15px; /* Increased margin between input fields and button */
-            margin-bottom: 25px; /* Increased margin between button and footer */
+            margin-left: 5px; /* Moved button slightly to the right */
+            margin-bottom: 35px; /* Increased margin between button and footer */
         }
         form button:hover {
             background-color: #0056b3;
         }
         .footer {
             position: absolute;
-            bottom: 0; /* Position the footer at the bottom of the container */
+            bottom: 10px; /* Position the footer at the bottom of the container */
             width: 100%;
             text-align: center;
             font-size: 10px; /* Decreased font size */
             color: #666666;
-            margin-bottom: 10px; /* Added margin at the bottom */
         }
     </style>
 </head>
