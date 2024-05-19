@@ -26,19 +26,19 @@
             position: relative;
         }
         .logo {
-            max-width: 200px; /* Increased the max-width to control logo size */
+            max-width: 200px; /* Adjust the max-width to control logo size */
             width: 100%;
             margin-bottom: 30px;
         }
         form {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
+            width: 100%;
         }
         form label {
             width: 100%;
-            text-align: left; /* Align labels to the left */
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             font-weight: bold;
             color: darkblue;
         }
@@ -60,16 +60,17 @@
             border-radius: 4px;
             cursor: pointer;
             margin-top: 10px;
+            align-self: center; /* Center the button */
         }
         form button:hover {
             background-color: #0056b3;
         }
         .footer {
             position: absolute;
-            bottom: 20px;
+            bottom: 20px; /* Position the footer at the bottom of the container */
             width: 100%;
             text-align: center;
-            font-size: 12px; /* Decreased font size */
+            font-size: 12px;
             color: #666666;
         }
     </style>
