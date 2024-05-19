@@ -40,22 +40,21 @@
             margin-bottom: 15px; /* Increased margin between form groups */
         }
         form label {
-            width: 100px; /* Set a fixed width for labels */
+    	    width: 100px; /* Set a fixed width for labels */
             font-weight: bold;
             color: darkblue;
             text-align: left; /* Align labels to the left */
-            margin-right: 3px; /* Reduced spacing between label and input */
             font-size: 12px; /* Reduced font size for labels */
-        }
-        form input[type="text"],
-        form input[type="password"] {
-            width: calc(100% - 105px); /* Decrease width of input fields */
+            display: inline-block; /* Make labels inline */
+	}
+
+	form input[type="text"],
+	form input[type="password"] {
+    	    width: calc(100% - 100px); /* Decrease width of input fields */
             padding: 5px; /* Reduced padding for smaller input field size */
             font-size: 14px; /* Reduced font size for input fields */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-left: 5px; /* Add margin between input fields */
-        }
+            border: 1px
+	}
         form button {
             width: calc(50% - 80px); /* Adjusted button width */
             padding: 5px; /* Adjusted button padding */
