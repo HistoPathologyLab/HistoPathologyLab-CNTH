@@ -16,8 +16,8 @@
             background-color: #f0f0f0;
         }
         .container {
-            max-width: 500px;
-            width: 90%;
+            max-width: 400px;
+            width: 100%;
             padding: 40px;
             background-color: #ffffff;
             border-radius: 8px;
@@ -26,7 +26,7 @@
             position: relative;
         }
         .logo {
-            max-width: 300px; /* Increased the max-width to make the logo larger */
+            max-width: 150px; /* Adjust the max-width to control logo size */
             width: 100%;
             margin-bottom: 30px;
         }
@@ -36,6 +36,7 @@
         .form-group {
             display: flex;
             align-items: center;
+            justify-content: center;
             margin-bottom: 15px;
         }
         form label {
@@ -43,10 +44,11 @@
             font-weight: bold;
             color: darkblue;
             text-align: left; /* Align labels to the left */
+            margin-right: 10px; /* Spacing between label and input */
         }
         form input[type="text"],
         form input[type="password"] {
-            flex: 1; /* Take the remaining space */
+            width: calc(100% - 120px); /* Decrease width of input fields */
             padding: 5px; /* Reduced padding for smaller input field size */
             font-size: 14px; /* Reduced font size for input fields */
             border: 1px solid #ccc;
