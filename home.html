@@ -28,13 +28,13 @@
         .sidebar h1 {
             font-size: 24px;
             font-weight: bold;
-            margin: 0; 
+            margin: 0;
             text-align: center;
         }
         .sidebar h2 {
             font-size: 16px;
             font-weight: normal;
-            margin: 0; 
+            margin: 0;
             text-align: center;
         }
         .sidebar-item {
@@ -49,7 +49,7 @@
         .sidebar-item.bold {
             margin-top: 30px;
             font-weight: bold;
-        } 
+        }
         .sidebar-item:hover {
             background-color: #004080;
         }
@@ -103,7 +103,7 @@
     <div class="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
-        <div class="sidebar-item bold">Home</div>
+        <div class="sidebar-item bold" id="home-link">Home</div>
         <div class="sidebar-item">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
@@ -175,6 +175,11 @@
         document.getElementById('logout').addEventListener('click', function() {
             sessionStorage.removeItem('isLoggedIn');
             window.location.href = 'index.html';
+        });
+
+        // Reload home.html when the Home item is clicked
+        document.getElementById('home-link').addEventListener('click', function() {
+            window.location.href = 'home.html';
         });
     </script>
 </body>
