@@ -18,8 +18,6 @@
             width: 15%; /* Increased width from 12.5% to 15% */
             color: white;
             display: flex;
-            justify-content: flex-start; /* Align items to the top */
-            align-items: center;
             flex-direction: column;
             padding-top: 20px; /* Add padding to create space at the top */
         }
@@ -34,6 +32,21 @@
             font-weight: normal;
             margin: 0;
             text-align: center;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0 0 0; /* Add margin to separate the list from the headers */
+            width: 100%; /* Ensure the list takes full width of the sidebar */
+        }
+        .sidebar ul li {
+            padding: 10px 15px;
+            cursor: pointer;
+            text-align: left; /* Align text to the left */
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li:hover {
+            background-color: #0056b3; /* Lighter blue on hover */
         }
         .content {
             flex-grow: 1;
@@ -78,6 +91,18 @@
     <div class="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
+        <ul>
+            <li>Home</li>
+            <li>Histo Reports Summary</li>
+            <li>FNAC Reports Summary</li>
+            <li>Cyto Reports Summary</li>
+            <li>US guided FNAC Reports Summary</li>
+            <li>Cancer Reports</li>
+            <li>Pending Reports</li>
+            <li>Reports to Print</li>
+            <li>Add Consultant / Registrar (Dr.)</li>
+            <li>Log out</li>
+        </ul>
     </div>
     <div class="content">
         <div class="top-bar">
