@@ -24,10 +24,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             position: relative;
-            margin-bottom: 20px; /* Increased margin between container and footer */
+            margin-bottom: 20px;
         }
         .logo {
-            max-width: 300px; /* Adjust the max-width to control logo size */
+            max-width: 300px;
             width: 100%;
             margin-bottom: 30px;
         }
@@ -38,49 +38,49 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px; /* Increased margin between form groups */
+            margin-bottom: 15px;
         }
         form label {
-            width: 60px; /* Set a fixed width for labels */
+            width: 60px;
             font-weight: bold;
             color: darkblue;
-            text-align: right; /* Align labels to the right */
-            font-size: 12px; /* Reduced font size for labels */
-            display: inline-block; /* Make labels inline */
-            margin: 0; /* Remove default margin */
+            text-align: right;
+            font-size: 12px;
+            display: inline-block;
+            margin: 0;
         }
         form input[type="text"],
         form input[type="password"] {
-            width: calc(60% - 70px); /* Decrease width of input fields */
-            padding: 5px; /* Reduced padding for smaller input field size */
-            font-size: 14px; /* Reduced font size for input fields */
-            border: 1px solid #ccc; /* Added missing semicolon */
-            margin-left: 10px; /* Reduced margin between label and input */
-            border-radius: 4px; /* Rounded edges */
+            width: calc(60% - 70px);
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            border-radius: 4px;
         }
         form button {
-            width: calc(30% - 40px); /* Adjusted button width */
-            padding: 5px; /* Adjusted button padding */
+            width: calc(30% - 40px);
+            padding: 5px;
             background-color: #007bff;
             color: #ffffff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 15px; /* Increased margin between input fields and button */
-            margin-left: 15px; /* Moved button slightly to the right */
-            margin-bottom: 35px; /* Increased margin between button and footer */
+            margin-top: 15px;
+            margin-left: 15px;
+            margin-bottom: 35px;
         }
         form button:hover {
             background-color: #0056b3;
         }
         .footer {
             position: absolute;
-            bottom: 10px; /* Position the footer at the bottom of the container */
-            left: 50%; /* Move to the center horizontally */
-            transform: translateX(-50%); /* Adjust for exact center alignment */
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
             text-align: center;
-            font-size: 10px; /* Decreased font size */
+            font-size: 10px;
             color: #666666;
         }
     </style>
@@ -115,8 +115,8 @@
 
             // Check if the credentials are correct
             if (userId === "histopath lab" && password === "Histo9876") {
-                // Store session data
-                sessionStorage.setItem('loggedIn', true);
+                // Set session storage to indicate the user is logged in
+                sessionStorage.setItem('isLoggedIn', 'true');
                 // Redirect to the home page
                 window.location.href = "home.html";
             } else {
@@ -125,11 +125,16 @@
             }
         });
 
-        // Check if user is already logged in
-        if (sessionStorage.getItem('loggedIn')) {
-            window.location.href = 'home.html';
+        // Function to check if the user is already logged in
+        function checkLogin() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                window.location.href = 'home.html';
+            }
         }
-    </script>
 
+        // Check login status on page load
+        checkLogin();
+    </script>
 </body>
 </html>
