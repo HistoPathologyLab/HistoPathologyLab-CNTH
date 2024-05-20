@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Histopathology Lab System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            background-color: darkblue;
+            width: 12.5%; /* 1/8th of the page width */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .sidebar h1 {
+            font-size: 24px; /* Adjust as needed */
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+        }
+        .sidebar h2 {
+            font-size: 16px; /* Adjust as needed */
+            font-weight: normal;
+            margin: 0;
+            text-align: center;
+        }
+        .content {
+            flex-grow: 1;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        .top-bar {
+            background-color: white;
+            height: 6.25%; /* 1/16th of the page height */
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 10px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+        }
+        .top-bar .datetime {
+            font-size: 14px; /* Adjust as needed */
+            color: #333333; /* Dark gray color for the text */
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px; /* Add some padding for the main content */
+            /* Add your main content styling here */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>ReportLab</h1>
+        <h2>CNTH</h2>
+    </div>
+    <div class="content">
+        <div class="top-bar">
+            <div class="datetime" id="datetime"></div>
+        </div>
+        <div class="main-content">
+            <!-- Main content goes here -->
+        </div>
+    </div>
+
+    <script>
+        // Function to update time and date
+        function updateTime() {
+            const datetimeElement = document.getElementById('datetime');
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const formattedDate = now.toLocaleDateString('en-US', options);
+            datetimeElement.textContent = formattedDate;
+        }
+
+        // Update time and date every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call to display immediately
+    </script>
+</body>
+</html>
