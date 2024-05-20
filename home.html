@@ -22,8 +22,8 @@
             align-items: center;
             flex-direction: column;
             padding-top: 20px; /* Add padding to create space at the top */
-	    padding-left: 15px; /* Increased left padding */
-	    padding-right: 15px; /* Increased right padding */
+            padding-left: 15px; /* Increased left padding */
+            padding-right: 15px; /* Increased right padding */
         }
         .sidebar h1 {
             font-size: 24px; /* Increased font size */
@@ -46,16 +46,16 @@
             text-align: left; /* Align text to the left */
             margin-left: 10px; /* Add more space from the left corner */
         }
-	.sidebar-item.bold {
-    	    margin-top: 30px; /* Add margin only to the "Home" item */
+        .sidebar-item.bold {
+            margin-top: 30px; /* Add margin only to the "Home" item */
             font-weight: bold;
-	} 
+        } 
         .sidebar-item:hover {
             background-color: #004080; /* Change background color on hover */
         }
-	.bold {
-	    font-weight: bold;
-	}
+        .bold {
+            font-weight: bold;
+        }
         .content {
             flex-grow: 1;
             background-color: white;
@@ -113,7 +113,7 @@
         <div class="sidebar-item">Pending Reports</div>
         <div class="sidebar-item">Reports to Print</div>
         <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
-        <div class="sidebar-item bold">Log out</div>
+        <div class="sidebar-item bold" id="logout">Log out</div>
     </div>
     <div class="content">
         <div class="top-bar">
@@ -160,6 +160,26 @@
         // Update time and date every second
         setInterval(updateTime, 1000);
         updateTime(); // Initial call to display immediately
+
+        // Function to check session
+        function checkSession() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Function to handle logout
+        function logout() {
+            sessionStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        }
+
+        // Event listener for logout
+        document.getElementById('logout').addEventListener('click', logout);
+
+        // Check session on page load
+        checkSession();
     </script>
 </body>
 </html>
