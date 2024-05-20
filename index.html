@@ -83,19 +83,40 @@
             font-size: 10px;
             color: #666666;
         }
+
+        /* CSS for mobile devices */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .logo {
+                max-width: 200px;
+                margin-bottom: 20px;
+            }
+            form input[type="text"],
+            form input[type="password"] {
+                width: 100%;
+            }
+            form button {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="https://github.com/HistoPathologyLab/HistoPathologyLab-CNTH/blob/main/Logo%20Histopathology%20Lab.png?raw=true" alt="Histopathology Lab Logo" class="logo">
-        <form id="login-form">
+        <form id="login-form" autocomplete="off">
             <div class="form-group">
                 <label for="user-id">User ID:</label>
-                <input type="text" id="user-id" placeholder="Enter your User ID" required>
+                <input type="text" id="user-id" autocomplete="off" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" placeholder="Enter your Password" required>
+                <input type="password" id="password" autocomplete="off" required>
             </div>
             <button type="submit">Login</button>
         </form>
@@ -105,7 +126,7 @@
     </div>
 
     <script>
-    	document.getElementById("login-form").addEventListener("submit", function(event) {
+        document.getElementById("login-form").addEventListener("submit", function(event) {
             // Prevent the form from submitting
             event.preventDefault();
 
@@ -115,13 +136,16 @@
 
             // Check if the credentials are correct
             if (userId === "histopath lab" && password === "Histo9876") {
+                // Save login state to session storage
+                sessionStorage.setItem('isLoggedIn', 'true');
+
                 // Redirect to the home page
                 window.location.href = "home.html";
             } else {
                 // Display an error message or perform other actions
                 alert("Invalid credentials. Please try again.");
             }
-    	});
+        });
 
         // Function to check if the user is already logged in
         function checkLogin() {

@@ -25,16 +25,7 @@
             padding-left: 15px;
             padding-right: 15px;
         }
-        .sidebar h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0; 
-            text-align: center;
-        }
-        .sidebar h2 {
-            font-size: 16px;
-            font-weight: normal;
-            margin: 0; 
+        .sidebar h1, .sidebar h2 {
             text-align: center;
         }
         .sidebar-item {
@@ -49,12 +40,9 @@
         .sidebar-item.bold {
             margin-top: 30px;
             font-weight: bold;
-        } 
+        }
         .sidebar-item:hover {
             background-color: #004080;
-        }
-        .bold {
-            font-weight: bold;
         }
         .content {
             flex-grow: 1;
@@ -77,6 +65,7 @@
             left: 50%;
             transform: translateX(-50%);
             height: 80%;
+            width: auto;
         }
         .datetime {
             color: darkblue;
@@ -97,13 +86,37 @@
             flex-grow: 1;
             padding: 20px;
         }
+
+        /* CSS for mobile devices */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                padding: 20px 0;
+                justify-content: center;
+            }
+            .sidebar h1, .sidebar h2 {
+                text-align: center;
+            }
+            .sidebar-item {
+                width: 80%;
+                margin: 10px auto;
+                text-align: center;
+            }
+            .logo {
+                position: relative;
+                left: auto;
+                transform: none;
+                height: auto;
+                width: 70%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
-        <div class="sidebar-item bold" onclick="window.location.href='home.html'">Home</div>
+        <div class="sidebar-item bold" id="home-link">Home</div>
         <div class="sidebar-item">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
@@ -175,6 +188,11 @@
         document.getElementById('logout').addEventListener('click', function() {
             sessionStorage.removeItem('isLoggedIn');
             window.location.href = 'index.html';
+        });
+
+        // Reload home.html when the Home item is clicked
+        document.getElementById('home-link').addEventListener('click', function() {
+            window.location.href = 'home.html';
         });
     </script>
 </body>
