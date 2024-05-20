@@ -15,35 +15,37 @@
         }
         .sidebar {
             background-color: darkblue;
-            width: 15%;
+            width: 15%; /* Increased width from 12.5% to 15% */
             color: white;
             display: flex;
-            justify-content: flex-start;
+            justify-content: flex-start; /* Align items to the top */
             align-items: center;
             flex-direction: column;
-            padding-top: 20px;
-            padding-left: 30px; /* Increased left padding */
+            padding-top: 20px; /* Add padding to create space at the top */
         }
         .sidebar h1 {
-            font-size: 24px;
+            font-size: 24px; /* Increased font size */
             font-weight: bold;
             margin: 0;
             text-align: center;
         }
         .sidebar h2 {
-            font-size: 16px;
+            font-size: 16px; /* Increased font size */
             font-weight: normal;
             margin: 0;
             text-align: center;
         }
         .sidebar-item {
-            font-family: 'Congenial', sans-serif;
-            font-size: 14px;
-            padding: 15px 20px;
-            cursor: pointer;
+            font-family: 'Congenial', sans-serif; /* Change font family */
+            font-size: 14px; /* Increased font size */
+            padding: 15px 20px; /* Add padding for better readability */
+            cursor: pointer; /* Add pointer cursor */
+            width: 100%; /* Ensure full width */
+            text-align: left; /* Align text to the left */
+            margin-left: 10px; /* Add more space from the left corner */
         }
         .sidebar-item:hover {
-            background-color: #004080;
+            background-color: #004080; /* Change background color on hover */
         }
         .content {
             flex-grow: 1;
@@ -53,38 +55,39 @@
         }
         .top-bar {
             background-color: white;
-            height: 10%;
+            height: 10%; /* Increased height from 6.25% to 10% */
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            position: relative;
+            justify-content: space-between; /* Space between for centering logo and aligning date and time to the right */
+            padding: 0 20px; /* Add padding to create space around the content */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+            position: relative; /* Ensure absolute positioning of logo */
         }
         .logo {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            height: 80%;
+            height: 80%; /* Adjust height as needed */
         }
         .datetime {
             color: darkblue;
             text-align: right;
-            flex-grow: 1;
+            flex-grow: 1; /* Push date and time to the right */
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: flex-end; /* Align date and time to the right */
         }
         .datetime .time {
-            font-size: 16px;
+            font-size: 16px; /* Larger font size for time */
             font-weight: bold;
         }
         .datetime .date {
-            font-size: 12px;
+            font-size: 12px; /* Smaller font size for date */
         }
         .main-content {
             flex-grow: 1;
-            padding: 20px;
+            padding: 20px; /* Add some padding for the main content */
+            /* Add your main content styling here */
         }
     </style>
 </head>
