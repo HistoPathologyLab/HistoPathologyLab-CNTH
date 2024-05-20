@@ -25,7 +25,16 @@
             padding-left: 15px;
             padding-right: 15px;
         }
-        .sidebar h1, .sidebar h2 {
+        .sidebar h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+        }
+        .sidebar h2 {
+            font-size: 16px;
+            font-weight: normal;
+            margin: 0;
             text-align: center;
         }
         .sidebar-item {
@@ -43,6 +52,9 @@
         }
         .sidebar-item:hover {
             background-color: #004080;
+        }
+        .bold {
+            font-weight: bold;
         }
         .content {
             flex-grow: 1;
@@ -65,7 +77,6 @@
             left: 50%;
             transform: translateX(-50%);
             height: 80%;
-            width: auto;
         }
         .datetime {
             color: darkblue;
@@ -85,30 +96,6 @@
         .main-content {
             flex-grow: 1;
             padding: 20px;
-        }
-
-        /* CSS for mobile devices */
-        @media screen and (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                padding: 20px 0;
-                justify-content: center;
-            }
-            .sidebar h1, .sidebar h2 {
-                text-align: center;
-            }
-            .sidebar-item {
-                width: 80%;
-                margin: 10px auto;
-                text-align: center;
-            }
-            .logo {
-                position: relative;
-                left: auto;
-                transform: none;
-                height: auto;
-                width: 70%;
-            }
         }
     </style>
 </head>
