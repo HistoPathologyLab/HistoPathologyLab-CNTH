@@ -91,11 +91,11 @@
         <form id="login-form">
             <div class="form-group">
                 <label for="user-id">User ID:</label>
-                <input type="text" id="user-id" value="histopath lab" required>
+                <input type="text" id="user-id" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" value="Histo9876" required>
+                <input type="password" id="password" required>
             </div>
             <button type="submit">Login</button>
         </form>
@@ -115,8 +115,9 @@
 
             // Check if the credentials are correct
             if (userId === "histopath lab" && password === "Histo9876") {
-                // Set session storage item to indicate logged in status
-                sessionStorage.setItem('isLoggedIn', true);
+                // Save login state to session storage
+                sessionStorage.setItem('isLoggedIn', 'true');
+
                 // Redirect to the home page
                 window.location.href = "home.html";
             } else {
