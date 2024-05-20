@@ -115,6 +115,8 @@
 
             // Check if the credentials are correct
             if (userId === "histopath lab" && password === "Histo9876") {
+                // Store session data
+                sessionStorage.setItem('loggedIn', true);
                 // Redirect to the home page
                 window.location.href = "home.html";
             } else {
@@ -122,6 +124,11 @@
                 alert("Invalid credentials. Please try again.");
             }
         });
+
+        // Check if user is already logged in
+        if (sessionStorage.getItem('loggedIn')) {
+            window.location.href = 'home.html';
+        }
     </script>
 
 </body>
