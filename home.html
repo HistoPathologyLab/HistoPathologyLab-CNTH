@@ -97,38 +97,13 @@
             flex-grow: 1;
             padding: 20px;
         }
-
-        /* Media query for mobile devices */
-        @media (max-width: 768px) {
-            .top-bar {
-                flex-direction: column;
-                height: auto;
-                padding: 10px;
-            }
-            .logo {
-                height: auto;
-                width: 70%;
-                margin-bottom: 10px;
-            }
-            .datetime {
-                align-items: center;
-                text-align: center;
-                margin-top: 10px;
-            }
-            .datetime .time {
-                font-size: 14px;
-            }
-            .datetime .date {
-                font-size: 12px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
-        <div class="sidebar-item bold" id="home-link">Home</div>
+        <div class="sidebar-item bold" onclick="window.location.href='home.html'">Home</div>
         <div class="sidebar-item">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
@@ -200,11 +175,6 @@
         document.getElementById('logout').addEventListener('click', function() {
             sessionStorage.removeItem('isLoggedIn');
             window.location.href = 'index.html';
-        });
-
-        // Reload home.html when the Home item is clicked
-        document.getElementById('home-link').addEventListener('click', function() {
-            window.location.href = 'home.html';
         });
     </script>
 </body>
