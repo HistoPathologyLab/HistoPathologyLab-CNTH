@@ -11,8 +11,8 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
         }
         .wrapper {
             display: flex;
@@ -28,18 +28,20 @@
             padding: 20px;
             box-sizing: border-box;
             flex-shrink: 0;
+            overflow-y: auto;
+        }
+        .sidebar h1, .sidebar h2 {
+            text-align: center;
         }
         .sidebar h1 {
             font-size: 24px;
             font-weight: bold;
-            margin: 0 0 10px 0;
-            text-align: center;
+            margin: 0 0 10px;
         }
         .sidebar h2 {
             font-size: 16px;
             font-weight: normal;
-            margin: 0 0 20px 0;
-            text-align: center;
+            margin: 0 0 20px;
         }
         .sidebar-item {
             font-family: 'Congenial', sans-serif;
@@ -63,7 +65,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            overflow: auto;
+            overflow: hidden;
         }
         .top-bar {
             background-color: white;
@@ -99,7 +101,7 @@
         .main-content {
             flex: 1;
             padding: 20px;
-            overflow-y: auto;
+            overflow: auto;
         }
         @media (max-width: 768px) {
             .wrapper {
@@ -117,16 +119,18 @@
                 margin-bottom: 5px;
             }
             .top-bar {
-                flex-direction: column;
+                flex-direction: row;
                 height: auto;
+                align-items: center;
+                justify-content: space-between;
             }
             .logo {
-                position: static;
-                transform: none;
-                margin-bottom: 10px;
+                position: absolute;
+                transform: translateX(-50%);
+                left: 50%;
             }
             .datetime {
-                align-items: center;
+                align-items: flex-end;
             }
         }
     </style>
