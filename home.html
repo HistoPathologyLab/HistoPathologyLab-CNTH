@@ -73,9 +73,6 @@
             position: relative;
         }
         .logo {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
             height: 80%;
         }
         .datetime {
@@ -97,14 +94,26 @@
             flex-grow: 1;
             padding: 20px;
         }
-        @media (max-width: 320px) {
-            .logo {
-                position: center; /* Adjust width to fit within the top bar */
-                left: auto;
-                transform: none;
+        @media (max-width: 600px) {
+            .top-bar {
+                flex-direction: column;
                 height: auto;
-                width: 30px; /* Adjust width to fit within the top bar */
-                margin: 10px;
+                padding: 10px;
+            }
+            .logo {
+                height: auto;
+                width: 50px; /* Adjust width to fit within the top bar */
+                margin-bottom: 10px;
+            }
+            .datetime {
+                align-items: center;
+                text-align: center;
+            }
+            .datetime .time {
+                font-size: 14px;
+            }
+            .datetime .date {
+                font-size: 10px;
             }
         }
     </style>
