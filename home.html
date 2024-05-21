@@ -61,6 +61,7 @@
             background-color: white;
             display: flex;
             flex-direction: column;
+            overflow: auto; /* Enable scrolling */
         }
         .top-bar {
             background-color: white;
@@ -96,6 +97,31 @@
         .main-content {
             flex-grow: 1;
             padding: 20px;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            .sidebar-item {
+                margin-left: 0;
+                text-align: center;
+            }
+            .top-bar {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+            }
+            .logo {
+                position: static;
+                transform: none;
+                margin-bottom: 10px;
+            }
+            .datetime {
+                align-items: center;
+            }
         }
     </style>
 </head>
