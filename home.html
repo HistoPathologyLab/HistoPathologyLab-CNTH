@@ -96,18 +96,19 @@
         }
         @media (max-width: 600px) {
             .top-bar {
-                flex-direction: column;
                 height: auto;
                 padding: 10px;
+                justify-content: space-between;
             }
             .logo {
-                height: auto;
-                width: 50px; /* Adjust width to fit within the top bar */
-                margin-bottom: 10px;
+                height: 60px; /* Increase logo size */
+                width: auto;
             }
             .datetime {
-                align-items: center;
-                text-align: center;
+                align-items: flex-end;
+                text-align: right;
+                flex-direction: column;
+                margin-left: auto;
             }
             .datetime .time {
                 font-size: 14px;
