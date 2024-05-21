@@ -24,7 +24,6 @@
             padding-top: 20px;
             padding-left: 15px;
             padding-right: 15px;
-            overflow-y: auto;
         }
         .sidebar h1 {
             font-size: 24px;
@@ -97,78 +96,54 @@
         .main-content {
             flex-grow: 1;
             padding: 20px;
-            overflow: auto;
         }
-
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .sidebar {
                 width: 100%;
-                height: auto;
                 flex-direction: row;
-                flex-wrap: wrap;
-                padding: 10px 0;
-                overflow: auto;
                 justify-content: space-around;
-            }
-            .sidebar h1, .sidebar h2 {
-                flex-basis: 100%;
-                text-align: center;
-                margin: 0;
+                padding: 10px;
             }
             .sidebar h1 {
-                font-size: 20px;
+                font-size: 16px;
             }
             .sidebar h2 {
-                font-size: 14px;
+                font-size: 12px;
             }
             .sidebar-item {
                 font-size: 12px;
                 padding: 10px;
-                flex-basis: 45%;
-                text-align: center;
-                margin: 5px 0;
+                margin-left: 0;
+            }
+            .content {
+                flex-direction: column;
+                overflow: auto;
             }
             .top-bar {
-                height: auto;
                 flex-direction: column;
+                height: auto;
                 padding: 10px;
-                align-items: flex-start;
             }
             .logo {
                 position: static;
                 transform: none;
-                margin-bottom: 10px;
-                height: auto;
-                max-width: 100%;
+                height: 60px;
+                width: auto;
             }
             .datetime {
-                text-align: left;
-                align-items: flex-start;
+                align-items: center;
+                text-align: center;
+                flex-direction: row;
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
             }
             .datetime .time {
                 font-size: 14px;
             }
             .datetime .date {
                 font-size: 10px;
-            }
-            .main-content {
-                padding: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .sidebar-item {
-                font-size: 10px;
-                flex-basis: 100%;
-            }
-            .top-bar {
-                padding: 5px;
-            }
-            .datetime .time {
-                font-size: 12px;
-            }
-            .datetime .date {
-                font-size: 8px;
+                margin-left: 5px;
             }
         }
     </style>
