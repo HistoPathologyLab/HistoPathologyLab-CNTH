@@ -96,6 +96,7 @@
         .main-content {
             flex-grow: 1;
             padding: 20px;
+            overflow-y: auto; /* Ensure scrolling on mobile devices */
         }
         @media (max-width: 600px) {
             body {
@@ -108,7 +109,7 @@
                 justify-content: space-between;
                 padding: 10px;
             }
-            .sidebar h1 {
+            .sidebar h1, .sidebar h2 {
                 font-size: 14px;
             }
             .sidebar h2 {
@@ -147,6 +148,24 @@
             .datetime .date {
                 font-size: 10px;
                 margin-left: 5px;
+            }
+        }
+        @media (max-width: 320px) {
+            .sidebar h1 {
+                font-size: 12px;
+            }
+            .sidebar h2 {
+                font-size: 8px;
+            }
+            .sidebar-item {
+                font-size: 8px;
+                padding: 5px 2px;
+            }
+            .datetime .time {
+                font-size: 12px;
+            }
+            .datetime .date {
+                font-size: 8px;
             }
         }
     </style>
