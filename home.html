@@ -100,7 +100,7 @@
             padding: 20px;
             overflow-y: auto; /* Ensure scrolling on mobile devices */
         }
-        @media (max-width: 600px - 320px) {
+        @media (max-width: 600px) {
             body {
                 flex-direction: column; /* Change layout to column for mobile devices */
                 overflow: auto;
@@ -164,6 +164,9 @@
             }
         }
         @media (max-width: 320px) {
+            .sidebar {
+                width: 50%; /* Increased width for 320px screens */
+            }
             .sidebar h1 {
                 font-size: 14px;
             }
@@ -184,6 +187,91 @@
     </style>
 </head>
 <body>
+    <div class="sidebar">
+        <h1>ReportLab</h1>
+        <h2>CNTH</h2>
+        <div class="sidebar-item bold" id="home-link">Home</div>
+        <div class="sidebar-item">Histo Reports Summary</div>
+        <div class="sidebar-item">FNAC Reports Summary</div>
+        <div class="sidebar-item">Cyto Reports Summary</div>
+        <div class="sidebar-item">US guided FNAC Reports Summary</div>
+        <div class="sidebar-item">Cancer Reports</div>
+        <div class="sidebar-item">Pending Reports</div>
+        <div class="sidebar-item">Reports to Print</div>
+        <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
+        <div class="sidebar-item bold" id="logout">Log out</div>
+    </div>
+    <div class="content">
+        <div class="top-bar">
+            <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
+            <div class="datetime" id="datetime">
+                <div class="time" id="time"></div>
+                <div class="date" id="date"></div>
+            </div>
+        </div>
+        <div class="main-content">
+            <!-- Main content goes here -->
+        </div>
+    </div>
+
+    <script>
+        // Function to update time and date
+        function updateTime() {
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+            const now = new Date();
+
+            // Time options
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+
+            // Date options
+            const dateOptions = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+
+            const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+
+            timeElement.textContent = formattedTime;
+            dateElement.textContent = formattedDate;
+        }
+
+        // Update time and date every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call to display immediately
+
+        // Function to check if the user is logged in
+        function checkSession() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Call checkSession on page load
+        window.onload = checkSession;
+
+        // Log out functionality
+        document.getElementById('logout').addEventListener('click', function() {
+            sessionStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        });
+
+        // Reload home.html when the Home item is clicked
+        document.getElementById('home-link').addEventListener('click', function() {
+            window.location.href = 'home.html';
+        });
+    </script>
+</body>
+</html>
+
     <div class="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
