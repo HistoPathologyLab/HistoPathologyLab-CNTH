@@ -100,7 +100,7 @@
             padding: 20px;
             overflow-y: auto; /* Ensure scrolling on mobile devices */
         }
-        @media (max-width: 600px) {
+        @media (max-width: 320px) {
             body {
                 flex-direction: column; /* Change layout to column for mobile devices */
                 overflow: auto;
@@ -112,7 +112,7 @@
                 padding: 10px;
                 box-sizing: border-box;
                 overflow-x: auto; /* Ensure scrolling for wide content */
-                overflow-y: hidden; /* Prevent vertical scrolling */
+                overflow-y: auto; /* Add or adjust vertical scrolling */
                 flex-wrap: nowrap; /* Ensure items stay in one line */
             }
             .sidebar h1, .sidebar h2 {
@@ -143,7 +143,7 @@
             .logo {
                 position: static;
                 transform: none;
-                height: 60px;
+                height: auto;
                 width: auto;
                 margin: 0 auto;
             }
@@ -152,7 +152,7 @@
                 text-align: center;
                 flex-direction: column;
                 width: auto;
-                justify-content: center;
+                justify-content: right;
                 margin-top: 0;
             }
             .datetime .time {
