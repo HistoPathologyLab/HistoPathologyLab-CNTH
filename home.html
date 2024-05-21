@@ -100,7 +100,7 @@
             padding: 20px;
             overflow-y: auto; /* Ensure scrolling on mobile devices */
         }
-        @media (max-width: 320px) {
+        @media (max-width: 600px) {
             body {
                 flex-direction: column; /* Change layout to column for mobile devices */
                 overflow: auto;
@@ -111,7 +111,9 @@
                 align-items: flex-start;
                 padding: 10px;
                 box-sizing: border-box;
-                overflow-y: auto;
+                overflow-x: auto; /* Ensure scrolling for wide content */
+                overflow-y: hidden; /* Prevent vertical scrolling */
+                flex-wrap: nowrap; /* Ensure items stay in one line */
             }
             .sidebar h1, .sidebar h2 {
                 font-size: 18px;
@@ -126,6 +128,7 @@
                 padding: 10px 5px;
                 margin-left: 0;
                 text-align: left;
+                white-space: nowrap; /* Prevent wrapping of text */
             }
             .content {
                 flex-direction: column;
