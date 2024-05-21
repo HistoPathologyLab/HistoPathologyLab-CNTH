@@ -78,7 +78,6 @@
             left: 50%;
             transform: translateX(-50%);
             height: 80%;
-            max-height: 50px; /* Ensure the logo doesn't get too big on mobile */
         }
         .datetime {
             color: darkblue;
@@ -95,61 +94,17 @@
             padding: 20px;
         }
         @media (max-width: 600px) {
-            body {
-                flex-direction: column;
-                overflow: auto;
-            }
             .sidebar {
-                width: 100%;
-                flex-direction: row;
-                justify-content: space-around;
-                align-items: flex-start;
-                padding: 10px;
-                overflow-x: auto;
-                overflow-y: hidden;
-                box-sizing: border-box;
-            }
-            .sidebar h1, .sidebar h2 {
-                font-size: 18px;
-            }
-            .sidebar h2 {
-                font-size: 12px;
-            }
-            .sidebar-item {
-                font-size: 12px;
-                padding: 10px 5px;
-                margin-left: 0;
-                text-align: left;
-                white-space: nowrap;
+                position: fixed; /* Ensure sidebar remains on left */
+                top: 0; /* Align to top */
+                bottom: 0; /* Fill the height */
+                z-index: 1; /* Ensure sidebar stays above content */
             }
             .content {
-                flex-grow: 1;
-                flex-direction: column;
+                margin-left: 15%; /* Ensure content doesn't go under sidebar */
             }
             .top-bar {
-                flex-direction: column;
-                height: auto;
-                padding: 10px;
-            }
-            .logo {
-                position: relative;
-                left: 0;
-                transform: none;
-                height: auto;
-                width: 50%; /* Increase size on mobile */
-                max-height: none;
-                margin: 0 auto;
-            }
-            .datetime {
-                align-items: center;
-                text-align: center;
-                flex-direction: row;
-                justify-content: space-around;
-                width: 100%;
-                margin-top: 10px;
-            }
-            .datetime .time, .datetime .date {
-                font-size: 12px;
+                padding-left: 15%; /* Align top bar content with sidebar */
             }
         }
     </style>
