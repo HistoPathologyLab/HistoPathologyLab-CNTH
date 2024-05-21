@@ -11,7 +11,7 @@
             font-family: Arial, sans-serif;
             display: flex;
             height: 100vh;
-            overflow: hidden;
+            overflow: auto; /* Enable scrolling */
         }
         .sidebar {
             background-color: darkblue;
@@ -24,7 +24,7 @@
             padding-top: 20px;
             padding-left: 15px;
             padding-right: 15px;
-            box-sizing: border-box;
+            flex-shrink: 0; /* Prevent shrinking on smaller screens */
         }
         .sidebar h1 {
             font-size: 24px;
@@ -62,6 +62,7 @@
             background-color: white;
             display: flex;
             flex-direction: column;
+            overflow: auto; /* Ensure content area can scroll */
         }
         .top-bar {
             background-color: white;
@@ -82,30 +83,21 @@
         .datetime {
             color: darkblue;
             text-align: right;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
         }
-        .datetime .time, .datetime .date {
-            font-size: 14px;
+        .datetime .time {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .datetime .date {
+            font-size: 12px;
         }
         .main-content {
             flex-grow: 1;
             padding: 20px;
-        }
-        @media (max-width: 600px) {
-            .sidebar {
-                position: fixed; /* Ensure sidebar remains on left */
-                top: 0; /* Align to top */
-                bottom: 0; /* Fill the height */
-                z-index: 1; /* Ensure sidebar stays above content */
-            }
-            .content {
-                margin-left: 15%; /* Ensure content doesn't go under sidebar */
-            }
-            .top-bar {
-                padding-left: 15%; /* Align top bar content with sidebar */
-            }
         }
     </style>
 </head>
