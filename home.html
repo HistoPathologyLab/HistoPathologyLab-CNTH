@@ -18,12 +18,11 @@
             width: 15%;
             color: white;
             display: flex;
-            justify-content: flex-start;
-            align-items: center;
             flex-direction: column;
             padding-top: 20px;
             padding-left: 15px;
             padding-right: 15px;
+            box-sizing: border-box;
         }
         .sidebar h1 {
             font-size: 24px;
@@ -105,8 +104,9 @@
             }
             .sidebar {
                 width: 100%;
+                height: auto;
                 flex-direction: row;
-                justify-content: space-between;
+                justify-content: space-around;
                 padding: 10px;
             }
             .sidebar h1, .sidebar h2 {
