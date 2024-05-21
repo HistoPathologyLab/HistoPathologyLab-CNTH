@@ -9,68 +9,70 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            display: flex;
             height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .wrapper {
+            display: flex;
+            flex: 1;
             overflow: hidden;
         }
         .sidebar {
             background-color: darkblue;
-            width: 15%;
+            width: 300px;
             color: white;
             display: flex;
-            justify-content: flex-start;
-            align-items: center;
             flex-direction: column;
+            align-items: center;
             padding-top: 20px;
-            padding-left: 15px;
-            padding-right: 15px;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+        .sidebar h1, .sidebar h2 {
+            text-align: center;
+            margin: 0;
         }
         .sidebar h1 {
             font-size: 24px;
             font-weight: bold;
-            margin: 0;
-            text-align: center;
         }
         .sidebar h2 {
             font-size: 16px;
             font-weight: normal;
-            margin: 0;
-            text-align: center;
         }
         .sidebar-item {
             font-family: 'Congenial', sans-serif;
             font-size: 14px;
-            padding: 15px 20px;
+            padding: 10px 20px;
             cursor: pointer;
             width: 100%;
             text-align: left;
-            margin-left: 10px;
         }
         .sidebar-item.bold {
-            margin-top: 30px;
+            margin-top: 20px;
             font-weight: bold;
         }
         .sidebar-item:hover {
             background-color: #004080;
         }
-        .bold {
-            font-weight: bold;
-        }
         .content {
-            flex-grow: 1;
-            background-color: white;
+            flex: 1;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         .top-bar {
             background-color: white;
-            height: 10%;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             position: relative;
+            flex-shrink: 0;
         }
         .logo {
             position: absolute;
@@ -81,7 +83,6 @@
         .datetime {
             color: darkblue;
             text-align: right;
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
@@ -94,36 +95,63 @@
             font-size: 12px;
         }
         .main-content {
-            flex-grow: 1;
+            flex: 1;
             padding: 20px;
+            overflow: auto;
+        }
+        @media (max-width: 768px) {
+            .wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                max-width: none;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .sidebar-item {
+                text-align: center;
+                flex: 1 1 50%;
+                padding: 10px 10px;
+            }
+            .top-bar {
+                height: auto;
+                padding: 10px;
+            }
+            .datetime {
+                text-align: right;
+                align-items: flex-end;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h1>ReportLab</h1>
-        <h2>CNTH</h2>
-        <div class="sidebar-item bold" id="home-link">Home</div>
-        <div class="sidebar-item">Histo Reports Summary</div>
-        <div class="sidebar-item">FNAC Reports Summary</div>
-        <div class="sidebar-item">Cyto Reports Summary</div>
-        <div class="sidebar-item">US guided FNAC Reports Summary</div>
-        <div class="sidebar-item">Cancer Reports</div>
-        <div class="sidebar-item">Pending Reports</div>
-        <div class="sidebar-item">Reports to Print</div>
-        <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
-        <div class="sidebar-item bold" id="logout">Log out</div>
-    </div>
-    <div class="content">
-        <div class="top-bar">
-            <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
-            <div class="datetime" id="datetime">
-                <div class="time" id="time"></div>
-                <div class="date" id="date"></div>
-            </div>
+    <div class="wrapper">
+        <div class="sidebar">
+            <h1>ReportLab</h1>
+            <h2>CNTH</h2>
+            <div class="sidebar-item bold" id="home-link">Home</div>
+            <div class="sidebar-item">Histo Reports Summary</div>
+            <div class="sidebar-item">FNAC Reports Summary</div>
+            <div class="sidebar-item">Cyto Reports Summary</div>
+            <div class="sidebar-item">US guided FNAC Reports Summary</div>
+            <div class="sidebar-item">Cancer Reports</div>
+            <div class="sidebar-item">Pending Reports</div>
+            <div class="sidebar-item">Reports to Print</div>
+            <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
+            <div class="sidebar-item bold" id="logout">Log out</div>
         </div>
-        <div class="main-content">
-            <!-- Main content goes here -->
+        <div class="content">
+            <div class="top-bar">
+                <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
+                <div class="datetime" id="datetime">
+                    <div class="time" id="time"></div>
+                    <div class="date" id="date"></div>
+                </div>
+            </div>
+            <div class="main-content">
+                <!-- Main content goes here -->
+            </div>
         </div>
     </div>
 
