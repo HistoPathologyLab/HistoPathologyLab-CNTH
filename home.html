@@ -86,7 +86,8 @@
             color: darkblue;
             text-align: right;
             flex-grow: 1;
-            display: flex;
+            display: inline-bock; /* Ensure it stays inline for scrolling*/
+	    white-space: nowrap; /* Prevent text wrapping */
             flex-direction: column;
             align-items: flex-end;
             position: absolute; /* Position absolutely to right */
