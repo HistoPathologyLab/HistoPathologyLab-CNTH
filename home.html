@@ -88,7 +88,8 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            right: 20px;
+            position: absolute; /* Add this line */
+            right: 20px; /* Adjust margin to create space */
             white-space: nowrap;
         }
         .datetime .time {
@@ -205,12 +206,11 @@
         </div>
         <div class="main-content" id="main-content">
             <!-- Main content goes here -->
-            <!-- Placeholder text has been removed -->
         </div>
     </div>
 
     <script>
-	// Function to update time and date
+        // Function to update time and date
         function updateTime() {
             const timeElement = document.getElementById('time');
             const dateElement = document.getElementById('date');
