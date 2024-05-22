@@ -73,11 +73,10 @@
             padding: 0 20px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             position: relative;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent text wrapping */
         }
         .logo {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
             height: 80%;
         }
         .datetime {
@@ -167,15 +166,11 @@
             .logo {
                 height: 20px;
             }
-            .datetime {
-                align-items: center;
-            }
             .datetime .time {
                 font-size: 10px;
             }
             .datetime .date {
                 font-size: 8px;
-                display: none; /* Hide the date text */
             }
         }
     </style>
