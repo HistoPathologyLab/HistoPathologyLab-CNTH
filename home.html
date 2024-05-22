@@ -25,9 +25,8 @@
             padding-left: 15px;
             padding-right: 15px;
             overflow-y: auto;
-            position: absolute; /* Fix for large screens */
-            top: 0; /* Fix for large screens */
-            bottom: 0; /* Fix for large screens */
+            position: fixed; /* Ensure the sidebar stays fixed */
+            height: 100vh;
         }
         .sidebar h1 {
             font-size: 24px;
@@ -65,8 +64,10 @@
             background-color: white;
             display: flex;
             flex-direction: column;
+            margin-left: 250px; /* Add margin to accommodate the fixed sidebar */
             overflow-y: auto;
-            margin-left: 250px; /* Ensure content is not overlapped by sidebar */
+            height: 100vh;
+            width: calc(100% - 250px);
         }
         .top-bar {
             background-color: white;
@@ -79,7 +80,6 @@
             position: relative;
             overflow-x: auto; /* Enable horizontal scrolling */
             white-space: nowrap; /* Prevent text wrapping */
-            z-index: 1; /* Ensure top-bar is above sidebar */
         }
         .logo {
             height: 80%;
@@ -109,19 +109,20 @@
             padding: 20px;
             overflow-x: auto; /* Ensure main content can scroll horizontally */
         }
+        .menu-button {
+            display: none; /* Initially hidden */
+        }
 
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px; /* Adjust the width for smaller screens */
-                position: fixed; /* Fix for mobile screens */
-                left: -200px; /* Hide sidebar by default */
-                transition: left 0.3s; /* Smooth transition for sidebar */
+                position: absolute; /* Change to absolute for mobile view */
+                z-index: 1000; /* Ensure it is on top */
+                transform: translateX(-100%); /* Hide by default */
+                transition: transform 0.3s ease;
             }
             .sidebar.visible {
-                left: 0; /* Show sidebar when visible */
-            }
-            .content {
-                margin-left: 0; /* Ensure content takes full width */
+                transform: translateX(0); /* Show when toggled */
             }
             .sidebar h1, .sidebar h2 {
                 font-size: 18px;
@@ -134,6 +135,7 @@
             .top-bar {
                 height: 50px;
                 padding: 0 10px;
+                margin-left: 0; /* Remove margin for top bar */
             }
             .logo {
                 height: 40px;
@@ -144,15 +146,26 @@
             .datetime .date {
                 font-size: 10px;
             }
-            #menu-button {
-                display: inline-block;
+            .content {
+                margin-left: 0; /* Remove margin for content */
+                width: 100%; /* Full width for content */
+            }
+            .menu-button {
+                display: block; /* Show menu button on mobile */
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background-color: darkblue;
+                color: white;
+                border: none;
+                padding: 10px;
+                cursor: pointer;
             }
         }
 
         @media (max-width: 480px) {
             .sidebar {
                 width: 150px; /* Further adjust the width for very small screens */
-                left: -150px; /* Hide sidebar by default */
             }
             .sidebar-item {
                 font-size: 10px;
@@ -172,7 +185,6 @@
         @media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
                 width: 120px; /* Final adjustment for 320px screens */
-                left: -120px; /* Hide sidebar by default */
             }
             .sidebar-item {
                 font-size: 8px;
@@ -215,9 +227,9 @@
         <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
         <div class="sidebar-item bold" id="logout">Log out</div>
     </div>
-    <div class="content">
+    <div class="content" id="content">
         <div class="top-bar">
-            <button id="menu-button" style="display:none;">&#9776;</button>
+            <button class="menu-button" id="menu-button">&#9776;</button>
             <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
             <div class="datetime" id="datetime">
                 <div class="time" id="time"></div>
@@ -285,29 +297,19 @@
         });
 
         // Toggle sidebar visibility for mobile
-        document.getElementById('menu-button').addEventListener('click', function() {
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar.classList.contains('visible')) {
-                sidebar.classList.remove('visible');
-            } else {
-                sidebar.classList.add('visible');
-            }
+        const menuButton = document.getElementById('menu-button');
+        const sidebar = document.getElementById('sidebar');
+
+        menuButton.addEventListener('click', function() {
+            sidebar.classList.toggle('visible');
         });
 
-        // Ensure menu button is shown/hidden based on window size
-        function handleResize() {
-            const menuButton = document.getElementById('menu-button');
-            if (window.innerWidth <= 768) {
-                menuButton.style.display = 'inline-block';
-            } else {
-                menuButton.style.display = 'none';
-                document.getElementById('sidebar').classList.remove('visible');
+        // Close the sidebar when clicking outside of it
+        document.addEventListener('click', function(event) {
+            if (!sidebar.contains(event.target) && event.target !== menuButton) {
+                sidebar.classList.remove('visible');
             }
-        }
-
-        // Initial check and on resize
-        handleResize();
-        window.addEventListener('resize', handleResize);
+        });
     </script>
 </body>
 </html>
