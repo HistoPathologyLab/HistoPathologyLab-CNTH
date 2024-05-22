@@ -25,6 +25,10 @@
             padding-left: 15px;
             padding-right: 15px;
             overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+        .sidebar.hidden {
+            transform: translateX(-100%);
         }
         .sidebar h1 {
             font-size: 24px;
@@ -104,6 +108,16 @@
             padding: 20px;
             overflow-x: auto; /* Ensure main content can scroll horizontally */
         }
+        .menu-button {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: darkblue;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+        }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -129,6 +143,9 @@
             }
             .datetime .date {
                 font-size: 10px;
+            }
+            .menu-button {
+                display: block;
             }
         }
 
@@ -182,7 +199,8 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
+    <button class="menu-button" id="menu-button">&#9776;</button>
+    <div class="sidebar" id="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
         <div class="sidebar-item bold" id="home-link">Home</div>
@@ -262,6 +280,12 @@
         // Reload home.html when the Home item is clicked
         document.getElementById('home-link').addEventListener('click', function() {
             window.location.href = 'home.html';
+        });
+
+        // Toggle sidebar visibility on menu button click
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
         });
     </script>
 </body>
