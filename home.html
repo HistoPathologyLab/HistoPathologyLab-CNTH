@@ -85,11 +85,9 @@
         .datetime {
     	    color: darkblue;
     	    text-align: right;
-	    flex-grow: 1;
     	    display: flex;
 	    flex-direction: column;
 	    align-items: flex-end;
-	    position: relative;
 	    right: 20px; /* Adjust margin to create space */
     	    white-space: nowrap; 
 	}
@@ -152,7 +150,7 @@
             }
         }
 
-        @media (max-width: 320px) {
+        @media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
                 width: 120px; /* Final adjustment for 320px screens */
             }
@@ -173,6 +171,9 @@
             .logo {
                 height: 20px;
             }
+	    .datetime {
+		margin-right: 10px; /* Further reduce margin for portrait mode on 320px screens */
+	    }
             .datetime .time {
                 font-size: 10px;
             }
