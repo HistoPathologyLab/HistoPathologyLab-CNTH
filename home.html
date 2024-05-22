@@ -69,7 +69,7 @@
             height: 10%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; /* Center the content */
             padding: 0 20px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -78,6 +78,9 @@
         }
         .logo {
             height: 80%;
+            position: absolute; /* Position the logo absolutely */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for true centering */
         }
         .datetime {
             color: darkblue;
@@ -86,6 +89,8 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
+            position: absolute; /* Position absolutely to right */
+            right: 20px; /* Space from right edge */
         }
         .datetime .time {
             font-size: 16px;
@@ -201,8 +206,7 @@
         </div>
         <div class="main-content" id="main-content">
             <!-- Main content goes here -->
-            <p>Welcome to the Histopathology Lab System. This is the main content area.</p>
-            <p>Add more content here, ensuring it adjusts well to screen size changes.</p>
+            <!-- Placeholder text has been removed -->
         </div>
     </div>
 
