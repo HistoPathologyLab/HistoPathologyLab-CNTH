@@ -121,10 +121,10 @@
             display: none; /* Initially hidden */
         }
         .search-button {
-            background-color: #FFBF00;
+            background-color: gold;
             color: white;
             border: none;
-            padding: 10px 100px; /* Increased padding for a larger button */
+            padding: 20px 40px; /* Increased padding for a larger button */
             cursor: pointer;
             margin-top: 40px; /* Adjust the margin to position the button below the white bar */
             margin-bottom: 20px; /* Add some bottom margin for spacing */
@@ -133,7 +133,7 @@
             display: block; /* Make the button a block element to center it */
             border-radius: 10px; /* Rounded edges */
             font-weight: bold; /* Bold font */
-            font-size: 16px; /* Increased font size */
+            font-size: 22px; /* Increased font size */
         }
         .search-button:hover {
             background-color: #004080;
@@ -141,6 +141,28 @@
         .search-button i {
             margin-left: 5px;
             transform: scaleX(-1); /* Mirror the icon */
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .custom-button {
+            background-color: azure;
+            color: darkblue;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            flex: 1;
+            margin: 0 10px;
+            text-align: center;
+        }
+        .custom-button:hover {
+            background-color: #004080;
+            color: white;
         }
         @media (max-width: 768px) {
             .sidebar {
@@ -253,7 +275,7 @@
         <div class="sidebar-item">Cancer Reports</div>
         <div class="sidebar-item">Pending Reports</div>
         <div class="sidebar-item">Reports to Print</div>
-        <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
+	<div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
         <div class="sidebar-item bold" id="logout">Log out</div>
     </div>
     <div class="content" id="content">
@@ -270,6 +292,11 @@
                 Search Reports
                 <i class="fas fa-search"></i>
             </button>
+            <div class="button-container">
+                <button class="custom-button">Add / Remove Specimen</button>
+                <button class="custom-button">Add / Remove Reports</button>
+                <button class="custom-button">Add / Remove Specimen Photos</button>
+            </div>
             <!-- Main content goes here -->
         </div>
     </div>
