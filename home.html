@@ -55,14 +55,14 @@
         }
         .sidebar-item:hover {
             background-color: #004080;
-	}
+        }
         .bold {
             font-weight: bold;
-	}
-	.divider {
-	width: 90%;
-	border: 1px solid white;
-	margin: 20px 0;
+        }
+        .divider {
+            width: 90%;
+            border: 1px solid white;
+            margin: 20px 0;
         }
         .content {
             flex-grow: 1;
@@ -85,7 +85,7 @@
             position: relative;
             overflow-x: auto; /* Enable horizontal scrolling */
             white-space: nowrap; /* Prevent text wrapping */
-	    margin-left: 30px;
+            margin-left: 30px;
         }
         .logo {
             height: 80%;
@@ -114,11 +114,33 @@
             flex-grow: 1;
             padding: 20px;
             overflow-x: auto; /* Ensure main content can scroll horizontally */
+            position: relative; /* Needed for absolute positioning of button */
         }
         .menu-button {
             display: none; /* Initially hidden */
         }
-
+        .search-button {
+            background-color: darkblue;
+            color: white;
+            border: none;
+            padding: 15px 30px; /* Increased padding for a larger button */
+            cursor: pointer;
+            margin-top: 20px; /* Adjust the margin to position the button below the white bar */
+            margin-bottom: 20px; /* Add some bottom margin for spacing */
+            margin-left: auto; /* Align the button to the right */
+            margin-right: auto; /* Align the button to the left */
+            display: block; /* Make the button a block element to center it */
+            border-radius: 10px; /* Rounded edges */
+            font-weight: bold; /* Bold font */
+            font-size: 16px; /* Increased font size */
+        }
+        .search-button:hover {
+            background-color: #004080;
+        }
+        .search-button i {
+            margin-left: 5px;
+            transform: scaleX(-1); /* Mirror the icon */
+        }
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px; /* Adjust the width for smaller screens */
@@ -168,7 +190,6 @@
                 cursor: pointer;
             }
         }
-
         @media (max-width: 480px) {
             .sidebar {
                 width: 150px; /* Further adjust the width for very small screens */
@@ -187,7 +208,6 @@
                 font-size: 8px;
             }
         }
-
         @media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
                 width: 120px; /* Final adjustment for 320px screens */
@@ -222,13 +242,13 @@
     <div class="sidebar" id="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
-	<hr class="divider"> <!-- Divider line added here-->
+        <hr class="divider"> <!-- Divider line added here-->
         <div class="sidebar-item bold" id="home-link">Home</div>
         <div class="sidebar-item">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
         <div class="sidebar-item">US guided FNAC Reports Summary</div>
-	<div class="sidebar-item">ERPR Reports</div> <!-- New sidebar item added here-->
+        <div class="sidebar-item">ERPR Reports</div> <!-- New sidebar item added here-->
         <div class="sidebar-item">Cancer Reports</div>
         <div class="sidebar-item">Pending Reports</div>
         <div class="sidebar-item">Reports to Print</div>
@@ -245,6 +265,10 @@
             </div>
         </div>
         <div class="main-content" id="main-content">
+            <button class="search-button">
+                Search Reports
+                <i class="fas fa-search"></i>
+            </button>
             <!-- Main content goes here -->
         </div>
     </div>
@@ -318,6 +342,12 @@
                 sidebar.classList.remove('visible');
             }
         });
+
+        // FontAwesome script to load the search icon
+        var script = document.createElement('script');
+        script.src = 'https://kit.fontawesome.com/a076d05399.js';
+        script.crossOrigin = 'anonymous';
+        document.head.appendChild(script);
     </script>
 </body>
 </html>
