@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Histopathology Lab System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
     <style>
         body {
             margin: 0;
@@ -74,7 +73,6 @@
             overflow-y: auto;
             height: 100vh;
             width: calc(100% - 250px);
-	    position: relative; /* Needed for absolute positioning of button */
         }
         .top-bar {
             background-color: white;
@@ -108,7 +106,6 @@
         .datetime .time {
             font-size: 16px;
             font-weight: bold;
-	    margin-left: 15px;
         }
         .datetime .date {
             font-size: 12px;
@@ -117,32 +114,9 @@
             flex-grow: 1;
             padding: 20px;
             overflow-x: auto; /* Ensure main content can scroll horizontally */
-	    position: relative; /* Needed for absolute positioning of button */
         }
         .menu-button {
             display: none; /* Initially hidden */
-	}
-        .search-button {
-            background-color: Darkblue;
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            cursor: pointer;
-            margin-top: 50px; /* Adjust the margin to position the button below the white bar */
-            margin-bottom: 20px; /* Add some bottom margin for spacing */
-            margin-left: auto; /* Align the button to the right */
-            margin-right: auto; /* Align the button to the left */
-            display: block; /* Make the button a block element to center it */
-	    border-radius: 10px; /* Add border radius to round edges */
-	    font-size: 18px; /* Increase font size */
-	    font-weight: bold; /* Bold font */
-        }
-
-        .search-button:hover {
-            background-color: #004080;
-        }
-        .search-button i {
-            margin-left: 5px;
         }
 
         @media (max-width: 768px) {
@@ -273,7 +247,6 @@
         <div class="main-content" id="main-content">
             <!-- Main content goes here -->
         </div>
-	<button id="search-button" class="search-button">Search Reports <i class="fas fa-search fa-flip-horizontal"></i></button>
     </div>
 
     <script>
@@ -344,13 +317,6 @@
             if (!sidebar.contains(event.target) && event.target !== menuButton) {
                 sidebar.classList.remove('visible');
             }
-        });
-
-        // Search button functionality
-        document.getElementById('search-button').addEventListener('click', function() {
-            // Add your search action here
-            // For now, let's just log a message
-            console.log('Search button clicked');
         });
     </script>
 </body>
