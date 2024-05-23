@@ -122,15 +122,20 @@
             display: none; /* Initially hidden */
         }
         .search-button {
-            position: absolute;
-            top: 20px; /* Adjust top margin as needed */
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: darkblue;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
+    	    background-color: darkblue;
+    	    color: white;
+    	    border: none;
+    	    padding: 10px 20px;
+    	    cursor: pointer;
+    	    margin-top: 10px; /* Adjust the margin to position the button below the white bar */
+    	    margin-bottom: 20px; /* Add some bottom margin for spacing */
+    	    margin-left: auto; /* Align the button to the right */
+    	    margin-right: auto; /* Align the button to the left */
+    	    display: block; /* Make the button a block element to center it */
+	}
+
+	.search-button:hover {
+    	    background-color: #004080;
         }
         .search-button i {
             margin-left: 5px;
@@ -175,10 +180,7 @@
                 <div class="date" id="date"></div>
             </div>
         </div>
-        <div class="main-content" id="main-content">
-            <!-- Main content goes here -->
-        </div>
-        <button class="search-button" id="search-button">Search Reports <i class="fas fa-search"></i></button>
+        <button id="search-button" class="search-button">Search Reports</button> <!-- Added search button here -->
     </div>
 
     <script>
