@@ -144,7 +144,14 @@
         }
         .button-container {
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .button-row {
+            display: flex;
             justify-content: space-around;
+            width: 100%;
             margin-top: 20px;
         }
         .custom-button {
@@ -157,8 +164,7 @@
             font-weight: bold;
             font-size: 16px;
             flex: 1;
-            margin: 0 30px;
-	    margin-top: 30px; /* Adjust the margin to position the button below the search reports button */
+            margin: 0 10px;
             text-align: center;
         }
         .custom-button:hover {
@@ -232,7 +238,7 @@
                 font-size: 8px;
             }
         }
-        @media (max-width: 320px) and (orientation: portrait) {
+	@media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
                 width: 120px; /* Final adjustment for 320px screens */
             }
@@ -276,7 +282,7 @@
         <div class="sidebar-item">Cancer Reports</div>
         <div class="sidebar-item">Pending Reports</div>
         <div class="sidebar-item">Reports to Print</div>
-	<div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
+        <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
         <div class="sidebar-item bold" id="logout">Log out</div>
     </div>
     <div class="content" id="content">
@@ -303,6 +309,7 @@
                     <button class="custom-button">Reports for Checking</button>
                     <button class="custom-button">Edit Reports</button>
                 </div>
+            </div>
             <!-- Main content goes here -->
         </div>
     </div>
