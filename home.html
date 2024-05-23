@@ -25,14 +25,9 @@
             padding-left: 15px;
             padding-right: 15px;
             overflow-y: auto;
-            transition: transform 0.3s ease;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-        }
-        .sidebar.hidden {
-            transform: translateX(-100%);
+            position: absolute; /* Fix for large screens */
+            top: 0; /* Fix for large screens */
+            bottom: 0; /* Fix for large screens */
         }
         .sidebar h1 {
             font-size: 24px;
@@ -71,11 +66,7 @@
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            margin-left: 250px;
-            transition: margin-left 0.3s ease;
-        }
-        .content.shifted {
-            margin-left: 0;
+            margin-left: 250px; /* Ensure content is not overlapped by sidebar */
         }
         .top-bar {
             background-color: white;
@@ -88,6 +79,7 @@
             position: relative;
             overflow-x: auto; /* Enable horizontal scrolling */
             white-space: nowrap; /* Prevent text wrapping */
+            z-index: 1; /* Ensure top-bar is above sidebar */
         }
         .logo {
             height: 80%;
@@ -117,25 +109,19 @@
             padding: 20px;
             overflow-x: auto; /* Ensure main content can scroll horizontally */
         }
-        .menu-button {
-            display: none;
-            font-size: 24px;
-            background: none;
-            border: none;
-            color: darkblue;
-            cursor: pointer;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
-        }
 
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px; /* Adjust the width for smaller screens */
+                position: fixed; /* Fix for mobile screens */
+                left: -200px; /* Hide sidebar by default */
+                transition: left 0.3s; /* Smooth transition for sidebar */
             }
-            .sidebar.hidden {
-                transform: translateX(-200px); /* Adjust the hidden transform */
+            .sidebar.visible {
+                left: 0; /* Show sidebar when visible */
+            }
+            .content {
+                margin-left: 0; /* Ensure content takes full width */
             }
             .sidebar h1, .sidebar h2 {
                 font-size: 18px;
@@ -158,20 +144,15 @@
             .datetime .date {
                 font-size: 10px;
             }
-            .menu-button {
-                display: block;
-            }
-            .content {
-                margin-left: 0;
+            #menu-button {
+                display: inline-block;
             }
         }
 
         @media (max-width: 480px) {
             .sidebar {
                 width: 150px; /* Further adjust the width for very small screens */
-            }
-            .sidebar.hidden {
-                transform: translateX(-150px); /* Adjust the hidden transform */
+                left: -150px; /* Hide sidebar by default */
             }
             .sidebar-item {
                 font-size: 10px;
@@ -191,9 +172,7 @@
         @media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
                 width: 120px; /* Final adjustment for 320px screens */
-            }
-            .sidebar.hidden {
-                transform: translateX(-120px); /* Adjust the hidden transform */
+                left: -120px; /* Hide sidebar by default */
             }
             .sidebar-item {
                 font-size: 8px;
@@ -222,7 +201,6 @@
     </style>
 </head>
 <body>
-    <button class="menu-button" id="menu-button">&#9776;</button>
     <div class="sidebar" id="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
@@ -237,8 +215,9 @@
         <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
         <div class="sidebar-item bold" id="logout">Log out</div>
     </div>
-    <div class="content" id="content">
+    <div class="content">
         <div class="top-bar">
+            <button id="menu-button" style="display:none;">&#9776;</button>
             <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
             <div class="datetime" id="datetime">
                 <div class="time" id="time"></div>
@@ -300,23 +279,35 @@
             window.location.href = 'index.html';
         });
 
-        // Sidebar toggle functionality
-        const menuButton = document.getElementById('menu-button');
-        const sidebar = document.getElementById('sidebar');
-        const content = document.getElementById('content');
-
-        menuButton.addEventListener('click', function() {
-            sidebar.classList.toggle('hidden');
-            content.classList.toggle('shifted');
+        // Reload home.html when the Home item is clicked
+        document.getElementById('home-link').addEventListener('click', function() {
+            window.location.href = 'home.html';
         });
 
-        // Optional: Close the sidebar when clicking outside of it on mobile
-        document.addEventListener('click', function(event) {
-            if (!sidebar.contains(event.target) && !menuButton.contains(event.target)) {
-                sidebar.classList.add('hidden');
-                content.classList.remove('shifted');
+        // Toggle sidebar visibility for mobile
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('visible')) {
+                sidebar.classList.remove('visible');
+            } else {
+                sidebar.classList.add('visible');
             }
         });
+
+        // Ensure menu button is shown/hidden based on window size
+        function handleResize() {
+            const menuButton = document.getElementById('menu-button');
+            if (window.innerWidth <= 768) {
+                menuButton.style.display = 'inline-block';
+            } else {
+                menuButton.style.display = 'none';
+                document.getElementById('sidebar').classList.remove('visible');
+            }
+        }
+
+        // Initial check and on resize
+        handleResize();
+        window.addEventListener('resize', handleResize);
     </script>
 </body>
 </html>
