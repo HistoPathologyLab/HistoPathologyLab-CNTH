@@ -55,9 +55,14 @@
         }
         .sidebar-item:hover {
             background-color: #004080;
-        }
+	}
         .bold {
             font-weight: bold;
+	}
+	.divider {
+	width: 90%;
+	border: 1px solid white;
+	margin: 20px 0;
         }
         .content {
             flex-grow: 1;
@@ -217,6 +222,7 @@
     <div class="sidebar" id="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
+	<hr class="divider"> <!-- Divider line added here-->
         <div class="sidebar-item bold" id="home-link">Home</div>
         <div class="sidebar-item">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
