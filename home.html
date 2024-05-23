@@ -122,20 +122,20 @@
             display: none; /* Initially hidden */
         }
         .search-button {
-    	    background-color: darkblue;
-    	    color: white;
-    	    border: none;
-    	    padding: 10px 20px;
-    	    cursor: pointer;
-    	    margin-top: 10px; /* Adjust the margin to position the button below the white bar */
-    	    margin-bottom: 20px; /* Add some bottom margin for spacing */
-    	    margin-left: auto; /* Align the button to the right */
-    	    margin-right: auto; /* Align the button to the left */
-    	    display: block; /* Make the button a block element to center it */
-	}
+            background-color: darkblue;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px; /* Adjust the margin to position the button below the white bar */
+            margin-bottom: 20px; /* Add some bottom margin for spacing */
+            margin-left: auto; /* Align the button to the right */
+            margin-right: auto; /* Align the button to the left */
+            display: block; /* Make the button a block element to center it */
+        }
 
-	.search-button:hover {
-    	    background-color: #004080;
+        .search-button:hover {
+            background-color: #004080;
         }
         .search-button i {
             margin-left: 5px;
@@ -143,122 +143,122 @@
 
         @media (max-width: 768px) {
             /* Styles for smaller screens */
-        }
+	}
 
-        @media (max-width: 480px) {
+	@media (max-width: 480px) {
             /* Styles for very small screens */
         }
 
         @media (max-width: 320px) and (orientation: portrait) {
             /* Styles for 320px screens */
         }
-    </style>
-</head>
-<body>
-    <div class="sidebar" id="sidebar">
-        <h1>ReportLab</h1>
-        <h2>CNTH</h2>
-        <hr class="divider"> <!-- Divider line added here-->
-        <div class="sidebar-item bold" id="home-link">Home</div>
-        <div class="sidebar-item">Histo Reports Summary</div>
-        <div class="sidebar-item">FNAC Reports Summary</div>
-        <div class="sidebar-item">Cyto Reports Summary</div>
-        <div class="sidebar-item">US guided FNAC Reports Summary</div>
-        <div class="sidebar-item">ERPR Reports</div> <!-- New sidebar item added here-->
-        <div class="sidebar-item">Cancer Reports</div>
-        <div class="sidebar-item">Pending Reports</div>
-        <div class="sidebar-item">Reports to Print</div>
-        <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
-        <div class="sidebar-item bold" id="logout">Log out</div>
-    </div>
-    <div class="content" id="content">
-        <div class="top-bar">
-            <button class="menu-button" id="menu-button">&#9776;</button>
-            <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
-            <div class="datetime" id="datetime">
-                <div class="time" id="time"></div>
-                <div class="date" id="date"></div>
-            </div>
+        </style>
+    </head>
+    <body>
+        <div class="sidebar" id="sidebar">
+            <h1>ReportLab</h1>
+            <h2>CNTH</h2>
+            <hr class="divider"> <!-- Divider line added here-->
+            <div class="sidebar-item bold" id="home-link">Home</div>
+            <div class="sidebar-item">Histo Reports Summary</div>
+            <div class="sidebar-item">FNAC Reports Summary</div>
+            <div class="sidebar-item">Cyto Reports Summary</div>
+            <div class="sidebar-item">US guided FNAC Reports Summary</div>
+            <div class="sidebar-item">ERPR Reports</div> <!-- New sidebar item added here-->
+            <div class="sidebar-item">Cancer Reports</div>
+            <div class="sidebar-item">Pending Reports</div>
+            <div class="sidebar-item">Reports to Print</div>
+            <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
+            <div class="sidebar-item bold" id="logout">Log out</div>
         </div>
-        <button id="search-button" class="search-button">Search Reports</button> <!-- Added search button here -->
-    </div>
+        <div class="content" id="content">
+            <div class="top-bar">
+                <button class="menu-button" id="menu-button">&#9776;</button>
+                <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
+                <div class="datetime" id="datetime">
+                    <div class="time" id="time"></div>
+                    <div class="date" id="date"></div>
+                </div>
+            </div>
+            <button id="search-button" class="search-button">Search Reports <i class="fas fa-search"></i></button> <!-- Added search button here -->
+        </div>
 
-    <script>
-        // Function to update time and date
-        function updateTime() {
-            const timeElement = document.getElementById('time');
-            const dateElement = document.getElementById('date');
-            const now = new Date();
+        <script>
+            // Function to update time and date
+            function updateTime() {
+                const timeElement = document.getElementById('time');
+                const dateElement = document.getElementById('date');
+                const now = new Date();
 
-            // Time options
-            const timeOptions = {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            };
+                // Time options
+                const timeOptions = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                };
 
-            // Date options
-            const dateOptions = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            };
+                // Date options
+                const dateOptions = {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                };
 
-            const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
-            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+                const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+                const formattedDate = now.toLocaleDateString('en-US', dateOptions);
 
-            timeElement.textContent = formattedTime;
-            dateElement.textContent = formattedDate;
-        }
+                timeElement.textContent = formattedTime;
+                dateElement.textContent = formattedDate;
+            }
 
-        // Update time and date every second
-        setInterval(updateTime, 1000);
-        updateTime(); // Initial call to display immediately
+            // Update time and date every second
+            setInterval(updateTime, 1000);
+            updateTime(); // Initial call to display immediately
 
-        // Function to check if the user is logged in
-        function checkSession() {
-            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-            if (!isLoggedIn) {
+            // Function to check if the user is logged in
+            function checkSession() {
+                const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+                if (!isLoggedIn) {
+                    window.location.href = 'index.html';
+                }
+            }
+
+            // Call checkSession on page load
+            window.onload = checkSession;
+
+            // Log out functionality
+            document.getElementById('logout').addEventListener('click', function() {
+                sessionStorage.removeItem('isLoggedIn');
                 window.location.href = 'index.html';
-            }
-        }
+            });
 
-        // Call checkSession on page load
-        window.onload = checkSession;
+            // Reload home.html when the Home item is clicked
+            document.getElementById('home-link').addEventListener('click', function() {
+                window.location.href = 'home.html';
+            });
 
-        // Log out functionality
-        document.getElementById('logout').addEventListener('click', function() {
-            sessionStorage.removeItem('isLoggedIn');
-            window.location.href = 'index.html';
-        });
+            // Toggle sidebar visibility for mobile
+            const menuButton = document.getElementById('menu-button');
+            const sidebar = document.getElementById('sidebar');
 
-        // Reload home.html when the Home item is clicked
-        document.getElementById('home-link').addEventListener('click', function() {
-            window.location.href = 'home.html';
-        });
+            menuButton.addEventListener('click', function() {
+                sidebar.classList.toggle('visible');
+            });
 
-        // Toggle sidebar visibility for mobile
-        const menuButton = document.getElementById('menu-button');
-        const sidebar = document.getElementById('sidebar');
+            // Close the sidebar when clicking outside of it
+            document.addEventListener('click', function(event) {
+                if (!sidebar.contains(event.target) && event.target !== menuButton) {
+                    sidebar.classList.remove('visible');
+                }
+            });
 
-        menuButton.addEventListener('click', function() {
-            sidebar.classList.toggle('visible');
-        });
-
-        // Close the sidebar when clicking outside of it
-        document.addEventListener('click', function(event) {
-            if (!sidebar.contains(event.target) && event.target !== menuButton) {
-                sidebar.classList.remove('visible');
-            }
-        });
-
-        // Search button functionality
-        document.getElementById('search-button').addEventListener('click', function() {
-            // Add your search action here
-            // For now, let's just log a message
-            console.log('Search button clicked');
-        });
-    </script>
-</body>
+            // Search button functionality
+            document.getElementById('search-button').addEventListener('click', function() {
+                // Add your search action here
+                // For now, let's just log a message
+                console.log('Search button clicked');
+            });
+        </script>
+    </body>
 </html>
