@@ -123,24 +123,26 @@
             background-color: darkblue;
             color: white;
             border: none;
-            padding: 15px 30px; /* Increased padding for a larger button */
+            padding: 15px 30px; /* Increased size */
             cursor: pointer;
-            margin-top: 20px; /* Adjust the margin to position the button below the white bar */
+            margin-top: 10px; /* Adjust the margin to position the button below the white bar */
             margin-bottom: 20px; /* Add some bottom margin for spacing */
             margin-left: auto; /* Align the button to the right */
             margin-right: auto; /* Align the button to the left */
             display: block; /* Make the button a block element to center it */
-            border-radius: 10px; /* Rounded edges */
+            border-radius: 5px; /* Rounded edges */
             font-weight: bold; /* Bold font */
-            font-size: 16px; /* Increased font size */
+            display: flex; /* Flexbox for icon alignment */
+            align-items: center; /* Center items vertically */
+            justify-content: center; /* Center items horizontally */
         }
         .search-button:hover {
             background-color: #004080;
         }
         .search-button i {
-            margin-left: 5px;
-            transform: scaleX(-1); /* Mirror the icon */
+            margin-left: 10px; /* Add some space between the text and the icon */
         }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px; /* Adjust the width for smaller screens */
@@ -190,6 +192,7 @@
                 cursor: pointer;
             }
         }
+
         @media (max-width: 480px) {
             .sidebar {
                 width: 150px; /* Further adjust the width for very small screens */
@@ -208,6 +211,7 @@
                 font-size: 8px;
             }
         }
+
         @media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
                 width: 120px; /* Final adjustment for 320px screens */
@@ -262,7 +266,7 @@
             <div class="datetime" id="datetime">
                 <div class="time" id="time"></div>
                 <div class="date" id="date"></div>
-            </div>
+</div>
         </div>
         <div class="main-content" id="main-content">
             <button class="search-button">
@@ -342,12 +346,8 @@
                 sidebar.classList.remove('visible');
             }
         });
-
-        // FontAwesome script to load the search icon
-        var script = document.createElement('script');
-        script.src = 'https://kit.fontawesome.com/a076d05399.js';
-        script.crossOrigin = 'anonymous';
-        document.head.appendChild(script);
     </script>
+    <!-- Font Awesome CDN for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
