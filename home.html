@@ -67,13 +67,15 @@
         }
         .content {
             flex-grow: 1;
-            background-color: white;
             display: flex;
             flex-direction: column;
             margin-left: 250px; /* Add margin to accommodate the fixed sidebar */
             overflow-y: auto;
             height: 100vh;
             width: calc(100% - 250px);
+            background-image: url('https://github.com/HistoPathologyLab/HistoPathologyLab-CNTH/raw/main/Home%20page.jpg'); /* Background image */
+            background-size: cover; /* Ensure the image covers the entire area */
+            background-position: center; /* Center the image */
         }
         .top-bar {
             background-color: white;
@@ -121,13 +123,13 @@
             display: none; /* Initially hidden */
         }
         .search-button {
-            background-color: gold;
+            background-color: #FFBF00; /* Change background color to #FFBF00 */
             color: white;
             border: none;
-            padding: 10px 100px; /* Increased padding for a larger button */
+            padding: 10px 180px; /* Increased padding for a larger button */
             cursor: pointer;
-            margin-top: 40px; /* Adjust the margin to position the button below the white bar */
-            margin-bottom: 20px; /* Add some bottom margin for spacing */
+            margin-top: 60px; /* Adjust the margin to position the button below the white bar */
+            margin-bottom: 60px; /* Add some bottom margin for spacing */
             margin-left: auto; /* Align the button to the right */
             margin-right: auto; /* Align the button to the left */
             display: block; /* Make the button a block element to center it */
@@ -150,9 +152,9 @@
         }
         .button-row {
             display: flex;
-            justify-content: space-around;
+            justify-content: center; /* Center align the buttons */
             width: 100%;
-            margin-top: 20px;
+            margin-top: 20px; /* Adjusted margin-top */
         }
         .custom-button {
             background-color: #1E90FF;
@@ -164,12 +166,31 @@
             font-weight: bold;
             font-size: 16px;
             flex: 1;
-            margin: 0 10px;
+            margin: 0 40px;
             text-align: center;
+            max-width: 400px; /* Add a max-width to limit the button width */
         }
-        .custom-button:hover {
+        .new-custom-button {
+            background-color: #FFBF00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            flex: 1;
+            margin: 0 40px;
+            text-align: center;
+	    max-width: 400px;
+        }
+        .custom-button:hover, .new-custom-button:hover {
             background-color: #004080;
             color: white;
+        }
+        .highlighted-button {
+            background-color: #1E90FF; /* Change background color to #1E90FF */
+            color: white; /* Text color remains white */
         }
         @media (max-width: 768px) {
             .sidebar {
@@ -219,6 +240,11 @@
                 padding: 10px;
                 cursor: pointer;
             }
+            .custom-button, .new-custom-button {
+                font-size: 14px;
+                padding: 8px 5px;
+                margin: 0 20px;
+            }
         }
         @media (max-width: 480px) {
             .sidebar {
@@ -237,8 +263,13 @@
             .datetime .date {
                 font-size: 8px;
             }
+            .custom-button, .new-custom-button {
+                font-size: 12px;
+                padding: 6px 3px;
+                margin: 0 10px;
+            }
         }
-	@media (max-width: 320px) and (orientation: portrait) {
+        @media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
                 width: 120px; /* Final adjustment for 320px screens */
             }
@@ -265,6 +296,11 @@
             .datetime .date {
                 font-size: 8px;
             }
+            .custom-button, .new-custom-button {
+                font-size: 10px;
+                padding: 4px 2px;
+                margin: 0 5px;
+            }
         }
     </style>
 </head>
@@ -274,7 +310,7 @@
         <h2>CNTH</h2>
         <hr class="divider"> <!-- Divider line added here-->
         <div class="sidebar-item bold" id="home-link">Home</div>
-        <div class="sidebar-item">Histo Reports Summary</div>
+        <div class="sidebar-item" id="histo-reports-link">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
         <div class="sidebar-item">US guided FNAC Reports Summary</div>
@@ -300,17 +336,33 @@
                 <i class="fas fa-search"></i>
             </button>
             <div class="button-container">
-                <div class="button-row">
-                    <button class="custom-button">Add / Remove Specimen</button>
-                    <button class="custom-button">Add / Remove Reports</button>
-                    <button class="custom-button">Add / Remove Specimen Photos</button>
-                </div>
+                <!-- New button rows added here -->
                 <div class="button-row">
                     <button class="custom-button">Reports for Checking</button>
+                    <button class="custom-button">Add / Remove Specimen</button>
+                    <button class="custom-button">Add / Edit IHC</button>
+                </div>
+                <div class="button-row">
                     <button class="custom-button">Edit Reports</button>
+                    <button class="custom-button">Add / Remove Report</button>
+                    <button class="custom-button">Add / Edit Deep / FR</button>
+                </div>
+                <div class="button-row">
+                    <button class="custom-button">Search Specimen Photos</button>
+                    <button class="custom-button">Add / Remove Specimen Photos</button>
+                    <button class="custom-button">Add / Edit Special Stain</button>
+                </div>
+                <div class="button-row">
+                    <button class="custom-button">Add a Supplementary Report</button>
+                </div>
+                <div class="button-row">
+                    <button class="custom-button">Add ERPR Report</button>
+                </div>
+	        <!-- New button rows added here -->
+	        <div class="button-row style="margin-top: 40px;"> <!-- Adjusted margin-top -->
+                    <button class="new-custom-button">Summary</button>
                 </div>
             </div>
-            <!-- Main content goes here -->
         </div>
     </div>
 
@@ -368,6 +420,11 @@
         document.getElementById('home-link').addEventListener('click', function() {
             window.location.href = 'home.html';
         });
+
+	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
+	document.getElementById('histo-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'histoReports.html';
+	});
 
         // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
