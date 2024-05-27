@@ -192,6 +192,15 @@
             background-color: #1E90FF; /* Change background color to #1E90FF */
             color: white; /* Text color remains white */
         }
+	@media (min-width: 769px) and (max-width: 1024px) {
+    	    .button-row {
+                flex-wrap: wrap; /* Allow buttons to wrap */
+    	    }
+    	    .custom-button, .new-custom-button {
+        	margin: 10px; /* Adjust margins for better spacing */
+        	flex: 1 1 30%; /* Allow buttons to grow and shrink, taking approximately 30% of the container */
+    		}
+	}
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px; /* Adjust the width for smaller screens */
