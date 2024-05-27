@@ -70,11 +70,14 @@
             flex-direction: column;
             margin-left: 250px; /* Add margin to accommodate the fixed sidebar */
             overflow-y: auto;
-            height: 100vh;
-            width: calc(100% - 250px);
+    	    height: calc(100vh - 10%); /* Adjust height to account for the top bar */
+    	    width: calc(100% - 250px);
             background-image: url('https://github.com/HistoPathologyLab/HistoPathologyLab-CNTH/raw/main/Home%20page.jpg'); /* Background image */
             background-size: cover; /* Ensure the image covers the entire area */
             background-position: center; /* Center the image */
+	    justify-content: flex-start; /* Align content to the top */
+    	    align-items: center; /* Center the content horizontally */
+            padding-top: 20px; /* Add some padding at the top */
 	}
 	.form-container {
     	    background-color: rgba(255, 255, 255, 0.8); /* Optional: add a background color for better readability */
@@ -140,6 +143,12 @@
 	}
 
         @media (max-width: 768px) {
+    	    .content {
+        	margin-left: 0; /* Remove margin for content */
+        	width: 100%; /* Full width for content */
+        	height: calc(100vh - 50px); /* Adjust height to account for the top bar */
+        	padding-top: 10px; /* Adjust padding for smaller screens */
+    	    }
             .sidebar {
                 width: 200px; /* Adjust the width for smaller screens */
                 position: absolute; /* Change to absolute for mobile view */
