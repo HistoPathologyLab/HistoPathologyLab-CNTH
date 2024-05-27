@@ -76,6 +76,20 @@
             background-size: cover; /* Ensure the image covers the entire area */
             background-position: center; /* Center the image */
         }
+	.form-container {
+    	    margin: 100px auto; /* Center the container horizontally and add top margin */
+            width: 80%; /* Adjust width as needed */
+            max-width: 600px; /* Set maximum width */
+	}
+	.form-container label, .form-container select, .form-container input {
+            display: block;
+            margin-bottom: 10px; /* Add margin between elements */
+	}
+	.form-container select, .form-container input {
+    	    width: 100%; /* Make inputs full width */
+    	    padding: 5px; /* Add padding to inputs */
+    	    box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
         .top-bar {
             background-color: white;
             height: 10%;
@@ -246,6 +260,36 @@
                 <div class="date" id="date"></div>
             </div>
         </div>
+        <div class="main-content" id="main-content">
+            <div>
+                <label for="type">Type:</label>
+                <input type="text" id="type" name="type" value="Histo" readonly>
+                <label for="year">Year:</label>
+                <select id="year" name="year">
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <!-- Add more years as needed -->
+                </select>
+                <label for="month">Month:</label>
+                <select id="month" name="month">
+                    <option value="all">All</option>
+                    <option value="january">January</option>
+                    <option value="february">February</option>
+                    <option value="march">March</option>
+                    <option value="april">April</option>
+                    <option value="may">May</option>
+                    <option value="june">June</option>
+                    <option value="july">July</option>
+                    <option value="august">August</option>
+                    <option value="september">September</option>
+                    <option value="october">October</option>
+                    <option value="november">November</option>
+                    <option value="december">December</option>
+                </select>
+	    </div>   
+	</div>
         <div class="main-content" id="main-content">
             <!-- Main content goes here -->
         </div>
