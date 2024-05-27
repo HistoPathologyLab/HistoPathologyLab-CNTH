@@ -70,33 +70,11 @@
             flex-direction: column;
             margin-left: 250px; /* Add margin to accommodate the fixed sidebar */
             overflow-y: auto;
-            height: calc(100vh - 10%);
+            height: 100vh;
             width: calc(100% - 250px);
             background-image: url('https://github.com/HistoPathologyLab/HistoPathologyLab-CNTH/raw/main/Home%20page.jpg'); /* Background image */
             background-size: cover; /* Ensure the image covers the entire area */
             background-position: center; /* Center the image */
-    	    justify-content: flex-start; /* Align content to the top */
-	    align-items: center; /* Center content horizontally */
-        }
-	.form-container {
-    	    background-color: rgba(255, 255, 255, 0.8);
-    	    padding: 20px;
-    	    border-radius: 10px;
-    	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    	    margin-top: 20px; /* Space below the top bar */
-    	    width: 100%;
-    	    max-width: 600px;
-    	    box-sizing: border-box;
-    	    text-align: center; /* Center the text */
-	}
-	.form-container label, .form-container select, .form-container input {
-            display: block;
-            margin-bottom: 10px; /* Add margin between elements */
-	}
-	.form-container select, .form-container input {
-    	    width: 100%; /* Make inputs full width */
-    	    padding: 5px; /* Add padding to inputs */
-    	    box-sizing: border-box; /* Include padding and border in element's total width and height */
         }
         .top-bar {
             background-color: white;
@@ -107,7 +85,7 @@
             padding: 0 20px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             position: relative;
-            overflow-x: center;
+            overflow-x: auto; /* Enable horizontal scrolling */
             white-space: nowrap; /* Prevent text wrapping */
             margin-left: 30px;
         }
@@ -240,6 +218,42 @@
                 font-size: 8px;
             }
         }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-button {
+            background-color: darkblue;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -269,37 +283,36 @@
             </div>
         </div>
         <div class="main-content" id="main-content">
-            <div>
-                <label for="type">Type:</label>
-                <input type="text" id="type" name="type" value="Histo" readonly>
-                <label for="year">Year:</label>
-                <select id="year" name="year">
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <!-- Add more years as needed -->
-                </select>
-                <label for="month">Month:</label>
-                <select id="month" name="month">
-                    <option value="all">All</option>
-                    <option value="january">January</option>
-                    <option value="february">February</option>
-                    <option value="march">March</option>
-                    <option value="april">April</option>
-                    <option value="may">May</option>
-                    <option value="june">June</option>
-                    <option value="july">July</option>
-                    <option value="august">August</option>
-                    <option value="september">September</option>
-                    <option value="october">October</option>
-                    <option value="november">November</option>
-                    <option value="december">December</option>
-                </select>
-	    </div>   
-	</div>
-        <div class="main-content" id="main-content">
             <!-- Main content goes here -->
+            <div class="search-container">
+                <div class="input-group">
+                    <label for="type">Type</label>
+                    <input type="text" id="type" value="Histo">
+                </div>
+                <div class="input-group">
+                    <label for="year">Year</label>
+                    <select id="year"></select>
+                </div>
+                <div class="input-group">
+                    <label for="month">Month</label>
+                    <select id="month">
+                        <option value="all">All</option>
+                        <option value="january">January</option>
+                        <option value="february">February</option>
+                        <option value="march">March</option>
+                        <option value="april">April</option>
+                        <option value="may">May</option>
+                        <option value="june">June</option>
+                        <option value="july">July</option>
+                        <option value="august">August</option>
+                        <option value="september">September</option>
+                        <option value="october">October</option>
+                        <option value="november">November</option>
+                        <option value="december">December</option>
+                    </select>
+                </div>
+                <button class="search-button" id="search-button">&#128269;</button>
+            </div>
         </div>
     </div>
 
@@ -345,7 +358,19 @@
         }
 
         // Call checkSession on page load
-        window.onload = checkSession;
+        window.onload = function() {
+            checkSession();
+
+            // Populate the year dropdown with current and upcoming years
+            const yearSelect = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
+            for (let i = 0; i < 10; i++) {
+                const option = document.createElement('option');
+                option.value = currentYear + i;
+                option.textContent = currentYear + i;
+                yearSelect.appendChild(option);
+            }
+        };
 
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
