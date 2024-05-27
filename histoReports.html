@@ -75,21 +75,28 @@
             background-image: url('https://github.com/HistoPathologyLab/HistoPathologyLab-CNTH/raw/main/Home%20page.jpg'); /* Background image */
             background-size: cover; /* Ensure the image covers the entire area */
             background-position: center; /* Center the image */
+    	    justify-content: center; /* Center the content vertically */
+            align-items: center; /* Center the content horizontally */
+            padding: 20px; /* Add some padding */
 	}
 	.form-container {
-    	    margin: 100px auto; /* Center the container horizontally and add top margin */
-            width: 80%; /* Adjust width as needed */
-            max-width: 600px; /* Set maximum width */
+    	    background-color: rgba(255, 255, 255, 0.8); /* Optional: add a background color for better readability */
+    	    padding: 20px; /* Add some padding */
+    	    border-radius: 10px; /* Optional: add rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
+    	    width: 100%; /* Full width */
+    	    max-width: 600px; /* Set maximum width */
+    	    box-sizing: border-box; /* Include padding and border in element's total width and height */
 	}
 	.form-container label, .form-container select, .form-container input {
-            display: block;
-            margin-bottom: 10px; /* Add margin between elements */
+    	    display: block;
+    	    margin-bottom: 10px; /* Add margin between elements */
 	}
 	.form-container select, .form-container input {
     	    width: 100%; /* Make inputs full width */
     	    padding: 5px; /* Add padding to inputs */
     	    box-sizing: border-box; /* Include padding and border in element's total width and height */
-        }
+	}
         .top-bar {
             background-color: white;
             height: 10%;
