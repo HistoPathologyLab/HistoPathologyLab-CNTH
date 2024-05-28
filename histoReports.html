@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Histopathology Lab System</title>
+    <title>Histo Reports - Histopathology Lab System</title>
     <style>
         body {
             margin: 0;
@@ -15,7 +15,7 @@
         }
         .sidebar {
             background-color: darkblue;
-            width: 250px; /* Fixed width for the sidebar */
+            width: 250px;
             color: white;
             display: flex;
             justify-content: flex-start;
@@ -25,7 +25,7 @@
             padding-left: 15px;
             padding-right: 15px;
             overflow-y: auto;
-            position: fixed; /* Ensure the sidebar stays fixed */
+            position: fixed;
             height: 100vh;
         }
         .sidebar h1 {
@@ -68,32 +68,30 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            margin-left: 250px; /* Add margin to accommodate the fixed sidebar */
+            margin-left: 250px;
             overflow-y: auto;
             height: 100vh;
             width: calc(100% - 250px);
-            background-image: url('https://github.com/HistoPathologyLab/HistoPathologyLab-CNTH/raw/main/Home%20page.jpg'); /* Background image */
-            background-size: cover; /* Ensure the image covers the entire area */
-            background-position: center; /* Center the image */
+            background-color: #f5f5f5;
         }
         .top-bar {
             background-color: white;
             height: 10%;
             display: flex;
             align-items: center;
-            justify-content: center; /* Center the content */
+            justify-content: center;
             padding: 0 20px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             position: relative;
-            overflow-x: auto; /* Enable horizontal scrolling */
-            white-space: nowrap; /* Prevent text wrapping */
+            overflow-x: auto;
+            white-space: nowrap;
             margin-left: 30px;
         }
         .logo {
             height: 80%;
-            position: absolute; /* Position the logo absolutely */
-            left: 50%; /* Center horizontally */
-            transform: translateX(-50%); /* Adjust for true centering */
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
         .datetime {
             color: darkblue;
@@ -101,8 +99,8 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            position: absolute; /* Add this line */
-            right: 20px; /* Adjust margin to create space */
+            position: absolute;
+            right: 20px;
             white-space: nowrap;
         }
         .datetime .time {
@@ -115,22 +113,22 @@
         .main-content {
             flex-grow: 1;
             padding: 20px;
-            overflow-x: auto; /* Ensure main content can scroll horizontally */
+            overflow-x: auto;
         }
         .menu-button {
-            display: none; /* Initially hidden */
+            display: none;
         }
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 200px; /* Adjust the width for smaller screens */
-                position: absolute; /* Change to absolute for mobile view */
-                z-index: 1000; /* Ensure it is on top */
-                transform: translateX(-100%); /* Hide by default */
+                width: 200px;
+                position: absolute;
+                z-index: 1000;
+                transform: translateX(-100%);
                 transition: transform 0.3s ease;
             }
             .sidebar.visible {
-                transform: translateX(0); /* Show when toggled */
+                transform: translateX(0);
             }
             .sidebar h1, .sidebar h2 {
                 font-size: 18px;
@@ -143,7 +141,7 @@
             .top-bar {
                 height: 50px;
                 padding: 0 10px;
-                margin-left: 0; /* Remove margin for top bar */
+                margin-left: 0;
             }
             .logo {
                 height: 40px;
@@ -155,11 +153,11 @@
                 font-size: 10px;
             }
             .content {
-                margin-left: 0; /* Remove margin for content */
-                width: 100%; /* Full width for content */
+                margin-left: 0;
+                width: 100%;
             }
             .menu-button {
-                display: block; /* Show menu button on mobile */
+                display: block;
                 position: absolute;
                 top: 10px;
                 left: 10px;
@@ -173,7 +171,7 @@
 
         @media (max-width: 480px) {
             .sidebar {
-                width: 150px; /* Further adjust the width for very small screens */
+                width: 150px;
             }
             .sidebar-item {
                 font-size: 10px;
@@ -192,7 +190,7 @@
 
         @media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
-                width: 120px; /* Final adjustment for 320px screens */
+                width: 120px;
             }
             .sidebar-item {
                 font-size: 8px;
@@ -222,7 +220,7 @@
         .search-container {
             display: flex;
             align-items: center;
-            margin-top: 1px; /* Reduce margin top */
+            margin-top: 1px;
             margin-left: 20px;
             margin-right: 20px;
         }
@@ -245,38 +243,69 @@
             border-radius: 4px;
         }
 
-	.search-button {
-    	    background-color: #FFBF00; /* Change background color */
-    	    color: white;
-    	    border: none;
-    	    padding: 5px 10px;
-    	    cursor: pointer;
-   	    border-radius: 4px;
-    	    font-size: 14px; /* Reduce font size */
-	    margin-top: 24px;
-	}
-	.search-button:hover {
+        .search-button {
+            background-color: #FFBF00;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-top: 24px;
+        }
+        .search-button:hover {
             background-color: #004080;
-	}
-	.highlight {
-	    background-color: #1E90FF;
-	}
-	.bold {
-	    font-weight: bold
-	}
+        }
+        .highlight {
+            background-color: #1E90FF;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+            overflow-y: auto;
+            height: calc(100vh - 200px);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .view-button {
+            background-color: #FFBF00;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        .view-button:hover {
+            background-color: #004080;
+        }
     </style>
 </head>
 <body>
     <div class="sidebar" id="sidebar">
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
-        <hr class="divider"> <!-- Divider line added here-->
+        <hr class="divider">
         <div class="sidebar-item bold" id="home-link">Home</div>
         <div class="sidebar-item bold highlight" id="histo-reports-link">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
         <div class="sidebar-item">US guided FNAC Reports Summary</div>
-        <div class="sidebar-item">ERPR Reports</div> <!-- New sidebar item added here-->
+        <div class="sidebar-item">ERPR Reports</div>
         <div class="sidebar-item">Cancer Reports</div>
         <div class="sidebar-item">Pending Reports</div>
         <div class="sidebar-item">Reports to Print</div>
@@ -293,7 +322,6 @@
             </div>
         </div>
         <div class="main-content" id="main-content">
-            <!-- Main content goes here -->
             <div class="search-container">
                 <div class="input-group">
                     <label for="type">Type</label>
@@ -322,6 +350,45 @@
                     </select>
                 </div>
                 <button class="search-button" id="search-button">&#128269;</button>
+            </div>
+            <div class="table-container">
+                <table id="report-table">
+                    <thead>
+                        <tr>
+                            <th>Specimen No</th>
+                            <th>Date of Surgery/Procedure</th>
+                            <th>Patient's Name</th>
+                            <th>Patient's Age</th>
+                            <th>Ward/Clinic No</th>
+                            <th>BHT No</th>
+                            <th>Specimen</th>
+                            <th>Typing Date</th>
+                            <th>Conclusion</th>
+                            <th>View Reports</th>
+                            <th>Relevant Registrar Dr.</th>
+                            <th>Relevant Consultant Dr.</th>
+                            <th>Report Issued Date</th>
+                            <th>Specimen Received Date</th>
+                            <th>IHC Requested Date</th>
+                            <th>IHC Institute</th>
+                            <th>IHC Type</th>
+                            <th>IHC Received Date</th>
+                            <th>Special Stain Requested Date</th>
+                            <th>Special Stain Received Date</th>
+                            <th>Deep Requested Date</th>
+                            <th>Deep Received Date</th>
+                            <th>FR Requested Date</th>
+                            <th>FR Received Date</th>
+                            <th>Supplementary Report Issued Date</th>
+                            <th>View Supplementary Reports</th>
+                            <th>View ERPR Reports</th>
+                            <th>Other Steps of Processing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be populated here dynamically -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -393,10 +460,10 @@
             window.location.href = 'home.html';
         });
 
-	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
-	document.getElementById('histo-reports-link').addEventListener('click', function() {
-    	    window.location.href = 'histoReports.html';
-	});
+        // Reload histoReports.html when the "Histo Reports Summary" item is clicked
+        document.getElementById('histo-reports-link').addEventListener('click', function() {
+            window.location.href = 'histoReports.html';
+        });
 
         // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
@@ -412,6 +479,120 @@
                 sidebar.classList.remove('visible');
             }
         });
-    </script>
+
+        // Function to dynamically add rows to the table
+        function addRow(data) {
+            const tableBody = document.getElementById('report-table').getElementsByTagName('tbody')[0];
+            const newRow = tableBody.insertRow();
+
+            const fields = [
+                'specimenNo', 'dateOfSurgery', 'patientName', 'patientAge',
+                'wardNo', 'bhtNo', 'specimen', 'typingDate', 'conclusion',
+                'viewReports', 'registrarDr', 'consultantDr', 'reportIssuedDate',
+                'specimenReceivedDate', 'ihcRequestedDate', 'ihcInstitute', 'ihcType',
+                'ihcReceivedDate', 'specialStainRequestedDate', 'specialStainReceivedDate',
+                'deepRequestedDate', 'deepReceivedDate', 'frRequestedDate', 'frReceivedDate',
+                'supplementaryReportIssuedDate', 'viewSupplementaryReports', 'viewErprReports', 'otherSteps'
+            ];
+
+            fields.forEach(field => {
+                const cell = newRow.insertCell();
+                if (field.includes('view')) {
+                    const button = document.createElement('button');
+                    button.className = 'view-button';
+                    button.textContent = 'View';
+                    cell.appendChild(button);
+                } else {
+                    cell.textContent = data[field] || '';
+                }
+            });
+        }
+
+        // Example data to add (replace with actual data fetching logic)
+        const exampleData = {
+            specimenNo: '12345',
+            dateOfSurgery: '2024-05-01',
+            patientName: 'John Doe',
+            patientAge: '45',
+            wardNo: '12A',
+            bhtNo: '67890',
+            specimen: 'Biopsy',
+            typingDate: '2024-05-02',
+            conclusion: 'Benign',
+            viewReports: true,
+            registrarDr: 'Dr. Smith',
+            consultantDr: 'Dr. Johnson',
+            reportIssuedDate: '2024-05-03',
+            specimenReceivedDate: '2024-05-01',
+            ihcRequestedDate: '2024-05-02',
+            ihcInstitute: 'ABC Labs',
+            ihcType: 'Type A',
+            ihcReceivedDate: '2024-05-04',
+            specialStainRequestedDate: '2024-05-02',
+            specialStainReceivedDate: '2024-05-04',
+            deepRequestedDate: '2024-05-02',
+            deepReceivedDate: '2024-05-04',
+            frRequestedDate: '2024-05-02',
+            frReceivedDate: '2024-05-04',
+            supplementaryReportIssuedDate: '2024-05-05',
+            viewSupplementaryReports: true,
+            viewErprReports: true,
+            otherSteps: 'None};
+
+            // Add the example row to the table (for demonstration purposes)
+            addRow(exampleData);
+
+            // Function to dynamically populate the table with data
+            function populateTable(dataArray) {
+                dataArray.forEach(data => {
+                    addRow(data);
+                });
+            }
+
+            // Example data array (replace this with actual data fetching from the backend)
+            const exampleDataArray = [
+                {
+                    specimenNo: '12345',
+                    dateOfSurgery: '2024-05-01',
+                    patientName: 'John Doe',
+                    patientAge: '45',
+                    wardNo: '12A',
+                    bhtNo: '67890',
+                    specimen: 'Biopsy',
+                    typingDate: '2024-05-02',
+                    conclusion: 'Benign',
+                    viewReports: true,
+                    registrarDr: 'Dr. Smith',
+                    consultantDr: 'Dr. Johnson',
+                    reportIssuedDate: '2024-05-03',
+                    specimenReceivedDate: '2024-05-01',
+                    ihcRequestedDate: '2024-05-02',
+                    ihcInstitute: 'ABC Labs',
+                    ihcType: 'Type A',
+                    ihcReceivedDate: '2024-05-04',
+                    specialStainRequestedDate: '2024-05-02',
+                    specialStainReceivedDate: '2024-05-04',
+                    deepRequestedDate: '2024-05-02',
+                    deepReceivedDate: '2024-05-04',
+                    frRequestedDate: '2024-05-02',
+                    frReceivedDate: '2024-05-04',
+                    supplementaryReportIssuedDate: '2024-05-05',
+                    viewSupplementaryReports: true,
+                    viewErprReports: true,
+                    otherSteps: 'None'
+                },
+                // Additional data objects...
+            ];
+
+            // Populate the table with the example data array
+            populateTable(exampleDataArray);
+
+            // Fetch data from the backend and populate the table (replace with actual API call)
+            // fetch('/api/getReportData')
+            //     .then(response => response.json())
+            //     .then(data => populateTable(data))
+            //     .catch(error => console.error('Error fetching data:', error));
+        </script>
+    </div>
 </body>
 </html>
