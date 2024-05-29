@@ -410,103 +410,104 @@
     </div>
 
     <script>
-    // Function to update time and date
-    function updateTime() {
-        const timeElement = document.getElementById('time');
-        const dateElement = document.getElementById('date');
-        const now = new Date();
+// Function to update time and date
+function updateTime() {
+    const timeElement = document.getElementById('time');
+    const dateElement = document.getElementById('date');
+    const now = new Date();
 
-        // Time options
-        const timeOptions = {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        };
-
-        // Date options
-        const dateOptions = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
-
-        const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
-        const formattedDate = now.toLocaleDateString('en-US', dateOptions);
-
-        timeElement.textContent = formattedTime;
-        dateElement.textContent = formattedDate;
-    }
-
-    // Update time and date every second
-    setInterval(updateTime, 1000);
-    updateTime(); // Initial call to display immediately
-
-    // Function to check if the user is logged in
-    function checkSession() {
-        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-        if (!isLoggedIn) {
-            window.location.href = 'index.html';
-        }
-    }
-
-    // Call checkSession on page load
-    window.onload = function() {
-        checkSession();
-
-        // Populate the year dropdown with current and upcoming years
-        const yearSelect = document.getElementById('year');
-        const currentYear = new Date().getFullYear();
-        for (let i = 0; i < 10; i++) {
-            const option = document.createElement('option');
-            option.value = currentYear + i;
-            option.textContent = currentYear + i;
-            yearSelect.appendChild(option);
-        }
+    // Time options
+    const timeOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false // 24-hour format
     };
 
-    // Log out functionality
-    document.getElementById('logout').addEventListener('click', function() {
-        sessionStorage.removeItem('isLoggedIn');
+    // Date options
+    const dateOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+
+    const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+    const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+
+    timeElement.textContent = formattedTime;
+    dateElement.textContent = formattedDate;
+}
+
+// Update time and date every second
+setInterval(updateTime, 1000);
+updateTime(); // Initial call to display immediately
+
+// Function to check if the user is logged in
+function checkSession() {
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (!isLoggedIn) {
         window.location.href = 'index.html';
-    });
+    }
+}
 
-    // Reload home.html when the Home item is clicked
-    document.getElementById('home-link').addEventListener('click', function() {
-        window.location.href = 'home.html';
-    });
+// Call checkSession on page load
+window.onload = function() {
+    checkSession();
 
-    // Reload histoReports.html when the "Histo Reports Summary" item is clicked
-    document.getElementById('histo-reports-link').addEventListener('click', function() {
-        window.location.href = 'histoReports.html';
-    });
+    // Populate the year dropdown with current and upcoming years
+    const yearSelect = document.getElementById('year');
+    const currentYear = new Date().getFullYear();
+    for (let i = 0; i < 10; i++) {
+        const option = document.createElement('option');
+        option.value = currentYear + i;
+        option.textContent = currentYear + i;
+        yearSelect.appendChild(option);
+    }
+};
 
-    // Toggle sidebar visibility for mobile
-    const menuButton = document.getElementById('menu-button');
-    const sidebar = document.getElementById('sidebar');
+// Log out functionality
+document.getElementById('logout').addEventListener('click', function() {
+    sessionStorage.removeItem('isLoggedIn');
+    window.location.href = 'index.html';
+});
 
-    menuButton.addEventListener('click', function() {
-        sidebar.classList.toggle('visible');
-    });
+// Reload home.html when the Home item is clicked
+document.getElementById('home-link').addEventListener('click', function() {
+    window.location.href = 'home.html';
+});
 
-    // Close the sidebar when clicking outside of it
-    document.addEventListener('click', function(event) {
-        if (!sidebar.contains(event.target) && event.target !== menuButton) {
-            sidebar.classList.remove('visible');
-        }
-    });
+// Reload histoReports.html when the "Histo Reports Summary" item is clicked
+document.getElementById('histo-reports-link').addEventListener('click', function() {
+    window.location.href = 'histoReports.html';
+});
 
-    // Function to format date to DD/MM/YYYY
-    function formatDate(dateString) {
+// Toggle sidebar visibility for mobile
+const menuButton = document.getElementById('menu-button');
+const sidebar = document.getElementById('sidebar');
+
+menuButton.addEventListener('click', function() {
+    sidebar.classList.toggle('visible');
+});
+
+// Close the sidebar when clicking outside of it
+document.addEventListener('click', function(event) {
+    if (!sidebar.contains(event.target) && event.target !== menuButton) {
+        sidebar.classList.remove('visible');
+    }
+});
+
+// Function to format date to DD/MM/YYYY
+function formatDate(dateString) {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
     const year = date.getFullYear();
     return ${day}/${month}/${year};
-    }
+}
 
-    // Function to dynamically add rows to the table
-    function addRow(data) {
+// Function to dynamically add rows to the table
+function addRow(data) {
     const tableBody = document.getElementById('report-table').getElementsByTagName('tbody')[0];
     const newRow = tableBody.insertRow();
 
@@ -543,10 +544,53 @@
             cell.textContent = data[field] || '';
         }
     });
-    }
+}
 
-    // Example data to add (replace with actual data fetching logic)
-    const exampleData = {
+// Example data to add (replace with actual data fetching logic)
+const exampleData = {
+    specimenNo: '12345',
+    dateOfSurgery: '2024-05-01',
+    patientName: 'John Doe',
+    patientAge: '45',
+    wardNo: '12A',
+    bhtNo: '67890',
+    specimen: 'Biopsy',
+    typingDate: '2024-05-02',
+    conclusion: 'Benign',
+    viewReports: true,
+    registrarDr: 'Dr. Smith',
+    consultantDr: 'Dr. Johnson',
+    reportIssuedDate: '2024-05-03',
+    specimenReceivedDate: '2024-05-01',
+    ihcRequestedDate: '2024-05-02',
+    ihcInstitute: 'ABC Labs',
+    ihcType: 'Type A',
+    ihcReceivedDate: '2024-05-04',
+    specialStainRequestedDate: '2024-05-02',
+    specialStainReceivedDate: '2024-05-04',
+    deepRequestedDate: '2024-05-02',
+    deepReceivedDate: '2024-05-04',
+    frRequestedDate: '2024-05-02',
+    frReceivedDate: '2024-05-04',
+    supplementaryReportIssuedDate: '2024-05-05',
+    viewSupplementaryReports: true,
+    viewErprReports: true,
+    otherSteps: 'None'
+};
+
+// Add the example row to the table (for demonstration purposes)
+addRow(exampleData);
+
+// Function to dynamically populate the table with data
+function populateTable(dataArray) {
+    dataArray.forEach(data => {
+        addRow(data);
+    });
+}
+
+// Example data array (replace this with actual data fetching from the backend)
+const exampleDataArray = [
+    {
         specimenNo: '12345',
         dateOfSurgery: '2024-05-01',
         patientName: 'John Doe',
@@ -575,61 +619,17 @@
         viewSupplementaryReports: true,
         viewErprReports: true,
         otherSteps: 'None'
-    };
+    },
+    // Additional data objects...
+];
 
-    // Add the example row to the table (for demonstration purposes)
-    addRow(exampleData);
+// Populate the table with the example data array
+populateTable(exampleDataArray);
 
-    // Function to dynamically populate the table with data
-    function populateTable(dataArray) {
-        dataArray.forEach(data => {
-            addRow(data);
-        });
-    }
-
-    // Example data array (replace this with actual data fetching from the backend)
-    const exampleDataArray = [
-        {
-            specimenNo: '12345',
-            dateOfSurgery: '2024-05-01',
-            patientName: 'John Doe',
-            patientAge: '45',
-            wardNo: '12A',
-            bhtNo: '67890',
-            specimen: 'Biopsy',
-            typingDate: '2024-05-02',
-            conclusion: 'Benign',
-            viewReports: true,
-            registrarDr: 'Dr. Smith',
-            consultantDr: 'Dr. Johnson',
-            reportIssuedDate: '2024-05-03',
-            specimenReceivedDate: '2024-05-01',
-            ihcRequestedDate: '2024-05-02',
-            ihcInstitute: 'ABC Labs',
-            ihcType: 'Type A',
-            ihcReceivedDate: '2024-05-04',
-            specialStainRequestedDate: '2024-05-02',
-            specialStainReceivedDate: '2024-05-04',
-            deepRequestedDate: '2024-05-02',
-            deepReceivedDate: '2024-05-04',
-            frRequestedDate: '2024-05-02',
-            frReceivedDate: '2024-05-04',
-            supplementaryReportIssuedDate: '2024-05-05',
-            viewSupplementaryReports: true,
-            viewErprReports: true,
-            otherSteps: 'None'
-        },
-        // Additional data objects...
-    ];
-
-    // Populate the table with the example data array
-    populateTable(exampleDataArray);
-
-    // Fetch data from the backend and populate the table (replace with actual API call)
-    // fetch('/api/getReportData')
-    //     .then(response => response.json())
-    //     .then(data => populateTable(data))
-    //     .catch(error => console.error('Error fetching data:', error));
-</script>
+// Fetch data from the backend and populate the table (replace with actual API call)
+// fetch('/api/getReportData')
+//     .then(response => response.json())
+//     .then(data => populateTable(data))
+//     .catch(error => console.error('Error fetching data:', error));</script>
 </body>
 </html>
