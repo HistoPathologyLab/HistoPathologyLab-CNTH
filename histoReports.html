@@ -498,7 +498,7 @@
 
     // Function to dynamically add rows to the table
     function addRow(data) {
-        const tableBody = document.getElementById('report-table').getElementsByTagName('tbody')[0];
+        const tableBody = document.getElementById('report table').getElementsByTagName('tbody')[0];
         const newRow = tableBody.insertRow();
 
         const fields = [
@@ -513,11 +513,23 @@
 
         fields.forEach(field => {
             const cell = newRow.insertCell();
-            if (field.includes('view')) {
+            if (field === 'viewReports' && data.viewReports) {
                 const button = document.createElement('button');
                 button.className = 'view-button';
                 button.textContent = 'View';
                 cell.appendChild(button);
+            } else if (field === 'viewSupplementaryReports' && data.viewSupplementaryReports) {
+                const button = document.createElement('button');
+                button.className = 'view-button';
+                button.textContent = 'View';
+                cell.appendChild(button);
+            } else if (field === 'viewErprReports' && data.viewErprReports) {
+                const button = document.createElement('button');
+                button.className = 'view-button';
+                button.textContent = 'View';
+                cell.appendChild(button);
+            } else if (field.includes('Date') && data[field]) {
+                cell.textContent = formatDate(data[field]);
             } else {
                 cell.textContent = data[field] || '';
             }
