@@ -360,7 +360,7 @@
                 <!-- New button rows added here -->
                 <div class="button-row">
                     <button class="custom-button">Reports for Checking</button>
-                    <button class="custom-button">Add / Remove Specimen</button>
+                    <button class="custom-button" id="add-remove-specimen">Add / Remove Specimen</button>
                     <button class="custom-button">Add / Edit IHC</button>
                 </div>
                 <div class="button-row">
@@ -445,6 +445,11 @@
 	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
 	document.getElementById('histo-reports-link').addEventListener('click', function() {
     	    window.location.href = 'histoReports.html';
+	});
+
+	// Add event listener to the "Add / Remove Specimen" button
+document.getElementById('add-remove-specimen-button').addEventListener('click', function() {
+    	    window.location.href = 'addSpecimen.html';
 	});
 
         // Toggle sidebar visibility for mobile
