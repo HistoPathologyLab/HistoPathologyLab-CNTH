@@ -483,6 +483,123 @@
                 sidebar.classList.remove('visible');
             }
         });
+
+        // Function to dynamically add rows to the table
+        function addRow(data) {
+            const tableBody = document.getElementById('report-table').getElementsByTagName('tbody')[0];
+            const newRow = tableBody.insertRow();
+
+            const fields = [
+                'specimenNo', 'dateOfSurgery', 'patientName', 'patientAge',
+                'wardNo', 'bhtNo', 'specimen', 'typingDate', 'conclusion',
+                'viewReports', 'registrarDr', 'consultantDr', 'reportIssuedDate',
+                'specimenReceivedDate', 'ihcRequestedDate', 'ihcInstitute', 'ihcType',
+                'ihcReceivedDate', 'specialStainRequestedDate', 'specialStainReceivedDate',
+                'deepRequestedDate', 'deepReceivedDate', 'frRequestedDate', 'frReceivedDate',
+                'supplementaryReportIssuedDate', 'viewSupplementaryReports', 'viewErprReports', 'otherSteps'
+            ];
+
+            fields.forEach(field => {
+                const cell = newRow.insertCell();
+                if (field.includes('view')) {
+                    const button = document.createElement('button');
+                    button.className = 'view-button';
+                    button.textContent = 'View';
+                    cell.appendChild(button);
+                } else {
+                    cell.textContent = data[field] || '';
+                }
+            });
+        }
+
+        // Example data to add (replace with actual data fetching logic)
+        const exampleData = {
+            specimenNo: '12345',
+            dateOfSurgery: '2024-05-01',
+            patientName: 'John Doe',
+            patientAge: '45',
+            wardNo: '12A',
+            bhtNo: '67890',
+            specimen: 'Biopsy',
+            typingDate: '2024-05-02',
+            conclusion: 'Benign',
+            viewReports: true,
+            registrarDr: 'Dr. Smith',
+            consultantDr: 'Dr. Johnson',
+            reportIssuedDate: '2024-05-03',
+            specimenReceivedDate: '2024-05-01',
+            ihcRequestedDate: '2024-05-02',
+            ihcInstitute: 'ABC Labs',
+            ihcType: 'Type A',
+            ihcReceivedDate: '2024-05-04',
+            specialStainRequestedDate: '2024-05-02',
+            specialStainReceivedDate: '2024-05-04',
+            deepRequestedDate: '2024-05-02',
+            deepReceivedDate: '2024-05-04',
+            frRequestedDate: '2024-05-02',
+            frReceivedDate: '2024-05-04',
+            supplementaryReportIssuedDate: '2024-05-05',
+            viewSupplementaryReports: true,
+            viewErprReports: true,
+            otherSteps: 'None,
+	    }
+        });
+
+            // Add the example row to the table (for demonstration purposes)
+            addRow(exampleData);
+
+            // Function to dynamically populate the table with data
+            function populateTable(dataArray) {
+                dataArray.forEach(data => {
+                    addRow(data);
+                });
+            }
+
+            // Example data array (replace this with actual data fetching from the backend)
+            const exampleDataArray = [
+                {
+                    specimenNo: '12345',
+                    dateOfSurgery: '2024-05-01',
+                    patientName: 'John Doe',
+                    patientAge: '45',
+                    wardNo: '12A',
+                    bhtNo: '67890',
+                    specimen: 'Biopsy',
+                    typingDate: '2024-05-02',
+                    conclusion: 'Benign',
+                    viewReports: true,
+                    registrarDr: 'Dr. Smith',
+                    consultantDr: 'Dr. Johnson',
+                    reportIssuedDate: '2024-05-03',
+                    specimenReceivedDate: '2024-05-01',
+                    ihcRequestedDate: '2024-05-02',
+                    ihcInstitute: 'ABC Labs',
+                    ihcType: 'Type A',
+                    ihcReceivedDate: '2024-05-04',
+                    specialStainRequestedDate: '2024-05-02',
+                    specialStainReceivedDate: '2024-05-04',
+                    deepRequestedDate: '2024-05-02',
+                    deepReceivedDate: '2024-05-04',
+                    frRequestedDate: '2024-05-02',
+                    frReceivedDate: '2024-05-04',
+                    supplementaryReportIssuedDate: '2024-05-05',
+                    viewSupplementaryReports: true,
+                    viewErprReports: true,
+                    otherSteps: 'None'
+                },
+                // Additional data objects...
+            ];
+
+            // Populate the table with the example data array
+            populateTable(exampleDataArray);
+
+            // Fetch data from the backend and populate the table (replace with actual API call)
+            // fetch('/api/getReportData')
+            //     .then(response => response.json())
+            //     .then(data => populateTable(data))
+            //     .catch(error => console.error('Error fetching data:', error));
+            }
+        });
     </script>
 </body>
 </html>
