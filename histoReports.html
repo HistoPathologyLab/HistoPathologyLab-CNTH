@@ -361,10 +361,10 @@
                     <thead>
                         <tr>
                             <th>Specimen No</th>
-                            <th>Date of Surgery/Procedure</th>
+                            <th>Date of Surgery/ Procedure</th>
                             <th>Patient's Name</th>
                             <th>Patient's Age</th>
-                            <th>Ward/Clinic No</th>
+                            <th>Ward/ Clinic No</th>
                             <th>BHT No</th>
                             <th>Specimen</th>
                             <th>Typing Date</th>
@@ -500,17 +500,27 @@
             'supplementaryReportIssuedDate', 'viewSupplementaryReports', 'viewErprReports', 'otherSteps'
         ];
 
-        fields.forEach(field => {
-            const cell = newRow.insertCell();
-            if (field.includes('view')) {
-                const button = document.createElement('button');
-                button.className = 'view-button';
-                button.textContent = 'View';
-                cell.appendChild(button);
-            } else {
-                cell.textContent = data[field] || '';
-            }
-        });
+    fields.forEach(field => {
+        const cell = newRow.insertCell();
+        if (field === 'viewReports' && data.viewReports) {
+            const button = document.createElement('button');
+            button.className = 'view-button';
+            button.textContent = 'View';
+            cell.appendChild(button);
+        } else if (field === 'viewSupplementaryReports' && data.viewSupplementaryReports) {
+            const button = document.createElement('button');
+            button.className = 'view-button';
+            button.textContent = 'View';
+            cell.appendChild(button);
+        } else if (field === 'viewErprReports' && data.viewErprReports) {
+            const button = document.createElement('button');
+            button.className = 'view-button';
+            button.textContent = 'View';
+            cell.appendChild(button);
+        } else {
+            cell.textContent = data[field] || '';
+        }
+    });
     }
 
     // Example data to add (replace with actual data fetching logic)
