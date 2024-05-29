@@ -278,14 +278,12 @@
             font-size: 10px;
 	    table-layout: fixed; /* Ensure table layout is fixed */
         }
-
         th, td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: left;
 	    word-wrap: break-word; /* Ensure words wrap */
         }
-
         th {
     	    background-color: #f2f2f2;
             position: sticky; /* Make the header sticky */
@@ -304,7 +302,7 @@
             padding: 5px;
             cursor: pointer;
             border-radius: 4px;
-            font-size: 11px;
+            font-size: 10px;
         }
         .view-button:hover {
             background-color: #004080;
@@ -505,7 +503,7 @@ function formatDate(dateString) {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
     const year = date.getFullYear();
     return ${day}/${month}/${year};
-}
+    }
 
     // Function to dynamically add rows to the table
 function addRow(data) {
