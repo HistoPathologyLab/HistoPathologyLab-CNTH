@@ -270,20 +270,33 @@
             overflow-x: auto;
             overflow-y: auto;
             height: calc(100vh - 200px);
+    	    position: relative; /* Add position relative */
         }
         .table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 11px;
+            font-size: 10px;
+	    table-layout: fixed; /* Ensure table layout is fixed */
         }
+
         th, td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: left;
+	    word-wrap: break-word; /* Ensure words wrap */
         }
+
         th {
-            background-color: #f2f2f2;
+    	    background-color: #f2f2f2;
+            position: sticky; /* Make the header sticky */
+            top: 0; /* Stick to the top */
+            z-index: 1; /* Ensure header stays on top */
         }
+
+	td {
+   	    white-space: pre-wrap; /* Wrap text to fit within the cell */
+	}
+
         .view-button {
             background-color: #FFBF00;
             color: white;
@@ -485,20 +498,29 @@
         }
     });
 
-    // Function to dynamically add rows to the table
-    function addRow(data) {
-        const tableBody = document.getElementById('report-table').getElementsByTagName('tbody')[0];
-        const newRow = tableBody.insertRow();
+    // Function to format date to DD/MM/YYYY
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+    return ${day}/${month}/${year};
+}
 
-        const fields = [
-            'specimenNo', 'dateOfSurgery', 'patientName', 'patientAge',
-            'wardNo', 'bhtNo', 'specimen', 'typingDate', 'conclusion',
-            'viewReports', 'registrarDr', 'consultantDr', 'reportIssuedDate',
-            'specimenReceivedDate', 'ihcRequestedDate', 'ihcInstitute', 'ihcType',
-            'ihcReceivedDate', 'specialStainRequestedDate', 'specialStainReceivedDate',
-            'deepRequestedDate', 'deepReceivedDate', 'frRequestedDate', 'frReceivedDate',
-            'supplementaryReportIssuedDate', 'viewSupplementaryReports', 'viewErprReports', 'otherSteps'
-        ];
+    // Function to dynamically add rows to the table
+function addRow(data) {
+    const tableBody = document.getElementById('report-table').getElementsByTagName('tbody')[0];
+    const newRow = tableBody.insertRow();
+
+    const fields = [
+        'specimenNo', 'dateOfSurgery', 'patientName', 'patientAge',
+        'wardNo', 'bhtNo', 'specimen', 'typingDate', 'conclusion',
+        'viewReports', 'registrarDr', 'consultantDr', 'reportIssuedDate',
+        'specimenReceivedDate', 'ihcRequestedDate', 'ihcInstitute', 'ihcType',
+        'ihcReceivedDate', 'specialStainRequestedDate', 'specialStainReceivedDate',
+        'deepRequestedDate', 'deepReceivedDate', 'frRequestedDate', 'frReceivedDate',
+        'supplementaryReportIssuedDate', 'viewSupplementaryReports', 'viewErprReports', 'otherSteps'
+    ];
 
     fields.forEach(field => {
         const cell = newRow.insertCell();
@@ -517,11 +539,13 @@
             button.className = 'view-button';
             button.textContent = 'View';
             cell.appendChild(button);
+        } else if (field.includes('Date') && data[field]) {
+            cell.textContent = formatDate(data[field]);
         } else {
             cell.textContent = data[field] || '';
         }
     });
-    }
+}
 
     // Example data to add (replace with actual data fetching logic)
     const exampleData = {
