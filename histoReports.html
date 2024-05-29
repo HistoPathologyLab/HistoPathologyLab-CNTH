@@ -266,23 +266,35 @@
 	
 	.table-container {
             margin-top: 20px;
+	    margin-left: 20px; /* Add left margin */
             overflow-x: auto;
             overflow-y: auto;
             height: calc(100vh - 200px);
+    	    position: relative; /* Add position relative */
         }
         .table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 11px;
+            font-size: 10px;
+	    table-layout: fixed; /* Ensure table layout is fixed */
         }
         th, td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: left;
+	    word-wrap: break-word; /* Ensure words wrap */
         }
         th {
-            background-color: #f2f2f2;
+     	    background-color: #f2f2f2;
+            position: sticky; /* Make the header sticky */
+            top: 0; /* Stick to the top */
+            z-index: 1; /* Ensure header stays on top */
         }
+
+	td {
+   	    white-space: pre-wrap; /* Wrap text to fit within the cell */
+	}
+
         .view-button {
             background-color: #FFBF00;
             color: white;
@@ -290,7 +302,7 @@
             padding: 5px;
             cursor: pointer;
             border-radius: 4px;
-            font-size: 11px;
+            font-size: 10px;
         }
         .view-button:hover {
             background-color: #004080;
