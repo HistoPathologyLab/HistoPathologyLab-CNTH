@@ -263,6 +263,39 @@
 	.bold {
 	    font-weight: bold
 	}
+	
+	.table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+            overflow-y: auto;
+            height: calc(100vh - 200px);
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+        .th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        .th {
+            background-color: #f2f2f2;
+        }
+        .view-button {
+            background-color: #FFBF00;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        .view-button:hover {
+            background-color: #004080;
+        }
+
     </style>
 </head>
 <body>
@@ -321,6 +354,45 @@
                     </select>
                 </div>
                 <button class="search-button" id="search-button">&#128269;</button>
+            </div>
+            <div class="table-container">
+                <table id="report-table">
+                    <thead>
+                        <tr>
+                            <th>Specimen No</th>
+                            <th>Date of Surgery/Procedure</th>
+                            <th>Patient's Name</th>
+                            <th>Patient's Age</th>
+                            <th>Ward/Clinic No</th>
+                            <th>BHT No</th>
+                            <th>Specimen</th>
+                            <th>Typing Date</th>
+                            <th>Conclusion</th>
+                            <th>View Reports</th>
+                            <th>Relevant Registrar Dr.</th>
+                            <th>Relevant Consultant Dr.</th>
+                            <th>Report Issued Date</th>
+                            <th>Specimen Received Date</th>
+                            <th>IHC Requested Date</th>
+                            <th>IHC Institute</th>
+                            <th>IHC Type</th>
+                            <th>IHC Received Date</th>
+                            <th>Special Stain Requested Date</th>
+                            <th>Special Stain Received Date</th>
+                            <th>Deep Requested Date</th>
+                            <th>Deep Received Date</th>
+                            <th>FR Requested Date</th>
+                            <th>FR Received Date</th>
+                            <th>Supplementary Report Issued Date</th>
+                            <th>View Supplementary Reports</th>
+                            <th>View ERPR Reports</th>
+                            <th>Other Steps of Processing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be populated here dynamically -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
