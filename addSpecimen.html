@@ -266,7 +266,7 @@
         <h2>CNTH</h2>
         <hr class="divider"> <!-- Divider line added here-->
         <div class="sidebar-item bold" id="home-link">Home</div>
-        <div class="sidebar-item">Histo Reports Summary</div>
+        <div class="sidebar-item" id="histo-reports-link">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
         <div class="sidebar-item">US guided FNAC Reports Summary</div>
@@ -300,7 +300,7 @@
                 </select>
 
                 <label for="specimen-no">Specimen No:</label>
-                <input type="text" id="specimen-no" name="specimen-no" readonly>
+                <input type="text" id="specimen-no" name="specimen-no">
 
                 <label for="patient-name">Patient's Name:</label>
                 <input type="text" id="patient-name" name="patient-name">
@@ -369,8 +369,63 @@
             }
         }
 
-        // Call checkSession on page load
-        window.onload = checkSession;
+    	// Call checkSession on page load
+    	window.onload = function() {
+            checkSession();
+
+        // Function to populate year dropdown
+        function populateYearDropdown() {
+            const yearSelect = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
+
+            for (let i = 0; i <= 10; i++) { // Populate the next 10 years
+                const yearOption = document.createElement('option');
+                yearOption.value = currentYear + i;
+                yearOption.text = currentYear + i;
+                yearSelect.appendChild(yearOption);
+            }
+        }
+
+        // Existing functionality to generate specimen number
+        function generateSpecimenNo() {
+            const year = document.getElementById('year').value;
+            const type = document.getElementById('type').value;
+            const specimenNoField = document.getElementById('specimen-no');
+            let prefix = '';
+
+            switch (type) {
+                case 'Histo':
+                    prefix = 'CN';
+                    break;
+                case 'FNAC':
+                    prefix = 'NA';
+                    break;
+                case 'Cyto':
+                    prefix = 'F';
+                    break;
+                case 'US guided FNAC':
+                    prefix = 'U';
+                    break;
+            }
+
+            if (year && prefix) {
+                const yearSuffix = year.slice(-2);
+                const randomNumber = Math.floor(1000 + Math.random() * 9000); // Random 4-digit number
+                specimenNoField.value = ${prefix} ${randomNumber}/${yearSuffix};
+            }
+        }
+
+        // Event listeners to generate specimen number
+        document.getElementById('year').addEventListener('change', generateSpecimenNo);
+        document.getElementById('type').addEventListener('change', generateSpecimenNo);
+
+        // Initialize page on load
+        window.onload = function() {
+            checkSession();
+            populateYearDropdown();
+            updateTime();
+            setInterval(updateTime, 1000); // Update time and date every second
+        };
 
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
@@ -382,6 +437,11 @@
         document.getElementById('home-link').addEventListener('click', function() {
             window.location.href = 'home.html';
         });
+
+    	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
+    	document.getElementById('histo-reports-link').addEventListener('click', function() {
+            window.location.href = 'histoReports.html';
+    	});
 
         // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
@@ -397,57 +457,6 @@
                 sidebar.classList.remove('visible');
             }
         });
-
-	// Function to populate year dropdown
-	function populateYearDropdown() {
-    	    const yearSelect = document.getElementById('year');
-    	    const currentYear = new Date().getFullYear();
-
-    	    for (let i = 0; i <= 10; i++) { // Populate the next 10 years
-        	const yearOption = document.createElement('option');
-        	yearOption.value = currentYear + i;
-        	yearOption.text = currentYear + i;
-        	yearSelect.appendChild(yearOption);
-    	    }
-	}
-
-	// Call the function to populate year dropdown on page load
-	window.onload = function() {
-    	    checkSession();
-            populateYearDropdown();
-	};
-
-	// Existing functionality to generate specimen number
-	function generateSpecimenNo() {
-    	    const year = document.getElementById('year').value;
-    	    const type = document.getElementById('type').value;
-    	    let prefix = '';
-
-    	    switch (type) {
-        	case 'Histo':
-            	    prefix = 'CN';
-            	    break;
-        	case 'FNAC':
-            	    prefix = 'NA';
-                    break;
-        	case 'Cyto':
-            	    prefix = 'F';
-                    break;
-        	case 'US guided FNAC':
-            	    prefix = 'U';
-             	    break;
-    	    }
-
-    	    if (year && prefix) {
-                const yearSuffix = year.slice(-2);
-                const randomNumber = Math.floor(1000 + Math.random() * 9000); // Random 4-digit number
-                document.getElementById('specimen-no').value = ${prefix} ${randomNumber}/${yearSuffix};
-    	    }
-	}
-
-	// Event listeners to generate specimen number
-	document.getElementById('year').addEventListener('change', generateSpecimenNo);
-	document.getElementById('type').addEventListener('change', generateSpecimenNo);
     </script>
 </body>
 </html>
