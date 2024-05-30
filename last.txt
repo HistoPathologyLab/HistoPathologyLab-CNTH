@@ -285,7 +285,7 @@
 	    word-wrap: break-word; /* Ensure words wrap */
         }
         th {
-     	    background-color: #f2f2f2;
+    	    background-color: #f2f2f2;
             position: sticky; /* Make the header sticky */
             top: 0; /* Stick to the top */
             z-index: 1; /* Ensure header stays on top */
@@ -372,10 +372,10 @@
                     <thead>
                         <tr>
                             <th>Specimen No</th>
-                            <th>Date of Surgery/Procedure</th>
+                            <th>Date of Surgery/ Procedure</th>
                             <th>Patient's Name</th>
                             <th>Patient's Age</th>
-                            <th>Ward/Clinic No</th>
+                            <th>Ward/ Clinic No</th>
                             <th>BHT No</th>
                             <th>Specimen</th>
                             <th>Typing Date</th>
@@ -412,30 +412,31 @@
     <script>
     // Function to update time and date
     function updateTime() {
-        const timeElement = document.getElementById('time');
-        const dateElement = document.getElementById('date');
-        const now = new Date();
+    	const timeElement = document.getElementById('time');
+    	const dateElement = document.getElementById('date');
+    	const now = new Date();
 
-        // Time options
-        const timeOptions = {
+    	// Time options
+    	const timeOptions = {
             hour: '2-digit',
             minute: '2-digit',
-            second: '2-digit'
-        };
+            second: '2-digit',
+            hour12: false // 24-hour format
+    	};
 
-        // Date options
-        const dateOptions = {
+    	// Date options
+    	const dateOptions = {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
             day: 'numeric'
-        };
+    	};
 
-        const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
-        const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+    	const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+    	const formattedDate = now.toLocaleDateString('en-US', dateOptions);
 
-        timeElement.textContent = formattedTime;
-        dateElement.textContent = formattedDate;
+    	timeElement.textContent = formattedTime;
+    	dateElement.textContent = formattedDate;
     }
 
     // Update time and date every second
@@ -463,42 +464,51 @@
             option.textContent = currentYear + i;
             yearSelect.appendChild(option);
         }
-    };
+     };
 
-    // Log out functionality
-    document.getElementById('logout').addEventListener('click', function() {
-        sessionStorage.removeItem('isLoggedIn');
-        window.location.href = 'index.html';
-    });
+     // Log out functionality
+     document.getElementById('logout').addEventListener('click', function() {
+         sessionStorage.removeItem('isLoggedIn');
+         window.location.href = 'index.html';
+     });
 
-    // Reload home.html when the Home item is clicked
-    document.getElementById('home-link').addEventListener('click', function() {
-        window.location.href = 'home.html';
-    });
+     // Reload home.html when the Home item is clicked
+     document.getElementById('home-link').addEventListener('click', function() {
+         window.location.href = 'home.html';
+     });
 
-    // Reload histoReports.html when the "Histo Reports Summary" item is clicked
-    document.getElementById('histo-reports-link').addEventListener('click', function() {
+     // Reload histoReports.html when the "Histo Reports Summary" item is clicked
+     document.getElementById('histo-reports-link').addEventListener('click', function() {
         window.location.href = 'histoReports.html';
-    });
+     });
 
-    // Toggle sidebar visibility for mobile
-    const menuButton = document.getElementById('menu-button');
-    const sidebar = document.getElementById('sidebar');
+     // Toggle sidebar visibility for mobile
+     const menuButton = document.getElementById('menu-button');
+     const sidebar = document.getElementById('sidebar');
 
-    menuButton.addEventListener('click', function() {
-        sidebar.classList.toggle('visible');
-    });
+     menuButton.addEventListener('click', function() {
+         sidebar.classList.toggle('visible');
+     });
 
-    // Close the sidebar when clicking outside of it
-    document.addEventListener('click', function(event) {
-        if (!sidebar.contains(event.target) && event.target !== menuButton) {
-            sidebar.classList.remove('visible');
-        }
-    });
+     // Close the sidebar when clicking outside of it
+     document.addEventListener('click', function(event) {
+         if (!sidebar.contains(event.target) && event.target !== menuButton) {
+             sidebar.classList.remove('visible');
+         }
+     });
+ 
+     // Function to format date to DD/MM/YYYY
+     function formatDate(dateString) {
+         const date = new Date(dateString);
+         const day = String(date.getDate()).padStart(2, '0');
+         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+         const year = date.getFullYear();
+         return ${day}/${month}/${year};
+     }
 
-    // Function to dynamically add rows to the table
-    function addRow(data) {
-        const tableBody = document.getElementById('report table').getElementsByTagName('tbody')[0];
+     // Function to dynamically add rows to the table
+     function addRow(data) {
+        const tableBody = document.getElementById('report-table').getElementsByTagName('tbody')[0];
         const newRow = tableBody.insertRow();
 
         const fields = [
@@ -539,30 +549,30 @@
     // Example data to add (replace with actual data fetching logic)
     const exampleData = {
         specimenNo: '12345',
-        dateOfSurgery: '01/05/2024',
+        dateOfSurgery: '2024-05-01',
         patientName: 'John Doe',
         patientAge: '45',
         wardNo: '12A',
         bhtNo: '67890',
         specimen: 'Biopsy',
-        typingDate: '02/05/2024',
+        typingDate: '2024-05-02',
         conclusion: 'Benign',
         viewReports: true,
         registrarDr: 'Dr. Smith',
         consultantDr: 'Dr. Johnson',
-        reportIssuedDate: '03/05/2024',
-        specimenReceivedDate: '01/05/2024',
-        ihcRequestedDate: '02/05/2024',
+        reportIssuedDate: '2024-05-03',
+        specimenReceivedDate: '2024-05-01',
+        ihcRequestedDate: '2024-05-02',
         ihcInstitute: 'ABC Labs',
         ihcType: 'Type A',
-        ihcReceivedDate: '04/05/2024',
-        specialStainRequestedDate: '02/05/2024',
-        specialStainReceivedDate: '02/05/2024',
-        deepRequestedDate: '02/05/2024',
-        deepReceivedDate: '04/05/2024',
-        frRequestedDate: '02/05/2024',
-        frReceivedDate: '04/05/2024',
-        supplementaryReportIssuedDate: '05/05/2024',
+        ihcReceivedDate: '2024-05-04',
+        specialStainRequestedDate: '2024-05-02',
+        specialStainReceivedDate: '2024-05-04',
+        deepRequestedDate: '2024-05-02',
+        deepReceivedDate: '2024-05-04',
+        frRequestedDate: '2024-05-02',
+        frReceivedDate: '2024-05-04',
+        supplementaryReportIssuedDate: '2024-05-05',
         viewSupplementaryReports: true,
         viewErprReports: true,
         otherSteps: 'None'
@@ -582,30 +592,30 @@
     const exampleDataArray = [
         {
             specimenNo: '12345',
-            dateOfSurgery: '01/05/2024',
+            dateOfSurgery: '2024-05-01',
             patientName: 'John Doe',
             patientAge: '45',
             wardNo: '12A',
             bhtNo: '67890',
             specimen: 'Biopsy',
-            typingDate: '02/05/2024',
+            typingDate: '2024-05-02',
             conclusion: 'Benign',
             viewReports: true,
             registrarDr: 'Dr. Smith',
             consultantDr: 'Dr. Johnson',
-            reportIssuedDate: '03/05/2024',
-            specimenReceivedDate: '01/05/2024',
-            ihcRequestedDate: '02/05/2024',
+            reportIssuedDate: '2024-05-03',
+            specimenReceivedDate: '2024-05-01',
+            ihcRequestedDate: '2024-05-02',
             ihcInstitute: 'ABC Labs',
             ihcType: 'Type A',
-            ihcReceivedDate: '04/05/2024',
-            specialStainRequestedDate: '02/05/2024',
-            specialStainReceivedDate: '04/05/2024',
-            deepRequestedDate: '02/05/2024',
-            deepReceivedDate: '04/05/2024',
-            frRequestedDate: '02/05/2024',
-            frReceivedDate: '04/05/2024',
-            supplementaryReportIssuedDate: '05/05/2024',
+            ihcReceivedDate: '2024-05-04',
+            specialStainRequestedDate: '2024-05-02',
+            specialStainReceivedDate: '2024-05-04',
+            deepRequestedDate: '2024-05-02',
+            deepReceivedDate: '2024-05-04',
+            frRequestedDate: '2024-05-02',
+            frReceivedDate: '2024-05-04',
+            supplementaryReportIssuedDate: '2024-05-05',
             viewSupplementaryReports: true,
             viewErprReports: true,
             otherSteps: 'None'

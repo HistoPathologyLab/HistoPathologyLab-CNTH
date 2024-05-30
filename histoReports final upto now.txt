@@ -266,35 +266,23 @@
 	
 	.table-container {
             margin-top: 20px;
-	    margin-left: 20px; /* Add left margin */
             overflow-x: auto;
             overflow-y: auto;
             height: calc(100vh - 200px);
-    	    position: relative; /* Add position relative */
         }
         .table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10px;
-	    table-layout: fixed; /* Ensure table layout is fixed */
+            font-size: 11px;
         }
         th, td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: left;
-	    word-wrap: break-word; /* Ensure words wrap */
         }
         th {
-     	    background-color: #f2f2f2;
-            position: sticky; /* Make the header sticky */
-            top: 0; /* Stick to the top */
-            z-index: 1; /* Ensure header stays on top */
+            background-color: #f2f2f2;
         }
-
-	td {
-   	    white-space: pre-wrap; /* Wrap text to fit within the cell */
-	}
-
         .view-button {
             background-color: #FFBF00;
             color: white;
@@ -302,7 +290,7 @@
             padding: 5px;
             cursor: pointer;
             border-radius: 4px;
-            font-size: 10px;
+            font-size: 11px;
         }
         .view-button:hover {
             background-color: #004080;
@@ -498,7 +486,7 @@
 
     // Function to dynamically add rows to the table
     function addRow(data) {
-        const tableBody = document.getElementById('report table').getElementsByTagName('tbody')[0];
+        const tableBody = document.getElementById('report-table').getElementsByTagName('tbody')[0];
         const newRow = tableBody.insertRow();
 
         const fields = [
@@ -513,23 +501,11 @@
 
         fields.forEach(field => {
             const cell = newRow.insertCell();
-            if (field === 'viewReports' && data.viewReports) {
+            if (field.includes('view')) {
                 const button = document.createElement('button');
                 button.className = 'view-button';
                 button.textContent = 'View';
                 cell.appendChild(button);
-            } else if (field === 'viewSupplementaryReports' && data.viewSupplementaryReports) {
-                const button = document.createElement('button');
-                button.className = 'view-button';
-                button.textContent = 'View';
-                cell.appendChild(button);
-            } else if (field === 'viewErprReports' && data.viewErprReports) {
-                const button = document.createElement('button');
-                button.className = 'view-button';
-                button.textContent = 'View';
-                cell.appendChild(button);
-            } else if (field.includes('Date') && data[field]) {
-                cell.textContent = formatDate(data[field]);
             } else {
                 cell.textContent = data[field] || '';
             }
@@ -539,30 +515,30 @@
     // Example data to add (replace with actual data fetching logic)
     const exampleData = {
         specimenNo: '12345',
-        dateOfSurgery: '01/05/2024',
+        dateOfSurgery: '2024-05-01',
         patientName: 'John Doe',
         patientAge: '45',
         wardNo: '12A',
         bhtNo: '67890',
         specimen: 'Biopsy',
-        typingDate: '02/05/2024',
+        typingDate: '2024-05-02',
         conclusion: 'Benign',
         viewReports: true,
         registrarDr: 'Dr. Smith',
         consultantDr: 'Dr. Johnson',
-        reportIssuedDate: '03/05/2024',
-        specimenReceivedDate: '01/05/2024',
-        ihcRequestedDate: '02/05/2024',
+        reportIssuedDate: '2024-05-03',
+        specimenReceivedDate: '2024-05-01',
+        ihcRequestedDate: '2024-05-02',
         ihcInstitute: 'ABC Labs',
         ihcType: 'Type A',
-        ihcReceivedDate: '04/05/2024',
-        specialStainRequestedDate: '02/05/2024',
-        specialStainReceivedDate: '02/05/2024',
-        deepRequestedDate: '02/05/2024',
-        deepReceivedDate: '04/05/2024',
-        frRequestedDate: '02/05/2024',
-        frReceivedDate: '04/05/2024',
-        supplementaryReportIssuedDate: '05/05/2024',
+        ihcReceivedDate: '2024-05-04',
+        specialStainRequestedDate: '2024-05-02',
+        specialStainReceivedDate: '2024-05-04',
+        deepRequestedDate: '2024-05-02',
+        deepReceivedDate: '2024-05-04',
+        frRequestedDate: '2024-05-02',
+        frReceivedDate: '2024-05-04',
+        supplementaryReportIssuedDate: '2024-05-05',
         viewSupplementaryReports: true,
         viewErprReports: true,
         otherSteps: 'None'
@@ -582,30 +558,30 @@
     const exampleDataArray = [
         {
             specimenNo: '12345',
-            dateOfSurgery: '01/05/2024',
+            dateOfSurgery: '2024-05-01',
             patientName: 'John Doe',
             patientAge: '45',
             wardNo: '12A',
             bhtNo: '67890',
             specimen: 'Biopsy',
-            typingDate: '02/05/2024',
+            typingDate: '2024-05-02',
             conclusion: 'Benign',
             viewReports: true,
             registrarDr: 'Dr. Smith',
             consultantDr: 'Dr. Johnson',
-            reportIssuedDate: '03/05/2024',
-            specimenReceivedDate: '01/05/2024',
-            ihcRequestedDate: '02/05/2024',
+            reportIssuedDate: '2024-05-03',
+            specimenReceivedDate: '2024-05-01',
+            ihcRequestedDate: '2024-05-02',
             ihcInstitute: 'ABC Labs',
             ihcType: 'Type A',
-            ihcReceivedDate: '04/05/2024',
-            specialStainRequestedDate: '02/05/2024',
-            specialStainReceivedDate: '04/05/2024',
-            deepRequestedDate: '02/05/2024',
-            deepReceivedDate: '04/05/2024',
-            frRequestedDate: '02/05/2024',
-            frReceivedDate: '04/05/2024',
-            supplementaryReportIssuedDate: '05/05/2024',
+            ihcReceivedDate: '2024-05-04',
+            specialStainRequestedDate: '2024-05-02',
+            specialStainReceivedDate: '2024-05-04',
+            deepRequestedDate: '2024-05-02',
+            deepReceivedDate: '2024-05-04',
+            frRequestedDate: '2024-05-02',
+            frReceivedDate: '2024-05-04',
+            supplementaryReportIssuedDate: '2024-05-05',
             viewSupplementaryReports: true,
             viewErprReports: true,
             otherSteps: 'None'

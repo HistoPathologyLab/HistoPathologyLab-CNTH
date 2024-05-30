@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Histopathology Lab System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
     <style>
         body {
             margin: 0;
@@ -117,90 +116,11 @@
             flex-grow: 1;
             padding: 20px;
             overflow-x: auto; /* Ensure main content can scroll horizontally */
-            position: relative; /* Needed for absolute positioning of button */
         }
         .menu-button {
             display: none; /* Initially hidden */
         }
-	.search-button {
-    	    background-color: #FFBF00; /* Change background color to #FFBF00 */
-    	    color: white;
-	    border: none;
-	    padding: 10px 160px; /* Increased padding for a larger button */
-	    cursor: pointer;
-	    margin-top: 60px; /* Adjust the margin to position the button below the white bar */
-	    margin-bottom: 60px; /* Add some bottom margin for spacing */
-	    margin-left: auto; /* Align the button to the right */
-	    margin-right: auto; /* Align the button to the left */
-	    display: block; /* Make the button a block element to center it */
-	    border-radius: 10px; /* Rounded edges */
- 	    font-weight: bold; /* Bold font */
-	    font-size: 16px; /* Increased font size */
-	}
-	.search-button:hover {
-	    background-color: #004080;
-	}
-	.search-button i {
-	    margin-left: 5px;
-	    transform: scaleX(-1); /* Mirror the icon */
-        }
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .button-row {
-            display: flex;
-            justify-content: center; /* Center align the buttons */
-            width: 100%;
-            margin-top: 20px; /* Adjusted margin-top */
-        }
-        .custom-button {
-            background-color: #1E90FF;
-            color: white;
-            border: none;
-            padding: 10px 5px;
-            cursor: pointer;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
-            flex: 1;
-            margin: 0 40px;
-            text-align: center;
-            max-width: 400px; /* Add a max-width to limit the button width */
-        }
-        .new-custom-button {
-            background-color: #FFBF00;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 18px;
-            flex: 1;
-            margin: 0 40px;
-            text-align: center;
-	    max-width: 400px;
-        }
-        .custom-button:hover, .new-custom-button:hover {
-            background-color: #004080;
-            color: white;
-        }
-        .highlighted-button {
-            background-color: #1E90FF; /* Change background color to #1E90FF */
-            color: white; /* Text color remains white */
-        }
-	@media (min-width: 769px) and (max-width: 1024px) {
-    	    .button-row {
-                flex-wrap: wrap; /* Allow buttons to wrap */
-    	    }
-    	    .custom-button, .new-custom-button {
-        	margin: 10px; /* Adjust margins for better spacing */
-        	flex: 1 1 30%; /* Allow buttons to grow and shrink, taking approximately 30% of the container */
-    		}
-	}
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px; /* Adjust the width for smaller screens */
@@ -249,16 +169,8 @@
                 padding: 10px;
                 cursor: pointer;
             }
-            .custom-button, .new-custom-button {
-                font-size: 14px;
-                padding: 8px 5px;
-                margin: 0 20px;
-            }
-    	    .search-button {
-        	padding: 10px 80px; /* Adjust padding for smaller screens */
-        	font-size: 14px; /* Adjust font size for smaller screens */
-    	    }
         }
+
         @media (max-width: 480px) {
             .sidebar {
                 width: 150px; /* Further adjust the width for very small screens */
@@ -276,16 +188,8 @@
             .datetime .date {
                 font-size: 8px;
             }
-            .custom-button, .new-custom-button {
-                font-size: 12px;
-                padding: 6px 3px;
-                margin: 0 10px;
-            }
-    	    .search-button {
-  	        padding: 10px 40px; /* Further adjust padding for very small screens */
-        	font-size: 12px; /* Further adjust font size for very small screens */
-    	    }
         }
+
         @media (max-width: 320px) and (orientation: portrait) {
             .sidebar {
                 width: 120px; /* Final adjustment for 320px screens */
@@ -313,15 +217,6 @@
             .datetime .date {
                 font-size: 8px;
             }
-            .custom-button, .new-custom-button {
-                font-size: 10px;
-                padding: 4px 2px;
-                margin: 0 5px;
-    	    }
-    	    .search-button {
-        	padding: 10px 20px; /* Final adjustment for 320px screens */
-        	font-size: 10px; /* Final adjustment for 320px screens */
-    	    }
         }
     </style>
 </head>
@@ -331,7 +226,7 @@
         <h2>CNTH</h2>
         <hr class="divider"> <!-- Divider line added here-->
         <div class="sidebar-item bold" id="home-link">Home</div>
-        <div class="sidebar-item" id="histo-reports-link">Histo Reports Summary</div>
+        <div class="sidebar-item">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
         <div class="sidebar-item">US guided FNAC Reports Summary</div>
@@ -352,38 +247,7 @@
             </div>
         </div>
         <div class="main-content" id="main-content">
-            <button class="search-button">
-                Search Reports
-                <i class="fas fa-search"></i>
-            </button>
-            <div class="button-container">
-                <!-- New button rows added here -->
-                <div class="button-row">
-                    <button class="custom-button">Reports for Checking</button>
-                    <button class="custom-button" id="add-remove-specimen-button">Add / Remove Specimen</button>
-                    <button class="custom-button">Add / Edit IHC</button>
-                </div>
-                <div class="button-row">
-                    <button class="custom-button">Edit Reports</button>
-                    <button class="custom-button">Add / Remove Report</button>
-                    <button class="custom-button">Add / Edit Deep / FR</button>
-                </div>
-                <div class="button-row">
-                    <button class="custom-button">Search Specimen Photos</button>
-                    <button class="custom-button">Add / Remove Specimen Photos</button>
-                    <button class="custom-button">Add / Edit Special Stain</button>
-                </div>
-                <div class="button-row">
-                    <button class="custom-button">Add a Supplementary Report</button>
-                </div>
-                <div class="button-row">
-                    <button class="custom-button">Add ERPR Report</button>
-                </div>
-	        <!-- New button rows added here -->
-	        <div class="button-row style="margin-top: 40px;"> <!-- Adjusted margin-top -->
-                    <button class="new-custom-button">Summary</button>
-                </div>
-            </div>
+            <!-- Main content goes here -->
         </div>
     </div>
 
@@ -442,16 +306,6 @@
             window.location.href = 'home.html';
         });
 
-	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
-	document.getElementById('histo-reports-link').addEventListener('click', function() {
-    	    window.location.href = 'histoReports.html';
-	});
-
-	// Add event listener to the "Add / Remove Specimen" button
-	document.getElementById('add-remove-specimen-button').addEventListener('click', function() {
-    	    window.location.href = 'addSpecimen.html';
-	});
-
         // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
         const sidebar = document.getElementById('sidebar');
@@ -466,12 +320,6 @@
                 sidebar.classList.remove('visible');
             }
         });
-
-        // FontAwesome script to load the search icon
-        var script = document.createElement('script');
-        script.src = 'https://kit.fontawesome.com/a076d05399.js';
-        script.crossOrigin = 'anonymous';
-        document.head.appendChild(script);
     </script>
 </body>
 </html>
