@@ -328,7 +328,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         // Function to update time and date
         function updateTime() {
             const timeElement = document.getElementById('time');
@@ -369,62 +369,59 @@
             }
         }
 
-        // Call checkSession on page load
-        window.onload = checkSession;
+        // Populate year dropdown
+        function populateYearDropdown() {
+            const yearSelect = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
 
-	// Function to populate year dropdown
-	function populateYearDropdown() {
-    	    const yearSelect = document.getElementById('year');
-    	    const currentYear = new Date().getFullYear();
+            for (let i = 0; i <= 10; i++) { // Populate the next 10 years
+                const yearOption = document.createElement('option');
+                yearOption.value = currentYear + i;
+                yearOption.text = currentYear + i;
+                yearSelect.appendChild(yearOption);
+            }
+        }
 
-    	    for (let i = 0; i <= 10; i++) { // Populate the next 10 years
-        	const yearOption = document.createElement('option');
-        	yearOption.value = currentYear + i;
-        	yearOption.text = currentYear + i;
-        	yearSelect.appendChild(yearOption);
-    	    }
-	}
+        // Generate specimen number
+        function generateSpecimenNo() {
+            const year = document.getElementById('year').value;
+            const type = document.getElementById('type').value;
+            const specimenNoField = document.getElementById('specimen-no');
+            let prefix = '';
 
-	// Existing functionality to generate specimen number
-	function generateSpecimenNo() {
-    	    const year = document.getElementById('year').value;
-    	    const type = document.getElementById('type').value;
-    	    const specimenNoField = document.getElementById('specimen-no');
-    	    let prefix = '';
-
-    	    switch (type) {
+            switch (type) {
                 case 'Histo':
-            	    prefix = 'CN';
-            	    break;
+                    prefix = 'CN';
+                    break;
                 case 'FNAC':
-            	    prefix = 'NA';
-            	    break;
+                    prefix = 'NA';
+                    break;
                 case 'Cyto':
-            	    prefix = 'F';
-            	    break;
+                    prefix = 'F';
+                    break;
                 case 'US guided FNAC':
-            	    prefix = 'U';
-            	    break;
-    	    }
+                    prefix = 'U';
+                    break;
+            }
 
-    	    if (year && prefix) {
+            if (year && prefix) {
                 const yearSuffix = year.slice(-2);
                 const randomNumber = Math.floor(1000 + Math.random() * 9000); // Random 4-digit number
                 specimenNoField.value = ${prefix} ${randomNumber}/${yearSuffix};
-    	    }
-	}
+            }
+        }
 
-	// Event listeners to generate specimen number
-	document.getElementById('year').addEventListener('change', generateSpecimenNo);
-	document.getElementById('type').addEventListener('change', generateSpecimenNo);
+        // Event listeners to generate specimen number
+        document.getElementById('year').addEventListener('change', generateSpecimenNo);
+        document.getElementById('type').addEventListener('change', generateSpecimenNo);
 
-	// Initialize page on load
-	window.onload = function() {
-    	    checkSession();
+        // Initialize page on load
+        window.onload = function() {
+            checkSession();
             populateYearDropdown();
             updateTime();
             setInterval(updateTime, 1000); // Update time and date every second
-	};
+        };
 
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
@@ -437,10 +434,10 @@
             window.location.href = 'home.html';
         });
 
-	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
-    	document.getElementById('histo-reports-link').addEventListener('click', function() {
+        // Reload histoReports.html when the "Histo Reports Summary" item is clicked
+        document.getElementById('histo-reports-link').addEventListener('click', function() {
             window.location.href = 'histoReports.html';
-    	});
+        });
 
         // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
