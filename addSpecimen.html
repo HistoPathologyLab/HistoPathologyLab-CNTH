@@ -437,6 +437,11 @@
             window.location.href = 'home.html';
         });
 
+	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
+    	document.getElementById('histo-reports-link').addEventListener('click', function() {
+            window.location.href = 'histoReports.html';
+    	});
+
         // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
         const sidebar = document.getElementById('sidebar');
