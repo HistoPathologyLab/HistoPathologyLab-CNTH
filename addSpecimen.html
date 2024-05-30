@@ -218,6 +218,46 @@
                 font-size: 8px;
             }
         }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px; /* Set a max-width for the form */
+            margin: 30px auto; /* Center the form */
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .form-container input,
+        .form-container select {
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-container .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .form-container .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: darkblue;
+            color: white;
+        }
+        .form-container .button-container button:hover {
+            background-color: #004080;
+        }
     </style>
 </head>
 <body>
@@ -247,7 +287,44 @@
             </div>
         </div>
         <div class="main-content" id="main-content">
-            <!-- Main content goes here -->
+            <div class="form-container">
+                <label for="year">Year:</label>
+                <input type="number" id="year" name="year" placeholder="YYYY">
+
+                <label for="type">Type:</label>
+                <select id="type" name="type">
+                    <option value="Histo">Histo</option>
+                    <option value="FNAC">FNAC</option>
+                    <option value="Cyto">Cyto</option>
+                    <option value="US guided FNAC">US guided FNAC</option>
+                </select>
+
+                <label for="specimen-no">Specimen No:</label>
+                <input type="text" id="specimen-no" name="specimen-no" readonly>
+
+                <label for="patient-name">Patient's Name:</label>
+                <input type="text" id="patient-name" name="patient-name">
+
+                <label for="patient-age">Patient's Age:</label>
+                <input type="number" id="patient-age" name="patient-age">
+
+                <label for="bht-no">BHT No:</label>
+                <input type="text" id="bht-no" name="bht-no">
+
+                <label for="ward-clinic-no">Ward / Clinic No:</label>
+                <input type="text" id="ward-clinic-no" name="ward-clinic-no">
+
+                <label for="date-surgery">Date of Surgery / Procedure:</label>
+                <input type="text" id="date-surgery" name="date-surgery" placeholder="DD/MM/YYYY">
+
+                <label for="specimen-received">Specimen Received Date:</label>
+                <input type="text" id="specimen-received" name="specimen-received" placeholder="DD/MM/YYYY">
+
+                <div class="button-container">
+                    <button id="search-edit-remove">Search For Edit / Remove Specimen</button>
+                    <button id="add-specimen">Add</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -320,6 +397,38 @@
                 sidebar.classList.remove('visible');
             }
         });
+
+        // Function to generate specimen number
+        function generateSpecimenNo() {
+            const year = document.getElementById('year').value;
+            const type = document.getElementById('type').value;
+            let prefix = '';
+
+            switch (type) {
+                case 'Histo':
+                    prefix = 'CN';
+                    break;
+                case 'FNAC':
+                    prefix = 'NA';
+                    break;
+                case 'Cyto':
+                    prefix = 'F';
+                    break;
+                case 'US guided FNAC':
+                    prefix = 'U';
+                    break;
+            }
+
+            if (year && prefix) {
+                const yearSuffix = year.slice(-2);
+                const randomNumber = Math.floor(1000 + Math.random() * 9000); // Random 4-digit number
+                document.getElementById('specimen-no').value = ${prefix} ${randomNumber}/${yearSuffix};
+            }
+        }
+
+        // Event listeners to generate specimen number
+        document.getElementById('year').addEventListener('input', generateSpecimenNo);
+        document.getElementById('type').addEventListener('change', generateSpecimenNo);
     </script>
 </body>
 </html>
