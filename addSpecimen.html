@@ -379,6 +379,14 @@
             const yearSelect = document.getElementById('year');
             const currentYear = new Date().getFullYear();
 
+    	    // Add a placeholder option
+    	    const placeholderOption = document.createElement('option');
+            placeholderOption.value = '';
+            placeholderOption.text = 'Select Year';
+            placeholderOption.disabled = true; // Ensure it can't be selected again
+            placeholderOption.selected = true; // Ensure it is selected by default
+    	    yearSelect.appendChild(placeholderOption);
+
             for (let i = 0; i <= 10; i++) { // Populate the next 10 years
                 const yearOption = document.createElement('option');
                 yearOption.value = currentYear + i;
