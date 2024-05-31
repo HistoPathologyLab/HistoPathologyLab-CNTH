@@ -397,9 +397,12 @@
 	function updateSpecimenNumber() {
             const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
             const type = document.getElementById('type').value;
-            const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
-            const specimenNumber = `${prefix} XXXX/${year}`; // Use backticks for template string
-            document.getElementById('specimen-no').value = specimenNumber;
+
+	    if (year && type) {
+            	const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
+            	const specimenNumber = `${prefix} XXXX/${year}`; // Use backticks for template string
+            	document.getElementById('specimen-no').value = specimenNumber;
+	    }
 	}
 
     	// Event listeners for updating specimen number
@@ -428,7 +431,6 @@
             populateYearDropdown();
             document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
             document.getElementById('specimen-no').value = ''; // Ensure the specimen number field is blank initially
-            updateSpecimenNumber(); // Update specimen number initially
     	};
 
         // Log out functionality
