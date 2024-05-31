@@ -409,18 +409,12 @@
 	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
 	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
 
-	// Call updateSpecimenNumber on page load
-	window.onload = function() {
-    	    checkSession();
-    	    populateYearDropdown();
-    	    updateSpecimenNumber(); // Update specimen number initially
-	};
-
         // Initialize page on load
         window.onload = function() {
             checkSession();
             populateYearDropdown();
     	    document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
+	    updateSpecimenNumber(); // Update specimen number initially
         };
 
         // Log out functionality
