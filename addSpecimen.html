@@ -303,7 +303,7 @@
                 </select>
 
                 <label for="specimen-no">Specimen No:</label>
-                <input type="text" id="specimen-no" name="specimen-no" value="XXXX">
+                <input type="text" id="specimen-no" name="specimen-no">
 
                 <label for="patient-name">Patient's Name:</label>
                 <input type="text" id="patient-name" name="patient-name">
@@ -409,17 +409,24 @@
 	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
 	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
 
+	// Call checkSession and populateYearDropdown on page load
+	window.onload = function() {
+    	    checkSession();
+    	    populateYearDropdown();
+    	    document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
+	};
+
 	// Function to handle focus on the specimen number input field
 	document.getElementById('specimen-no').addEventListener('focus', function() {
     	    const specimenInput = document.getElementById('specimen-no');
-    	    if (specimenInput.value === 'XXXX') {
+    	    if (specimenInput.value.includes('XXXX')) {
         	specimenInput.value = ''; // Clear the field if it contains 'XXXX'
     	    }
 	});
 
 	// Function to handle blur (loss of focus) on the specimen number input field
 	document.getElementById('specimen-no').addEventListener('blur', function() {
-    	    const specimenInput = document.getElementById('specimen-no');
+            const specimenInput = document.getElementById('specimen-no');
     	    if (specimenInput.value === '') {
         	updateSpecimenNumber(); // Revert to the original specimen number if left blank
     	    }
