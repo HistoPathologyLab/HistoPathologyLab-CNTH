@@ -413,22 +413,22 @@
 	// Function to handle focus on the specimen number input field
 	document.getElementById('specimen-no').addEventListener('focus', function() {
     	    const specimenInput = document.getElementById('specimen-no');
-	    const placeholder = document.getElementById('specimen-placeholder');
-	    if (specimenInput.value === '') {
+    	    const placeholder = document.getElementById('specimen-placeholder');
+    	    if (specimenInput.value === '') {
         	specimenInput.value = 'XXXX';
-        	placeholder.style.display = 'none'; // Hide placeholder when input is focused
+        	placeholder.style.visibility = 'hidden'; // Hide placeholder when input is focused
     	    }
 	});
 
 	// Function to handle blur (loss of focus) on the specimen number input field
 	document.getElementById('specimen-no').addEventListener('blur', function() {
     	    const specimenInput = document.getElementById('specimen-no');
-	    const placeholder = document.getElementById('specimen-placeholder');
+    	    const placeholder = document.getElementById('specimen-placeholder');
     	    if (specimenInput.value === 'XXXX') {
         	specimenInput.value = ''; // Clear the field if it contains 'XXXX'
-        	placeholder.style.display = 'inline'; // Show placeholder when input is blurred
+        	placeholder.style.visibility = 'visible'; // Show placeholder when input is blurred
     	    }
-	});
+	})
 
         // Call updateSpecimenNumber on page load
         window.onload = function() {
