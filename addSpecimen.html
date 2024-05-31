@@ -294,13 +294,13 @@
                 <select id="year" name="year"></select>
 
                 <label for="type">Type:</label>
-                <select id="type" name="type">
-    		    <option value="" selected disabled>Select Type</option> <!-- Add placeholder option -->
-                    <option value="Histo">Histo</option>
-                    <option value="FNAC">FNAC</option>
-                    <option value="Cyto">Cyto</option>
-                    <option value="US guided FNAC">US guided FNAC</option>
-                </select>
+                <select id="type" name="type" onchange="updateSpecimenNumber()"> <!-- Add onchange attribute here -->
+    		    <option value="" selected disabled>Select Type</option>
+    		    <option value="Histo">Histo</option>
+    		    <option value="FNAC">FNAC</option>
+    		    <option value="Cyto">Cyto</option>
+    		    <option value="US guided FNAC">US guided FNAC</option>
+		</select>
 
                 <label for="specimen-no">Specimen No:</label>
                 <input type="text" id="specimen-no" name="specimen-no" value="XXXX">
