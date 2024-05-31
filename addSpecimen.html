@@ -233,7 +233,7 @@
             margin-top: 10px;
             font-weight: bold;
         }
-        .form-container input, 
+        .form-container input,
         .form-container select {
             padding: 10px;
             margin-top: 5px;
@@ -275,76 +275,187 @@
         <div class="sidebar-item">Pending Reports</div>
         <div class="sidebar-item">Reports to Print</div>
         <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
-        <div class="sidebar-item bold" id="logout">Logout</div>
+        <div class="sidebar-item bold" id="logout">Log out</div>
     </div>
-    <div class="content">
+    <div class="content" id="content">
         <div class="top-bar">
-            <img src="logo.png" alt="Logo" class="logo"> <!-- Adjust the path to your logo -->
-            <div class="datetime">
+            <button class="menu-button" id="menu-button">&#9776;</button>
+            <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
+            <div class="datetime" id="datetime">
                 <div class="time" id="time"></div>
                 <div class="date" id="date"></div>
             </div>
         </div>
-        <div class="main-content">
-            <!-- Main content goes here -->
+        <div class="main-content" id="main-content">
             <div class="form-container">
-                <label for="year">Select Year:</label>
-                <select id="year">
-                    <option value="">Select Year</option>
-                    <!-- Years will be populated by JavaScript -->
+                <label for="year">Year:</label>
+                <select id="year" name="year"></select>
+
+                <label for="type">Type:</label>
+                <select id="type" name="type">
+                    <option value="Histo">Histo</option>
+                    <option value="FNAC">FNAC</option>
+                    <option value="Cyto">Cyto</option>
+                    <option value="US guided FNAC">US guided FNAC</option>
                 </select>
-                <!-- Add other form elements as needed -->
+
+                <label for="specimen-no">Specimen No:</label>
+                <input type="text" id="specimen-no" name="specimen-no">
+
+                <label for="patient-name">Patient's Name:</label>
+                <input type="text" id="patient-name" name="patient-name">
+
+                <label for="patient-age">Patient's Age:</label>
+                <input type="number" id="patient-age" name="patient-age">
+
+                <label for="bht-no">BHT No:</label>
+                <input type="text" id="bht-no" name="bht-no">
+
+                <label for="ward-clinic-no">Ward / Clinic No:</label>
+                <input type="text" id="ward-clinic-no" name="ward-clinic-no">
+
+                <label for="date-surgery">Date of Surgery / Procedure:</label>
+                <input type="text" id="date-surgery" name="date-surgery" placeholder="DD/MM/YYYY">
+
+                <label for="specimen-received">Specimen Received Date:</label>
+                <input type="text" id="specimen-received" name="specimen-received" placeholder="DD/MM/YYYY">
+
                 <div class="button-container">
-                    <button type="submit">Submit</button>
-                    <button type="reset">Reset</button>
+                    <button id="search-edit-remove">Search For Edit / Remove Specimen</button>
+                    <button id="add-specimen">Add</button>
                 </div>
             </div>
         </div>
     </div>
-    <button class="menu-button" id="menu-button">Menu</button>
+
     <script>
-        // Function to display date and time
-        function updateDateTime() {
+        // Function to update time and date
+        function updateTime() {
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
             const now = new Date();
-            const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            const date = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-            document.getElementById('time').textContent = time;
-            document.getElementById('date').textContent = date;
+            // Time options
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+
+            // Date options
+            const dateOptions = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+
+            const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+
+            timeElement.textContent = formattedTime;
+            dateElement.textContent = formattedDate;
         }
 
-        // Initial call to display date and time
-        updateDateTime();
-        // Update date and time every second
-        setInterval(updateDateTime, 1000);
+        // Update time and date every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call to display immediately
 
-        // Populate year dropdown
-        const yearSelect = document.getElementById('year');
-        const currentYear = new Date().getFullYear();
-        for (let year = currentYear; year >= 2000; year--) {
-            const option = document.createElement('option');
-            option.value = year;
-            option.textContent = year;
-            yearSelect.appendChild(option);
+        // Function to check if the user is logged in
+        function checkSession() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'index.html';
+            }
         }
 
-        // Toggle sidebar visibility on mobile
+    	// Call checkSession on page load
+    	window.onload = function() {
+            checkSession();
+
+        // Function to populate year dropdown
+        function populateYearDropdown() {
+            const yearSelect = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
+
+            for (let i = 0; i <= 10; i++) { // Populate the next 10 years
+                const yearOption = document.createElement('option');
+                yearOption.value = currentYear + i;
+                yearOption.text = currentYear + i;
+                yearSelect.appendChild(yearOption);
+            }
+        }
+
+        // Existing functionality to generate specimen number
+        function generateSpecimenNo() {
+            const year = document.getElementById('year').value;
+            const type = document.getElementById('type').value;
+            const specimenNoField = document.getElementById('specimen-no');
+            let prefix = '';
+
+            switch (type) {
+                case 'Histo':
+                    prefix = 'CN';
+                    break;
+                case 'FNAC':
+                    prefix = 'NA';
+                    break;
+                case 'Cyto':
+                    prefix = 'F';
+                    break;
+                case 'US guided FNAC':
+                    prefix = 'U';
+                    break;
+            }
+
+            if (year && prefix) {
+                const yearSuffix = year.slice(-2);
+                const randomNumber = Math.floor(1000 + Math.random() * 9000); // Random 4-digit number
+                specimenNoField.value = ${prefix} ${randomNumber}/${yearSuffix};
+            }
+        }
+
+        // Event listeners to generate specimen number
+        document.getElementById('year').addEventListener('change', generateSpecimenNo);
+        document.getElementById('type').addEventListener('change', generateSpecimenNo);
+
+        // Initialize page on load
+        window.onload = function() {
+            checkSession();
+            populateYearDropdown();
+            updateTime();
+            setInterval(updateTime, 1000); // Update time and date every second
+        };
+
+        // Log out functionality
+        document.getElementById('logout').addEventListener('click', function() {
+            sessionStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        });
+
+        // Reload home.html when the Home item is clicked
+        document.getElementById('home-link').addEventListener('click', function() {
+            window.location.href = 'home.html';
+        });
+
+    	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
+    	document.getElementById('histo-reports-link').addEventListener('click', function() {
+            window.location.href = 'histoReports.html';
+    	});
+
+        // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
         const sidebar = document.getElementById('sidebar');
-        menuButton.addEventListener('click', () => {
+
+        menuButton.addEventListener('click', function() {
             sidebar.classList.toggle('visible');
         });
 
-        // Handle sidebar item clicks
-        document.getElementById('home-link').addEventListener('click', () => {
-            window.location.href = 'home.html';
-        });
-        document.getElementById('histo-reports-link').addEventListener('click', () => {
-            window.location.href = 'histo-reports-summary.html';
-        });
-        document.getElementById('logout').addEventListener('click', () => {
-            // Add logout logic here
-            alert('Logout clicked');
+        // Close the sidebar when clicking outside of it
+        document.addEventListener('click', function(event) {
+            if (!sidebar.contains(event.target) && event.target !== menuButton) {
+                sidebar.classList.remove('visible');
+            }
         });
     </script>
 </body>
