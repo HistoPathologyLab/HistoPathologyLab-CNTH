@@ -401,7 +401,7 @@
             const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
             const type = document.getElementById('type').value;
             const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
-            const specimenNumber = ${prefix} XXXX/${year}; // Generate the specimen number format
+            const specimenNumber = '${prefix} XXXX/${year}'; // Generate the specimen number format
             document.getElementById('specimen-no').value = specimenNumber;
 	}
 
