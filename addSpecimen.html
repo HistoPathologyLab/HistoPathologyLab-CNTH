@@ -412,8 +412,8 @@
 	// Function to handle focus on the specimen number input field
 	document.getElementById('specimen-no').addEventListener('focus', function() {
     	    const specimenInput = document.getElementById('specimen-no');
-    	    if (specimenInput.value === 'XXXX') {
-        	specimenInput.value = '';
+    	    if (specimenInput.value === 'XXXX')) {
+        	specimenInput.value = ''; // Clear the field if it contains 'XXXX'
     	    }
 	});
 
@@ -421,7 +421,7 @@
 	document.getElementById('specimen-no').addEventListener('blur', function() {
     	    const specimenInput = document.getElementById('specimen-no');
     	    if (specimenInput.value === '') {
-            specimenInput.value = 'XXXX';
+        	updateSpecimenNumber(); // Revert to the original specimen number if left blank
     	    }
 	});
 
