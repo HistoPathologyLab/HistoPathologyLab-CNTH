@@ -437,17 +437,20 @@
     	    const value = input.value.replace(/\D/g, ''); // Remove non-digit characters
     	    let formattedValue = '';
 
-    	    if (value.length > 2) {
-            	formattedValue += value.substring(0, 2) + '/';
-    	    }
-    	    if (value.length > 4) {
-        	formattedValue += value.substring(2, 4) + '/';
-        	formattedValue += value.substring(4, 8);
-    	    } else {
-        	formattedValue += value.substring(2, 4);
-    	    }
+    	    if (value.length > 0) {
+            	formattedValue += value.substring(0, 2); // Day
+            if (value.length > 2) {
+            	formattedValue += '/' + value.substring(2, 4); // Month
+            	if (value.length > 4) {
+                formattedValue += '/' + value.substring(4, 8); // Year
+                }
+            }
+    	}
 
-    	    input.value = formattedValue;
+    	// Maintain the cursor position
+    	const cursorPosition = input.selectionStart;
+    	input.value = formattedValue;
+    	input.setSelectionRange(cursorPosition, cursorPosition);
 	}
 
 	// Add event listeners to the date inputs
