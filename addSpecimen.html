@@ -409,6 +409,22 @@
 	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
 	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
 
+	// Function to handle focus on the specimen number input field
+	document.getElementById('specimen-no').addEventListener('focus', function() {
+    	    const specimenInput = document.getElementById('specimen-no');
+    	    if (specimenInput.value === 'XXXX') {
+        	specimenInput.value = '';
+    	    }
+	});
+
+	// Function to handle blur (loss of focus) on the specimen number input field
+	document.getElementById('specimen-no').addEventListener('blur', function() {
+    	    const specimenInput = document.getElementById('specimen-no');
+    	    if (specimenInput.value === '') {
+            specimenInput.value = 'XXXX';
+    	    }
+	});
+
         // Initialize page on load
         window.onload = function() {
             checkSession();
