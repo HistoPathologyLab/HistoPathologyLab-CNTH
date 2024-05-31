@@ -398,11 +398,17 @@
 
 	// Function to update specimen number based on selected year and type
 	function updateSpecimenNumber() {
-            const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
-            const type = document.getElementById('type').value;
-            const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
-            const specimenNumber = `${prefix} XXXX/${year}`; // Use backticks for template string
-            document.getElementById('specimen-no').value = specimenNumber;
+    	    const specimenInput = document.getElementById('specimen-no');
+    	    const currentValue = specimenInput.value;
+    
+    	    // Only update the specimen number if the current value is 'XXXX'
+    	    if (currentValue === 'XXXX') {
+            	const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
+            	const type = document.getElementById('type').value;
+            	const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
+            	const specimenNumber = ${prefix} XXXX/${year}; // Use backticks for template string
+            	specimenInput.value = specimenNumber;
+    	    }
 	}
 
 	// Call updateSpecimenNumber whenever the year or type selection changes
