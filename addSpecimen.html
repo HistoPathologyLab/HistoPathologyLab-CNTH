@@ -375,6 +375,12 @@
             const yearSelect = document.getElementById('year');
             const currentYear = new Date().getFullYear();
 
+            // Add a blank option at the start
+            const blankOption = document.createElement('option');
+            blankOption.value = '';
+            blankOption.text = '';
+            yearSelect.appendChild(blankOption);
+
             for (let i = 0; i <= 10; i++) { // Populate the next 10 years
                 const yearOption = document.createElement('option');
                 yearOption.value = currentYear + i;
@@ -407,10 +413,28 @@
 
             if (year && prefix) {
                 const yearSuffix = year.slice(-2);
-                const randomNumber = Math.floor(1000 + Math.random() * 9000); // Random 4-digit number
-                specimenNoField.value = '${prefix} ${randomNumber}/${yearSuffix}';
+                specimenNoField.value = '${prefix} xxxx/${yearSuffix}';
             }
         }
+
+    	// Add event listener to format date input
+    	function formatDateInput(event) {
+            const input = event.target;
+            const value = input.value.replace(/\D/g, ''); // Remove non-digit characters
+            let formattedValue = '';
+
+            if (value.length > 0) {
+                formattedValue += value.substring(0, 2);
+            }
+            if (value.length > 2) {
+                formattedValue += '/' + value.substring(2, 4);
+            }
+            if (value.length > 4) {
+                formattedValue += '/' + value.substring(4, 8);
+            }
+
+            input.value = formattedValue;
+    	}
 
         // Event listeners to generate specimen number
         document.getElementById('year').addEventListener('change', generateSpecimenNo);
@@ -454,6 +478,11 @@
                 sidebar.classList.remove('visible');
             }
         });
+
+    	// Add event listeners for date formatting
+    	document.getElementById('date-surgery').addEventListener('input', formatDateInput);
+    	document.getElementById('specimen-received').addEventListener('input', formatDateInput);
+	});
     </script>
 </body>
 </html>
