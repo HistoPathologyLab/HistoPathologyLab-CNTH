@@ -295,6 +295,7 @@
 
                 <label for="type">Type:</label>
                 <select id="type" name="type">
+    		    <option value="" selected disabled>Select Type</option> <!-- Add placeholder option -->
                     <option value="Histo">Histo</option>
                     <option value="FNAC">FNAC</option>
                     <option value="Cyto">Cyto</option>
@@ -399,6 +400,7 @@
         window.onload = function() {
             checkSession();
             populateYearDropdown();
+    	    document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
         };
 
         // Log out functionality
