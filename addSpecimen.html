@@ -396,6 +396,26 @@
             }
         }
 
+	// Function to update specimen number based on selected year and type
+	function updateSpecimenNumber() {
+            const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
+            const type = document.getElementById('type').value;
+            const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
+            const specimenNumber = ${prefix} XXXX/${year}; // Generate the specimen number format
+            document.getElementById('specimen-no').value = specimenNumber;
+	}
+
+	// Call updateSpecimenNumber whenever the year or type selection changes
+	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
+	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
+
+	// Call updateSpecimenNumber on page load
+	window.onload = function() {
+    	    checkSession();
+    	    populateYearDropdown();
+    	    updateSpecimenNumber(); // Update specimen number initially
+	};
+
         // Initialize page on load
         window.onload = function() {
             checkSession();
