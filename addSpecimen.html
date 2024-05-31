@@ -372,9 +372,6 @@
             }
         }
 
-        // Call checkSession on page load
-        window.onload = checkSession;
-
         // Function to populate year dropdown
         function populateYearDropdown() {
             const yearSelect = document.getElementById('year');
@@ -405,16 +402,9 @@
             document.getElementById('specimen-no').value = specimenNumber;
 	}
 
-	// Call updateSpecimenNumber whenever the year or type selection changes
-	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
-	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
-
-	// Call checkSession and populateYearDropdown on page load
-	window.onload = function() {
-    	    checkSession();
-    	    populateYearDropdown();
-    	    document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
-	};
+    	// Event listeners for updating specimen number
+    	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
+    	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
 
 	// Function to handle focus on the specimen number input field
 	document.getElementById('specimen-no').addEventListener('focus', function() {
@@ -432,13 +422,14 @@
     	    }
 	});
 
-        // Call updateSpecimenNumber on page load
-        window.onload = function() {
+	// Unified window.onload function
+    	window.onload = function() {
             checkSession();
             populateYearDropdown();
-    	    document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
-	    updateSpecimenNumber(); // Update specimen number initially
-        };
+            document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
+            document.getElementById('specimen-no').value = ''; // Ensure the specimen number field is blank initially
+            updateSpecimenNumber(); // Update specimen number initially
+    	};
 
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
