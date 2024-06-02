@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Histopathology Lab System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            background-color: darkblue;
+            width: 250px; /* Fixed width for the sidebar */
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+            padding-top: 20px;
+            padding-left: 15px;
+            padding-right: 15px;
+            overflow-y: auto;
+            position: fixed; /* Ensure the sidebar stays fixed */
+            height: 100vh;
+        }
+        .sidebar h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+        }
+        .sidebar h2 {
+            font-size: 16px;
+            font-weight: normal;
+            margin: 0;
+            text-align: center;
+        }
+        .sidebar-item {
+            font-family: 'Congenial', sans-serif;
+            font-size: 14px;
+            padding: 15px 20px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            margin-left: 10px;
+        }
+        .sidebar-item.bold {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+        .sidebar-item:hover {
+            background-color: #004080;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .divider {
+            width: 90%;
+            border: 1px solid white;
+            margin: 20px 0;
+        }
+        .content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            margin-left: 250px; /* Add margin to accommodate the fixed sidebar */
+            overflow-y: auto;
+            height: 100vh;
+            width: calc(100% - 250px);
+            background-image: url('https://github.com/HistoPathologyLab/HistoPathologyLab-CNTH/raw/main/Home%20page.jpg'); /* Background image */
+            background-size: cover; /* Ensure the image covers the entire area */
+            background-position: center; /* Center the image */
+        }
+        .top-bar {
+            background-color: white;
+            height: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center the content */
+            padding: 0 20px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent text wrapping */
+            margin-left: 30px;
+        }
+        .logo {
+            height: 80%;
+            position: absolute; /* Position the logo absolutely */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for true centering */
+        }
+        .datetime {
+            color: darkblue;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            position: absolute; /* Add this line */
+            right: 20px; /* Adjust margin to create space */
+            white-space: nowrap;
+        }
+        .datetime .time {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .datetime .date {
+            font-size: 12px;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-x: auto; /* Ensure main content can scroll horizontally */
+        }
+        .menu-button {
+            display: none; /* Initially hidden */
+	}
+	.form-container {
+    	    display: grid;
+    	    grid-template-columns: 1fr 1fr; /* Two columns */
+    	    gap: 20px; /* Space between items */
+    	    max-width: 600px;
+    	    margin: 30px auto;
+    	    background-color: rgba(255, 255, 255, 0.9);
+    	    padding: 20px;
+    	    border-radius: 10px;
+    	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+	.form-container label {
+            margin-top: 10px;
+    	    font-weight: bold;
+    	    grid-column: 1 / span 1; /* Label in first column */
+	}
+	.form-container input,
+	.form-container select {
+            padding: 10px;
+    	    margin-top: 5px;
+    	    font-size: 14px;
+    	    border-radius: 5px;
+    	    border: 1px solid #ccc;
+    	    grid-column: 2 / span 1; /* Input/select in second column */
+	}
+	.form-container .button-container {
+            grid-column: 1 / span 2; /* Span both columns */
+    	    display: flex;
+    	    justify-content: space-between;
+    	    margin-top: 20px;
+	}
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px; /* Adjust the width for smaller screens */
+                position: absolute; /* Change to absolute for mobile view */
+                z-index: 1000; /* Ensure it is on top */
+                transform: translateX(-100%); /* Hide by default */
+                transition: transform 0.3s ease;
+            }
+            .sidebar.visible {
+                transform: translateX(0); /* Show when toggled */
+            }
+            .sidebar h1, .sidebar h2 {
+                font-size: 18px;
+            }
+            .sidebar-item {
+                font-size: 12px;
+                padding: 10px;
+                margin: 0;
+            }
+            .top-bar {
+                height: 50px;
+                padding: 0 10px;
+                margin-left: 0; /* Remove margin for top bar */
+            }
+            .logo {
+                height: 40px;
+            }
+            .datetime .time {
+                font-size: 14px;
+            }
+            .datetime .date {
+                font-size: 10px;
+            }
+            .content {
+                margin-left: 0; /* Remove margin for content */
+                width: 100%; /* Full width for content */
+            }
+            .menu-button {
+                display: block; /* Show menu button on mobile */
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background-color: darkblue;
+                color: white;
+                border: none;
+                padding: 10px;
+                cursor: pointer;
+	    }
+    	    .form-container .button-container button {
+        	padding: 11px 16px; /* Decrease padding for smaller screens */
+        	font-size: 14px; /* Decrease font size for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 150px; /* Further adjust the width for very small screens */
+            }
+            .sidebar-item {
+                font-size: 10px;
+                padding: 8px;
+            }
+            .logo {
+                height: 30px;
+            }
+            .datetime .time {
+                font-size: 12px;
+            }
+            .datetime .date {
+                font-size: 8px;
+	    }
+    	    .form-container .button-container button {
+        	padding: 10px 14px; /* Further decrease padding for very small screens */
+        	font-size: 12px; /* Further decrease font size for very small screens */
+            }
+        }
+
+        @media (max-width: 320px) and (orientation: portrait) {
+            .sidebar {
+                width: 120px; /* Final adjustment for 320px screens */
+            }
+            .sidebar-item {
+                font-size: 8px;
+                padding: 5px;
+            }
+            .sidebar h1 {
+                font-size: 14px;
+            }
+            .sidebar h2 {
+                font-size: 10px;
+            }
+            .top-bar {
+                height: 40px;
+                padding: 0 5px;
+            }
+            .logo {
+                height: 20px;
+            }
+            .datetime .time {
+                font-size: 10px;
+            }
+            .datetime .date {
+                font-size: 8px;
+            }
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px; /* Set a max-width for the form */
+            margin: 30px auto; /* Center the form */
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .form-container input,
+        .form-container select {
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-container .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .form-container .button-container button {
+            padding: 8px 12px; /* Adjust padding for 320px screens in portrait orientation */
+            font-size: 12px; /* Adjust font size for 320px screens in portrait orientation */
+	    font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: darkblue;
+            color: white;
+        }
+        .form-container .button-container button:hover {
+            background-color: #FFBF00; /* Change background color to #FFBF00 */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <h1>ReportLab</h1>
+        <h2>CNTH</h2>
+        <hr class="divider"> <!-- Divider line added here-->
+        <div class="sidebar-item bold" id="home-link">Home</div>
+        <div class="sidebar-item bold highlight" id="histo-reports-link">Histo Reports Summary</div>
+        <div class="sidebar-item">FNAC Reports Summary</div>
+        <div class="sidebar-item">Cyto Reports Summary</div>
+        <div class="sidebar-item">US guided FNAC Reports Summary</div>
+        <div class="sidebar-item">ERPR Reports</div> <!-- New sidebar item added here-->
+        <div class="sidebar-item">Cancer Reports</div>
+        <div class="sidebar-item">Pending Reports</div>
+        <div class="sidebar-item">Reports to Print</div>
+        <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
+        <div class="sidebar-item bold" id="logout">Log out</div>
+    </div>
+    <div class="content" id="content">
+        <div class="top-bar">
+            <button class="menu-button" id="menu-button">&#9776;</button>
+            <img src="https://raw.githubusercontent.com/HistoPathologyLab/HistoPathologyLab-CNTH/main/Logo%202%20Histopathology%20Lab.png" alt="Histopathology Lab Logo" class="logo">
+            <div class="datetime" id="datetime">
+                <div class="time" id="time"></div>
+                <div class="date" id="date"></div>
+            </div>
+        </div>
+        <div class="main-content" id="main-content">
+            <!-- Main content goes here -->
+            <div class="form-container">
+                <label for="year">Year:</label>
+                <select id="year" name="year"></select>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+    		    <option value="" selected disabled>Select Gender</option> <!-- Add placeholder option -->
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <label for="type">Type:</label>
+                <select id="type" name="type">
+    		    <option value="" selected disabled>Select Type</option> <!-- Add placeholder option -->
+                    <option value="Histo">Histo</option>
+                    <option value="FNAC">FNAC</option>
+                    <option value="Cyto">Cyto</option>
+                    <option value="US guided FNAC">US guided FNAC</option>
+                </select>
+
+                <label for="bht-no">BHT No:</label>
+                <input type="text" id="bht-no" name="bht-no">
+
+                <label for="specimen-no">Specimen No:</label>
+                <input type="text" id="specimen-no" name="specimen-no">
+
+                <label for="ward-clinic-no">Ward / Clinic No:</label>
+                <input type="text" id="ward-clinic-no" name="ward-clinic-no">
+
+                <label for="patient-name">Patient's Name:</label>
+                <input type="text" id="patient-name" name="patient-name">
+
+                <label for="patient-age">Patient's Age:</label>
+                <input type="number" id="patient-age" name="patient-age">
+
+                <label for="date-surgery">Date of Surgery / Procedure:</label>
+                <input type="text" id="date-surgery" name="date-surgery" placeholder="DD/MM/YYYY">
+
+                <label for="specimen-received">Specimen Received Date:</label>
+                <input type="text" id="specimen-received" name="specimen-received" placeholder="DD/MM/YYYY">
+
+                <div class="button-container">
+                    <button id="search-edit-remove">Search For Edit / Remove Report</button>
+                    <button id="generate-report">Generate Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to update time and date
+        function updateTime() {
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+            const now = new Date();
+
+            // Time options
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+
+            // Date options
+            const dateOptions = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+
+            const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+
+            timeElement.textContent = formattedTime;
+            dateElement.textContent = formattedDate;
+        }
+
+        // Update time and date every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call to display immediately
+
+        // Function to check if the user is logged in
+        function checkSession() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Function to populate year dropdown
+        function populateYearDropdown() {
+            const yearSelect = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
+
+    	    // Add a placeholder option
+    	    const placeholderOption = document.createElement('option');
+            placeholderOption.value = '';
+            placeholderOption.text = 'Select Year';
+            placeholderOption.disabled = true; // Ensure it can't be selected again
+            placeholderOption.selected = true; // Ensure it is selected by default
+    	    yearSelect.appendChild(placeholderOption);
+
+            for (let i = 0; i <= 10; i++) { // Populate the next 10 years
+                const yearOption = document.createElement('option');
+                yearOption.value = currentYear + i;
+                yearOption.text = currentYear + i;
+                yearSelect.appendChild(yearOption);
+            }
+        }
+
+	// Function to update specimen number based on selected year and type
+	function updateSpecimenNumber() {
+            const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
+            const type = document.getElementById('type').value;
+
+	    if (year && type) {
+            	const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
+            	const specimenNumber = `${prefix} XXXX/${year}`; // Use backticks for template string
+            	document.getElementById('specimen-no').value = specimenNumber;
+	    }
+	}
+
+    	// Event listeners for updating specimen number
+    	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
+    	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
+
+	// Function to handle focus on the specimen number input field
+	document.getElementById('specimen-no').addEventListener('focus', function() {
+    	    const specimenInput = document.getElementById('specimen-no');
+    	    if (specimenInput.value.includes('XXXX')) {
+        	specimenInput.value = specimenInput.value.replace('XXXX', ''); // Clear only the 'XXXX' part
+    	    }
+	});
+
+	// Function to handle blur (loss of focus) on the specimen number input field
+	document.getElementById('specimen-no').addEventListener('blur', function() {
+    	    const specimenInput = document.getElementById('specimen-no');
+    	    const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
+    	    const type = document.getElementById('type').value;
+
+    	    if (specimenInput.value.trim() === '' || specimenInput.value === '/') { // Check if input is empty or contains only slashes
+        	updateSpecimenNumber(); // Revert to the original specimen number if left blank
+    	    } else {
+        	const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
+        	const currentValue = specimenInput.value;
+
+        	// Check if the prefix already exists
+        	if (!currentValue.startsWith(prefix)) {
+            	    const formattedSpecimenNumber = `${prefix} ${currentValue.split('/')[0].padEnd(4, 'X')}/${year}`;
+            	    specimenInput.value = formattedSpecimenNumber;
+        	} else {
+            	    const formattedSpecimenNumber = `${currentValue.split('/')[0].padEnd(4, 'X')}/${year}`;
+            	    specimenInput.value = formattedSpecimenNumber;
+        	}
+    	    }
+	});
+
+	// Unified window.onload function
+    	window.onload = function() {
+            checkSession();
+            populateYearDropdown();
+            document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
+	    document.getElementById('gender').selectedIndex = 0; // Select the placeholder option by default
+    	};
+
+	// Function to format date input
+	function formatDateInput(input) {
+    	    const value = input.value.replace(/\D/g, ''); // Remove non-digit characters
+    	    let formattedValue = '';
+    	    let cursorPosition = input.selectionStart; // Get the current cursor position
+
+    	    if (value.length > 0) {
+        	formattedValue += value.substring(0, 2); // Day
+        	if (value.length > 2) {
+            	    formattedValue += '/' + value.substring(2, 4); // Month
+            	    if (value.length > 4) {
+                	formattedValue += '/' + value.substring(4, 8); // Year
+                    }
+                }
+            }
+
+            // Set the formatted value
+    	    input.value = formattedValue;
+
+    	    // Adjust the cursor position after formatting
+    	    if (cursorPosition > formattedValue.length) {
+                cursorPosition = formattedValue.length;
+    	    } else if (cursorPosition > 2 && cursorPosition <= 5) {
+                cursorPosition += 1; // Adjust for the first '/' character
+    	    } else if (cursorPosition > 5) {
+        	cursorPosition += 2; // Adjust for both '/' characters
+    	    }
+
+    	    // Update cursor position
+    	    input.setSelectionRange(cursorPosition, cursorPosition);
+	}
+
+	// Add event listeners to the date inputs
+	const dateSurgeryInput = document.getElementById('date-surgery');
+	const specimenReceivedInput = document.getElementById('specimen-received');
+
+	dateSurgeryInput.addEventListener('input', function() {
+    	    formatDateInput(dateSurgeryInput);
+	});
+
+	specimenReceivedInput.addEventListener('input', function() {
+    	    formatDateInput(specimenReceivedInput);
+	});
+
+        // Log out functionality
+        document.getElementById('logout').addEventListener('click', function() {
+            sessionStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        });
+
+        // Reload home.html when the Home item is clicked
+        document.getElementById('home-link').addEventListener('click', function() {
+            window.location.href = 'home.html';
+        });
+
+    	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
+    	document.getElementById('histo-reports-link').addEventListener('click', function() {
+            window.location.href = 'histoReports.html';
+    	});
+
+        // Toggle sidebar visibility for mobile
+        const menuButton = document.getElementById('menu-button');
+        const sidebar = document.getElementById('sidebar');
+
+        menuButton.addEventListener('click', function() {
+            sidebar.classList.toggle('visible');
+        });
+
+        // Close the sidebar when clicking outside of it
+        document.addEventListener('click', function(event) {
+            if (!sidebar.contains(event.target) && event.target !== menuButton) {
+                sidebar.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>
