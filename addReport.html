@@ -121,6 +121,31 @@
             display: none; /* Initially hidden */
         }
 
+	.form-container {
+   	    display: flex;
+    	    flex-direction: column; /* Stack rows vertically */
+	}
+
+	.form-group {
+    	    display: flex;
+    	    align-items: center;
+    	    margin-bottom: 10px; /* Adjust spacing between form groups */
+	}
+
+	.form-group label {
+    	    margin-right: 10px; /* Space between label and input */
+    	    width: 100px; /* Fixed width for labels */
+	}
+
+	.form-group input {
+    	    margin-right: 20px; /* Space between input fields */
+    	    flex: 1; /* Allow input fields to grow and take available space */
+	}
+	.button-container button {
+            padding: 8px 16px;
+            font-size: 14px; 
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px; /* Adjust the width for smaller screens */
@@ -226,7 +251,7 @@
         <h2>CNTH</h2>
         <hr class="divider"> <!-- Divider line added here-->
         <div class="sidebar-item bold" id="home-link">Home</div>
-        <div class="sidebar-item">Histo Reports Summary</div>
+        <div class="sidebar-item" id="histo-reports-link">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
         <div class="sidebar-item">US guided FNAC Reports Summary</div>
