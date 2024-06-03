@@ -365,7 +365,7 @@
                 </div>
                 <div class="button-row">
                     <button class="custom-button">Edit Reports</button>
-                    <button class="custom-button">Add / Remove Report</button>
+		    <button class="custom-button" id="add-remove-report-button">Add / Remove Report</button>
                     <button class="custom-button">Add / Edit Deep / FR</button>
                 </div>
                 <div class="button-row">
@@ -450,6 +450,11 @@
 	// Add event listener to the "Add / Remove Specimen" button
 	document.getElementById('add-remove-specimen-button').addEventListener('click', function() {
     	    window.location.href = 'addSpecimen.html';
+	});
+
+	// Add event listener to the "Add / Remove Report" button
+	document.getElementById('add-remove-report-button').addEventListener('click', function() {
+    	    window.location.href = 'addReport.html';
 	});
 
         // Toggle sidebar visibility for mobile

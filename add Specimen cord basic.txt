@@ -279,7 +279,7 @@
         <h2>CNTH</h2>
         <hr class="divider"> <!-- Divider line added here-->
         <div class="sidebar-item bold" id="home-link">Home</div>
-        <div class="sidebar-item" id="histo-reports-link">Histo Reports Summary</div>
+        <div class="sidebar-item bold highlight" id="histo-reports-link">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
         <div class="sidebar-item">US guided FNAC Reports Summary</div>
@@ -322,13 +322,6 @@
 
                 <label for="patient-age">Patient's Age:</label>
                 <input type="number" id="patient-age" name="patient-age">
-
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender">
-    		    <option value="" selected disabled>Select Gender</option> <!-- Add placeholder option -->
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
 
                 <label for="bht-no">BHT No:</label>
                 <input type="text" id="bht-no" name="bht-no">
@@ -464,7 +457,6 @@
             checkSession();
             populateYearDropdown();
             document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
-	    document.getElementById('gender').selectedIndex = 0; // Select the placeholder option by default
     	};
 
 	// Function to format date input
