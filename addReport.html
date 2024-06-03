@@ -322,6 +322,46 @@
                     <input type="text" id="bht-no" name="bht-no">
                     <label for="specimen-received">Specimen Received Date:</label>
                     <input type="text" id="specimen-received" name="specimen-received" placeholder="DD/MM/YYYY">
+    		</div>
+    		<div class="form-group">
+                    <label for="specimen">Specimen:</label>
+                    <input type="text" id="specimen" name="specimen">
+    		</div>
+    		<div class="form-group">
+		    <label for="macro">Macro:</label>
+                    <input type="text" id="macro" name="macro">
+    		</div>
+    		<div class="form-group">
+		    <label for="micro">Micro:</label>
+                    <input type="text" id="micro" name="micro">
+    		</div>
+    		<div class="form-group">
+		    <label for="conclusion">CONCLUSION:</label>
+                    <input type="text" id="conclusion" name="conclusion">
+    		</div>
+    		<div class="form-group">
+		    <label for="diagnosis-for-summary-sheet">Diagnosis for summary sheet:</label>
+                    <input type="text" id="diagnosis-for-summary-sheet" name="diagnosis-for-summary-sheet">
+    		</div>
+    		<div class="form-group">
+		    <label for="comment">Comment:</label>
+                    <input type="text" id="comment" name="comment">
+    		</div>
+    		<div class="form-group">
+                    <label for="relevant-registrar-dr.">Relevant Registrar Dr.:</label>
+                    <select id="relevant-registrar-dr." name="relevant-registrar-dr.">
+    		    	<option value="" selected disabled>Select Gender</option> <!-- Add placeholder option -->
+                    </select>
+                    <label for="relevant-consultant-dr.">Relevant Consultant Dr.:</label>
+                    <select id="relevant-consultant-dr." name="relevant-consultant-dr.">
+    		    	<option value="" selected disabled>Select Gender</option> <!-- Add placeholder option -->
+                    </select>
+    		</div>
+    		<div class="form-group">
+                    <label for="typing">Typing Date:</label>
+                    <input type="text" id="typing" name="typing" placeholder="DD/MM/YYYY">
+    		</div>
+            </div>
     </div>
 
     <script>
@@ -365,8 +405,81 @@
             }
         }
 
-        // Call checkSession on page load
-        window.onload = checkSession;
+        // Function to populate year dropdown
+        function populateYearDropdown() {
+            const yearSelect = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
+
+    	    // Add a placeholder option
+    	    const placeholderOption = document.createElement('option');
+            placeholderOption.value = '';
+            placeholderOption.text = 'Select Year';
+            placeholderOption.disabled = true; // Ensure it can't be selected again
+            placeholderOption.selected = true; // Ensure it is selected by default
+    	    yearSelect.appendChild(placeholderOption);
+
+            for (let i = 0; i <= 10; i++) { // Populate the next 10 years
+                const yearOption = document.createElement('option');
+                yearOption.value = currentYear + i;
+                yearOption.text = currentYear + i;
+                yearSelect.appendChild(yearOption);
+            }
+        }
+
+	// Function to update specimen number based on selected year and type
+	function updateSpecimenNumber() {
+            const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
+            const type = document.getElementById('type').value;
+
+	    if (year && type) {
+            	const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
+            	const specimenNumber = `${prefix} XXXX/${year}`; // Use backticks for template string
+            	document.getElementById('specimen-no').value = specimenNumber;
+	    }
+	}
+
+    	// Event listeners for updating specimen number
+    	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
+    	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
+
+	// Function to handle focus on the specimen number input field
+	document.getElementById('specimen-no').addEventListener('focus', function() {
+    	    const specimenInput = document.getElementById('specimen-no');
+    	    if (specimenInput.value.includes('XXXX')) {
+        	specimenInput.value = specimenInput.value.replace('XXXX', ''); // Clear only the 'XXXX' part
+    	    }
+	});
+
+	// Function to handle blur (loss of focus) on the specimen number input field
+	document.getElementById('specimen-no').addEventListener('blur', function() {
+    	    const specimenInput = document.getElementById('specimen-no');
+    	    const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
+    	    const type = document.getElementById('type').value;
+
+    	    if (specimenInput.value.trim() === '' || specimenInput.value === '/') { // Check if input is empty or contains only slashes
+        	updateSpecimenNumber(); // Revert to the original specimen number if left blank
+    	    } else {
+        	const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
+        	const currentValue = specimenInput.value;
+
+        	// Check if the prefix already exists
+        	if (!currentValue.startsWith(prefix)) {
+            	    const formattedSpecimenNumber = `${prefix} ${currentValue.split('/')[0].padEnd(4, 'X')}/${year}`;
+            	    specimenInput.value = formattedSpecimenNumber;
+        	} else {
+            	    const formattedSpecimenNumber = `${currentValue.split('/')[0].padEnd(4, 'X')}/${year}`;
+            	    specimenInput.value = formattedSpecimenNumber;
+        	}
+    	    }
+	});
+
+	// Unified window.onload function
+    	window.onload = function() {
+            checkSession();
+            populateYearDropdown();
+            document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
+	    document.getElementById('gender').selectedIndex = 0; // Select the placeholder option by default
+    	};
 
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
