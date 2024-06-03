@@ -127,8 +127,9 @@
             max-width: 1100px; /* Set a max-width for the form */
             margin: 30px auto; /* Center the form */
             background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
-            padding: 15px;
+            padding: 8px 16px;
             border-radius: 10px;
+	    font-size: 14px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	}
 
@@ -139,12 +140,13 @@
 	}
 
 	.form-group label {
-    	    margin-right: 10px; /* Space between label and input */
-    	    width: 100px; /* Fixed width for labels */
+    	    margin-right: 15px; /* Space between label and input */
+    	    width: 150px; /* Fixed width for labels */
 	    font-weight: bold;
 	}
 
-	.form-group input, .form group select {
+	.form-group input, 
+	.form group select {
     	    margin-right: 20px; /* Space between input fields */
     	    flex: 1; /* Allow input fields to grow and take available space */
             padding: 10px;
@@ -153,7 +155,7 @@
             border-radius: 5px;
             border: 1px solid #ccc;
 	}
-	.button-container button {
+	.form-container, .button-container button {
             padding: 8px 16px;
             font-size: 14px;
             border: none; 
@@ -383,8 +385,9 @@
                     <input type="text" id="typing" name="typing" placeholder="DD/MM/YYYY">
     		</div>
 
-            <div class="button-container">
-                <button id="generate-report">Search For Generate Report</button>
+		<div class="button-container">
+                    <button id="generate-report">Search For Generate Report</button>
+    		</div>
             </div>
         </div>
     </div>
