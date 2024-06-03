@@ -506,7 +506,7 @@
             document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
 	    document.getElementById('gender').selectedIndex = 0; // Select the placeholder option by default
 	    document.getElementById('relevant-registrar-dr.').selectedIndex = 0; // Select the placeholder option by default
-	    document.getElementById('relevant-consultnt-dr.').selectedIndex = 0; // Select the placeholder option by default
+	    document.getElementById('relevant-consultant-dr.').selectedIndex = 0; // Select the placeholder option by default
     	};
 
 	// Function to format date input
@@ -544,7 +544,7 @@
 	// Add event listeners to the date inputs
 	const dateSurgeryInput = document.getElementById('date-surgery');
 	const specimenReceivedInput = document.getElementById('specimen-received');
-	const specimenReceivedInput = document.getElementById('typing');
+	const typingInput = document.getElementById('typing');
 
 
 	dateSurgeryInput.addEventListener('input', function() {
@@ -555,7 +555,7 @@
     	    formatDateInput(specimenReceivedInput);
 	});
 
-	specimenReceivedInput.addEventListener('input', function() {
+	typingInput.addEventListener('input', function() {
     	    formatDateInput(typingInput);
 	});
 
