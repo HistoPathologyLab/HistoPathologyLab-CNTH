@@ -192,6 +192,51 @@
             background-color: #1E90FF; /* Change background color to #1E90FF */
             color: white; /* Text color remains white */
         }
+	.modal {
+    	    display: none; /* Hidden by default */
+    	    position: fixed; /* Stay in place */
+    	    z-index: 1000; /* Sit on top */
+    	    left: 0;
+    	    top: 0;
+    	    width: 100%; /* Full width */
+    	    height: 100%; /* Full height */
+    	    overflow: auto; /* Enable scroll if needed */
+    	    background-color: rgb(0,0,0); /* Fallback color */
+    	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+
+	.modal-content {
+    	    background-color: #fefefe;
+    	    margin: 15% auto; /* 15% from the top and centered */
+    	    padding: 20px;
+    	    border: 1px solid #888;
+    	    width: 80%; /* Could be more or less, depending on screen size */
+    	    max-width: 400px; /* Add a max-width for better responsiveness */
+     	    text-align: center;
+    	    border-radius: 10px; /* Rounded edges */
+	}
+
+	.close {
+    	    color: #aaa;
+    	    float: right;
+    	    font-size: 28px;
+    	    font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+    	    color: black;
+    	    text-decoration: none;
+    	    cursor: pointer;
+	}
+
+	#pinInput {
+    	    width: 100%;
+    	    padding: 10px;
+    	    margin: 10px 0;
+    	    box-sizing: border-box;
+	}
+
 	@media (min-width: 769px) and (max-width: 1024px) {
     	    .button-row {
                 flex-wrap: wrap; /* Allow buttons to wrap */
@@ -330,16 +375,16 @@
         <h1>ReportLab</h1>
         <h2>CNTH</h2>
         <hr class="divider"> <!-- Divider line added here-->
-        <div class="sidebar-item bold" id="home-link">Home</div>
+        <div class="sidebar-item" id="home-link">Home</div>
         <div class="sidebar-item" id="histo-reports-link">Histo Reports Summary</div>
-        <div class="sidebar-item">FNAC Reports Summary</div>
-        <div class="sidebar-item">Cyto Reports Summary</div>
-        <div class="sidebar-item">US guided FNAC Reports Summary</div>
-        <div class="sidebar-item">ERPR Reports</div> <!-- New sidebar item added here-->
-        <div class="sidebar-item">Cancer Reports</div>
-        <div class="sidebar-item">Pending Reports</div>
-        <div class="sidebar-item">Reports to Print</div>
-        <div class="sidebar-item">Add Consultant / Registrar (Dr.)</div>
+        <div class="sidebar-item" id="fnac-reports-link">FNAC Reports Summary</div>
+        <div class="sidebar-item" id="cyto-reports-link">Cyto Reports Summary</div>
+        <div class="sidebar-item" id="us-guided-fnac-reports-link">US guided FNAC Reports Summary</div>
+        <div class="sidebar-item" id="erpr-reports-link">ERPR Reports</div>
+        <div class="sidebar-item" id="cancer-reports-link">Cancer Reports</div>
+        <div class="sidebar-item" id="pending-reports-link">Pending Reports</div>
+        <div class="sidebar-item" id="reports-to-print-link">Reports to Print</div>
+        <div class="sidebar-item" id="add-registrar-consultant-link">Add Consultant / Registrar (Dr.)</div>
         <div class="sidebar-item bold" id="logout">Log out</div>
     </div>
     <div class="content" id="content">
@@ -383,6 +428,15 @@
 	        <div class="button-row style="margin-top: 40px;"> <!-- Adjusted margin-top -->
                     <button class="new-custom-button">Summary</button>
                 </div>
+            </div>
+            <div id="pinModal" class="modal">
+    		<div class="modal-content">
+        	    <span class="close">&times;</span>
+                    <h2>Enter PIN</h2>
+                    <input type="password" id="pinInput" placeholder="Enter PIN">
+                    <button id="pinSubmit">Submit</button>
+                    <p id="pinError" style="color: red; display: none;">Incorrect PIN. Please try again.</p>
+    		</div>
             </div>
         </div>
     </div>
@@ -447,6 +501,46 @@
     	    window.location.href = 'histoReports.html';
 	});
 
+	// Reload fnacReports.html when the "FNAC Reports Summary" item is clicked
+	document.getElementById('fnac-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'fnacReports.html';
+	});
+
+	// Reload cytoReports.html when the "Cyto Reports Summary" item is clicked
+	document.getElementById('cyto-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'cytoReports.html';
+	});
+
+	// Reload usguidedfnacReports.html when the "US guided FNAC Reports Summary" item is clicked
+	document.getElementById('us-guided-fnac-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'usguidedfnacReports.html';
+	});
+
+	// Reload erprReports.html when the "ERPR Reports" item is clicked
+	document.getElementById('erpr-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'erprReports.html';
+	});
+
+	// Reload cancerReports.html when the "Cancer Reports" item is clicked
+	document.getElementById('cancer-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'cancerReports.html';
+	});
+
+	// Reload pendingReports.html when the "Pending Reports" item is clicked
+	document.getElementById('pending-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'pendingReports.html';
+	});
+
+	// Reload reportstoPrint.html when the "Reports to Print" item is clicked
+	document.getElementById('reports-to-print-link').addEventListener('click', function() {
+    	    window.location.href = 'reportstoPrint.html';
+	});
+
+	// Reload addregistrarConsultant.html when the "Add Consultant / Registrar (Dr.)" item is clicked
+	document.getElementById('add-registrar-consultant-link').addEventListener('click', function() {
+    	    window.location.href = 'addregistrarConsultant.html';
+	});
+
 	// Add event listener to the "Add / Remove Specimen" button
 	document.getElementById('add-remove-specimen-button').addEventListener('click', function() {
     	    window.location.href = 'addSpecimen.html';
@@ -455,6 +549,53 @@
 	// Add event listener to the "Add / Remove Report" button
 	document.getElementById('add-remove-report-button').addEventListener('click', function() {
     	    window.location.href = 'addReport.html';
+	});
+
+	// Function to show the PIN modal
+	function showPinModal() {
+    	    const pinModal = document.getElementById('pinModal');
+    	    pinModal.style.display = 'block';
+	}
+
+	// Function to hide the PIN modal
+	function hidePinModal() {
+    	    const pinModal = document.getElementById('pinModal');
+    	    pinModal.style.display = 'none';
+	}
+
+	// Function to validate the PIN
+	function validatePin() {
+    	    const pinInput = document.getElementById('pinInput').value;
+    	    const correctPin = '0709';
+    	    const pinError = document.getElementById('pinError');
+
+            if (pinInput === correctPin) {
+        	window.location.href = 'addregistrarConsultant.html';
+            } else {
+        	pinError.style.display = 'block';
+    	    }
+	}
+
+	// Event listeners for modal
+	document.getElementById('add-registrar-consultant-link').addEventListener('click', 	function(event) {
+    	    event.preventDefault(); // Prevent default action
+    	    showPinModal();
+	});
+
+	document.querySelector('.close').addEventListener('click', function() {
+    	    hidePinModal();
+	});
+
+	document.getElementById('pinSubmit').addEventListener('click', function() {
+    	    validatePin();
+	});
+
+	// Close modal when clicking outside of it
+	window.addEventListener('click', function(event) {
+    	    const pinModal = document.getElementById('pinModal');
+    	    if (event.target === pinModal) {
+        	hidePinModal();
+    	    }
 	});
 
         // Toggle sidebar visibility for mobile

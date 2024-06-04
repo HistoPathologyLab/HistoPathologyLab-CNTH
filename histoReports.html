@@ -375,11 +375,12 @@
                             <th>Date of Surgery / Procedure</th>
                             <th>Patient's Name</th>
                             <th>Patient's Age</th>
+			    <th>Gender</th>
                             <th>Ward / Clinic No</th>
                             <th>BHT No</th>
                             <th>Specimen</th>
                             <th>Typing Date</th>
-                            <th>Conclusion</th>
+                            <th>Diagnosis</th>
                             <th>View Reports</th>
                             <th>Relevant Registrar Dr.</th>
                             <th>Relevant Consultant Dr.</th>
@@ -502,8 +503,8 @@
         const newRow = tableBody.insertRow();
 
         const fields = [
-            'specimenNo', 'dateOfSurgery', 'patientName', 'patientAge',
-            'wardNo', 'bhtNo', 'specimen', 'typingDate', 'conclusion',
+            'specimenNo', 'dateOfSurgery', 'patientName', 'patientAge', 'gender',
+            'wardNo', 'bhtNo', 'specimen', 'typingDate', 'diagnosis',
             'viewReports', 'registrarDr', 'consultantDr', 'reportIssuedDate',
             'specimenReceivedDate', 'ihcRequestedDate', 'ihcInstitute', 'ihcType',
             'ihcReceivedDate', 'specialStainRequestedDate', 'specialStainReceivedDate',
@@ -542,11 +543,12 @@
         dateOfSurgery: '01/05/2024',
         patientName: 'John Doe',
         patientAge: '45',
+	gender: 'male',
         wardNo: '12A',
         bhtNo: '67890',
         specimen: 'Biopsy',
         typingDate: '02/05/2024',
-        conclusion: 'Benign',
+        diagnosis: 'Benign',
         viewReports: true,
         registrarDr: 'Dr. Smith',
         consultantDr: 'Dr. Johnson',
@@ -585,11 +587,12 @@
             dateOfSurgery: '01/05/2024',
             patientName: 'John Doe',
             patientAge: '45',
+	    diagnosis: 'male',
             wardNo: '12A',
             bhtNo: '67890',
             specimen: 'Biopsy',
             typingDate: '02/05/2024',
-            conclusion: 'Benign',
+            diagnosis: 'Benign',
             viewReports: true,
             registrarDr: 'Dr. Smith',
             consultantDr: 'Dr. Johnson',

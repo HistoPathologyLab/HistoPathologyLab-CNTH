@@ -27,7 +27,6 @@
             overflow-y: auto;
             position: fixed; /* Ensure the sidebar stays fixed */
             height: 100vh;
-	    z-index: 1001;
         }
         .sidebar h1 {
             font-size: 24px;
@@ -79,7 +78,7 @@
         }
         .top-bar {
             background-color: white;
-            height: 15%;
+            height: 10%;
             display: flex;
             align-items: center;
             justify-content: center; /* Center the content */
@@ -121,46 +120,6 @@
         .menu-button {
             display: none; /* Initially hidden */
         }
-	.form-container {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px; /* Set a max-width for the form */
-            margin: 30px auto; /* Center the form */
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .form-container label {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .form-container input,
-        .form-container select {
-            padding: 10px;
-            margin-top: 5px;
-            font-size: 14px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .form-container .button-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .form-container .button-container button {
-            padding: 8px 16px;
-            font-size: 14px; 
-	    font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: darkblue;
-            color: white;
-        }
-        .form-container .button-container button:hover {
-            background-color: #FFBF00; /* Change background color to #FFBF00 */
-        }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -182,7 +141,7 @@
                 margin: 0;
             }
             .top-bar {
-                height: 120px;
+                height: 50px;
                 padding: 0 10px;
                 margin-left: 0; /* Remove margin for top bar */
             }
@@ -202,19 +161,13 @@
             .menu-button {
                 display: block; /* Show menu button on mobile */
                 position: absolute;
-                top: 5px;
-		left: 5px;
-		height: 40px;
+                top: 10px;
+                left: 10px;
                 background-color: darkblue;
                 color: white;
                 border: none;
                 padding: 10px;
                 cursor: pointer;
-		z-index: 1001;
-	    }
-    	    .form-container .button-container button {
-        	padding: 11px 16px; /* Decrease padding for smaller screens */
-        	font-size: 14px; /* Decrease font size for smaller screens */
             }
         }
 
@@ -234,10 +187,6 @@
             }
             .datetime .date {
                 font-size: 8px;
-	    }
-    	    .form-container .button-container button {
-        	padding: 10px 14px; /* Further decrease padding for very small screens */
-        	font-size: 12px; /* Further decrease font size for very small screens */
             }
         }
 
@@ -267,10 +216,6 @@
             }
             .datetime .date {
                 font-size: 8px;
-	    }
-    	    .form-container .button-container button {
-            	padding: 8px 12px; /* Adjust padding for 320px screens in portrait orientation */
-            	font-size: 12px; /* Adjust font size for 320px screens in portrait orientation */
             }
         }
     </style>
@@ -281,7 +226,7 @@
         <h2>CNTH</h2>
         <hr class="divider"> <!-- Divider line added here-->
         <div class="sidebar-item bold" id="home-link">Home</div>
-        <div class="sidebar-item" id="histo-reports-link">Histo Reports Summary</div>
+        <div class="sidebar-item">Histo Reports Summary</div>
         <div class="sidebar-item">FNAC Reports Summary</div>
         <div class="sidebar-item">Cyto Reports Summary</div>
         <div class="sidebar-item">US guided FNAC Reports Summary</div>
@@ -303,55 +248,6 @@
         </div>
         <div class="main-content" id="main-content">
             <!-- Main content goes here -->
-            <div class="form-container">
-                <label for="year">Year:</label>
-                <select id="year" name="year"></select>
-
-                <label for="type">Type:</label>
-                <select id="type" name="type">
-    		    <option value="" selected disabled>Select Type</option> <!-- Add placeholder option -->
-                    <option value="Histo">Histo</option>
-                    <option value="FNAC">FNAC</option>
-                    <option value="Cyto">Cyto</option>
-                    <option value="US guided FNAC">US guided FNAC</option>
-                </select>
-
-                <label for="specimen-no">Specimen No:</label>
-                <input type="text" id="specimen-no" name="specimen-no">
-
-                <label for="patient-name">Patient's Name:</label>
-                <input type="text" id="patient-name" name="patient-name">
-
-                <label for="patient-age">Patient's Age:</label>
-                <input type="number" id="patient-age" name="patient-age">
-
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender">
-    		    <option value="" selected disabled>Select Gender</option> <!-- Add placeholder option -->
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-
-                <label for="bht-no">BHT No:</label>
-                <input type="text" id="bht-no" name="bht-no">
-
-                <label for="ward-clinic-no">Ward / Clinic No:</label>
-                <input type="text" id="ward-clinic-no" name="ward-clinic-no">
-
-                <label for="specimen">Specimen:</label>
-                <input type="text" id="specimen" name="specimen">
-
-                <label for="date-surgery">Date of Surgery / Procedure:</label>
-                <input type="text" id="date-surgery" name="date-surgery" placeholder="DD/MM/YYYY">
-
-                <label for="specimen-received">Specimen Received Date:</label>
-                <input type="text" id="specimen-received" name="specimen-received" placeholder="DD/MM/YYYY">
-
-                <div class="button-container">
-                    <button id="search-edit-remove">Search For Edit / Remove Specimen</button>
-                    <button id="add-specimen">Add</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -396,125 +292,8 @@
             }
         }
 
-        // Function to populate year dropdown
-        function populateYearDropdown() {
-            const yearSelect = document.getElementById('year');
-            const currentYear = new Date().getFullYear();
-
-    	    // Add a placeholder option
-    	    const placeholderOption = document.createElement('option');
-            placeholderOption.value = '';
-            placeholderOption.text = 'Select Year';
-            placeholderOption.disabled = true; // Ensure it can't be selected again
-            placeholderOption.selected = true; // Ensure it is selected by default
-    	    yearSelect.appendChild(placeholderOption);
-
-            for (let i = 0; i <= 10; i++) { // Populate the next 10 years
-                const yearOption = document.createElement('option');
-                yearOption.value = currentYear + i;
-                yearOption.text = currentYear + i;
-                yearSelect.appendChild(yearOption);
-            }
-        }
-
-	// Function to update specimen number based on selected year and type
-	function updateSpecimenNumber() {
-            const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
-            const type = document.getElementById('type').value;
-
-	    if (year && type) {
-            	const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
-            	const specimenNumber = `${prefix} XXXX/${year}`; // Use backticks for template string
-            	document.getElementById('specimen-no').value = specimenNumber;
-	    }
-	}
-
-    	// Event listeners for updating specimen number
-    	document.getElementById('year').addEventListener('change', updateSpecimenNumber);
-    	document.getElementById('type').addEventListener('change', updateSpecimenNumber);
-
-	// Function to handle focus on the specimen number input field
-	document.getElementById('specimen-no').addEventListener('focus', function() {
-    	    const specimenInput = document.getElementById('specimen-no');
-    	    if (specimenInput.value.includes('XXXX')) {
-        	specimenInput.value = specimenInput.value.replace('XXXX', ''); // Clear only the 'XXXX' part
-    	    }
-	});
-
-	// Function to handle blur (loss of focus) on the specimen number input field
-	document.getElementById('specimen-no').addEventListener('blur', function() {
-    	    const specimenInput = document.getElementById('specimen-no');
-    	    const year = document.getElementById('year').value.slice(-2); // Get the last two digits of the selected year
-    	    const type = document.getElementById('type').value;
-
-    	    if (specimenInput.value.trim() === '' || specimenInput.value === '/') { // Check if input is empty or contains only slashes
-        	updateSpecimenNumber(); // Revert to the original specimen number if left blank
-    	    } else {
-        	const prefix = type === 'Histo' ? 'CN' : type === 'Cyto' ? 'F' : type === 'FNAC' ? 'NA' : 'U';
-        	const currentValue = specimenInput.value;
-
-        	// Check if the prefix already exists
-        	if (!currentValue.startsWith(prefix)) {
-            	    const formattedSpecimenNumber = `${prefix} ${currentValue.split('/')[0].padEnd(4, 'X')}/${year}`;
-            	    specimenInput.value = formattedSpecimenNumber;
-        	} else {
-            	    const formattedSpecimenNumber = `${currentValue.split('/')[0].padEnd(4, 'X')}/${year}`;
-            	    specimenInput.value = formattedSpecimenNumber;
-        	}
-    	    }
-	});
-
-	// Unified window.onload function
-    	window.onload = function() {
-            checkSession();
-            populateYearDropdown();
-            document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
-	    document.getElementById('gender').selectedIndex = 0; // Select the placeholder option by default
-    	};
-
-	// Function to format date input
-	function formatDateInput(input) {
-    	    const value = input.value.replace(/\D/g, ''); // Remove non-digit characters
-    	    let formattedValue = '';
-    	    let cursorPosition = input.selectionStart; // Get the current cursor position
-
-    	    if (value.length > 0) {
-        	formattedValue += value.substring(0, 2); // Day
-        	if (value.length > 2) {
-            	    formattedValue += '/' + value.substring(2, 4); // Month
-            	    if (value.length > 4) {
-                	formattedValue += '/' + value.substring(4, 8); // Year
-                    }
-                }
-            }
-
-            // Set the formatted value
-    	    input.value = formattedValue;
-
-    	    // Adjust the cursor position after formatting
-    	    if (cursorPosition > formattedValue.length) {
-                cursorPosition = formattedValue.length;
-    	    } else if (cursorPosition > 2 && cursorPosition <= 5) {
-                cursorPosition += 1; // Adjust for the first '/' character
-    	    } else if (cursorPosition > 5) {
-        	cursorPosition += 2; // Adjust for both '/' characters
-    	    }
-
-    	    // Update cursor position
-    	    input.setSelectionRange(cursorPosition, cursorPosition);
-	}
-
-	// Add event listeners to the date inputs
-	const dateSurgeryInput = document.getElementById('date-surgery');
-	const specimenReceivedInput = document.getElementById('specimen-received');
-
-	dateSurgeryInput.addEventListener('input', function() {
-    	    formatDateInput(dateSurgeryInput);
-	});
-
-	specimenReceivedInput.addEventListener('input', function() {
-    	    formatDateInput(specimenReceivedInput);
-	});
+        // Call checkSession on page load
+        window.onload = checkSession;
 
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
@@ -526,11 +305,6 @@
         document.getElementById('home-link').addEventListener('click', function() {
             window.location.href = 'home.html';
         });
-
-    	// Reload histoReports.html when the "Histo Reports Summary" item is clicked
-    	document.getElementById('histo-reports-link').addEventListener('click', function() {
-            window.location.href = 'histoReports.html';
-    	});
 
         // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
