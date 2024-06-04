@@ -589,6 +589,11 @@
     	    }
 	});
 
+	// Prevent the modal from closing if the user clicks inside it
+	document.querySelector('.modal-content').addEventListener('click', 	function(event) {
+    	    event.stopPropagation();
+	});
+
         // Toggle sidebar visibility for mobile
         const menuButton = document.getElementById('menu-button');
         const sidebar = document.getElementById('sidebar');
