@@ -192,6 +192,51 @@
             background-color: #1E90FF; /* Change background color to #1E90FF */
             color: white; /* Text color remains white */
         }
+	.modal {
+    	    display: none; /* Hidden by default */
+    	    position: fixed; /* Stay in place */
+    	    z-index: 1000; /* Sit on top */
+    	    left: 0;
+    	    top: 0;
+    	    width: 100%; /* Full width */
+    	    height: 100%; /* Full height */
+    	    overflow: auto; /* Enable scroll if needed */
+    	    background-color: rgb(0,0,0); /* Fallback color */
+    	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+
+	.modal-content {
+    	    background-color: #fefefe;
+    	    margin: 15% auto; /* 15% from the top and centered */
+    	    padding: 20px;
+    	    border: 1px solid #888;
+    	    width: 80%; /* Could be more or less, depending on screen size */
+    	    max-width: 400px; /* Add a max-width for better responsiveness */
+     	    text-align: center;
+    	    border-radius: 10px; /* Rounded edges */
+	}
+
+	.close {
+    	    color: #aaa;
+    	    float: right;
+    	    font-size: 28px;
+    	    font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+    	    color: black;
+    	    text-decoration: none;
+    	    cursor: pointer;
+	}
+
+	#pinInput {
+    	    width: 100%;
+    	    padding: 10px;
+    	    margin: 10px 0;
+    	    box-sizing: border-box;
+	}
+
 	@media (min-width: 769px) and (max-width: 1024px) {
     	    .button-row {
                 flex-wrap: wrap; /* Allow buttons to wrap */
@@ -384,6 +429,15 @@
                     <button class="new-custom-button">Summary</button>
                 </div>
             </div>
+            <div id="pinModal" class="modal">
+    		<div class="modal-content">
+        	    <span class="close">&times;</span>
+                    <h2>Enter PIN</h2>
+                    <input type="password" id="pinInput" placeholder="Enter PIN">
+                    <button id="pinSubmit">Submit</button>
+                    <p id="pinError" style="color: red; display: none;">Incorrect PIN. Please try again.</p>
+    		</div>
+            </div>
         </div>
     </div>
 
@@ -460,6 +514,53 @@
 	// Add event listener to the "Add / Remove Report" button
 	document.getElementById('add-remove-report-button').addEventListener('click', function() {
     	    window.location.href = 'addReport.html';
+	});
+
+	// Function to show the PIN modal
+	function showPinModal() {
+    	    const pinModal = document.getElementById('pinModal');
+    	    pinModal.style.display = 'block';
+	}
+
+	// Function to hide the PIN modal
+	function hidePinModal() {
+    	    const pinModal = document.getElementById('pinModal');
+    	    pinModal.style.display = 'none';
+	}
+
+	// Function to validate the PIN
+	function validatePin() {
+    	    const pinInput = document.getElementById('pinInput').value;
+    	    const correctPin = '0709';
+    	    const pinError = document.getElementById('pinError');
+
+            if (pinInput === correctPin) {
+        	window.location.href = 'addregistrarConsultant.html';
+            } else {
+        	pinError.style.display = 'block';
+    	    }
+	}
+
+	// Event listeners for modal
+	document.getElementById('add-registrar-consultant-link').addEventListener('click', 	function(event) {
+    	    event.preventDefault(); // Prevent default action
+    	    showPinModal();
+	});
+
+	document.querySelector('.close').addEventListener('click', function() {
+    	    hidePinModal();
+	});
+
+	document.getElementById('pinSubmit').addEventListener('click', function() {
+    	    validatePin();
+	});
+
+	// Close modal when clicking outside of it
+	window.addEventListener('click', function(event) {
+    	    const pinModal = document.getElementById('pinModal');
+    	    if (event.target === pinModal) {
+        	hidePinModal();
+    	    }
 	});
 
         // Toggle sidebar visibility for mobile
