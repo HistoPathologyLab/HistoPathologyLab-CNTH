@@ -27,6 +27,7 @@
             overflow-y: auto;
             position: fixed; /* Ensure the sidebar stays fixed */
             height: 100vh;
+	    z-index: 1001;
         }
         .sidebar h1 {
             font-size: 24px;
@@ -78,7 +79,7 @@
         }
         .top-bar {
             background-color: white;
-            height: 20%;
+            height: 15%;
             display: flex;
             align-items: center;
             justify-content: center; /* Center the content */
@@ -202,13 +203,14 @@
                 display: block; /* Show menu button on mobile */
                 position: absolute;
                 top: 5px;
-                left: 10px;
+		left: 5px;
+		height: 40px;
                 background-color: darkblue;
                 color: white;
                 border: none;
                 padding: 10px;
                 cursor: pointer;
-		height: 100%;
+		z-index: 1001;
 	    }
     	    .form-container .button-container button {
         	padding: 11px 16px; /* Decrease padding for smaller screens */
@@ -258,7 +260,7 @@
                 padding: 0 5px;
             }
             .logo {
-                height: 30px;
+                height: 20px;
             }
             .datetime .time {
                 font-size: 10px;
