@@ -527,6 +527,11 @@
     	    window.location.href = 'reportstoPrint.html';
 	});
 
+	// Reload addregistrarConsultant.html when the "Add Consultant / Registrar (Dr.)" item is clicked
+	document.getElementById('add-registrar-consultant-link').addEventListener('click', function() {
+    	    window.location.href = 'addregistrarConsultant.html';
+	});
+
 	// Add event listener to the "Add / Remove Specimen" button
 	document.getElementById('add-remove-specimen-button').addEventListener('click', function() {
     	    window.location.href = 'addSpecimen.html';
@@ -563,7 +568,7 @@
 	}
 
 	// Event listeners for modal
-	document.getElementById('add-registrar-consultant-link').addEventListener('click', 	function(event) {
+	document.getElementById('add-registrar-consultant-link').addEventListener('click', function(event) {
     	    event.preventDefault(); // Prevent default action
     	    showPinModal();
 	});
