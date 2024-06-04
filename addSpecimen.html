@@ -78,7 +78,7 @@
         }
         .top-bar {
             background-color: white;
-            height: 10%;
+            height: 20%;
             display: flex;
             align-items: center;
             justify-content: center; /* Center the content */
@@ -119,10 +119,46 @@
         }
         .menu-button {
             display: none; /* Initially hidden */
-	}
-    	.form-container .button-container button {
+        }
+	.form-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px; /* Set a max-width for the form */
+            margin: 30px auto; /* Center the form */
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .form-container input,
+        .form-container select {
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-container .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .form-container .button-container button {
             padding: 8px 16px;
             font-size: 14px; 
+	    font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: darkblue;
+            color: white;
+        }
+        .form-container .button-container button:hover {
+            background-color: #FFBF00; /* Change background color to #FFBF00 */
         }
 
         @media (max-width: 768px) {
@@ -165,13 +201,14 @@
             .menu-button {
                 display: block; /* Show menu button on mobile */
                 position: absolute;
-                top: 10px;
+                top: 5px;
                 left: 10px;
                 background-color: darkblue;
                 color: white;
                 border: none;
                 padding: 10px;
                 cursor: pointer;
+		height: 100%;
 	    }
     	    .form-container .button-container button {
         	padding: 11px 16px; /* Decrease padding for smaller screens */
@@ -221,55 +258,18 @@
                 padding: 0 5px;
             }
             .logo {
-                height: 20px;
+                height: 30px;
             }
             .datetime .time {
                 font-size: 10px;
             }
             .datetime .date {
                 font-size: 8px;
+	    }
+    	    .form-container .button-container button {
+            	padding: 8px 12px; /* Adjust padding for 320px screens in portrait orientation */
+            	font-size: 12px; /* Adjust font size for 320px screens in portrait orientation */
             }
-        }
-
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px; /* Set a max-width for the form */
-            margin: 30px auto; /* Center the form */
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .form-container label {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .form-container input,
-        .form-container select {
-            padding: 10px;
-            margin-top: 5px;
-            font-size: 14px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .form-container .button-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .form-container .button-container button {
-            padding: 8px 12px; /* Adjust padding for 320px screens in portrait orientation */
-            font-size: 12px; /* Adjust font size for 320px screens in portrait orientation */
-	    font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: darkblue;
-            color: white;
-        }
-        .form-container .button-container button:hover {
-            background-color: #FFBF00; /* Change background color to #FFBF00 */
         }
     </style>
 </head>
