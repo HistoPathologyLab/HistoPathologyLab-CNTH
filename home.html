@@ -378,12 +378,12 @@
         <div class="sidebar-item bold" id="home-link">Home</div>
         <div class="sidebar-item" id="histo-reports-link">Histo Reports Summary</div>
         <div class="sidebar-item" id="fnac-reports-link">FNAC Reports Summary</div>
-        <div class="sidebar-item">Cyto Reports Summary</div>
-        <div class="sidebar-item">US guided FNAC Reports Summary</div>
-        <div class="sidebar-item">ERPR Reports</div> <!-- New sidebar item added here-->
-        <div class="sidebar-item">Cancer Reports</div>
-        <div class="sidebar-item">Pending Reports</div>
-        <div class="sidebar-item">Reports to Print</div>
+        <div class="sidebar-item" id="cyto-reports-link">Cyto Reports Summary</div>
+        <div class="sidebar-item" id="us-guided-fnac-reports-link">US guided FNAC Reports Summary</div>
+        <div class="sidebar-item" id="erpr-reports-link">ERPR Reports</div> <!-- New sidebar item added here-->
+        <div class="sidebar-item" id="cancer-reports-link">Cancer Reports</div>
+        <div class="sidebar-item" id="pending-reports-link">Pending Reports</div>
+        <div class="sidebar-item" id="reports-to-print-link">Reports to Print</div>
         <div class="sidebar-item" id="add-registrar-consultant-link">Add Consultant / Registrar (Dr.)</div>
         <div class="sidebar-item bold" id="logout">Log out</div>
     </div>
@@ -504,6 +504,36 @@
 	// Reload fnacReports.html when the "FNAC Reports Summary" item is clicked
 	document.getElementById('fnac-reports-link').addEventListener('click', function() {
     	    window.location.href = 'fnacReports.html';
+	});
+
+	// Reload cytoReports.html when the "Cyto Reports Summary" item is clicked
+	document.getElementById('cyto-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'cytoReports.html';
+	});
+
+	// Reload usguidedfnacReports.html when the "US guided FNAC Reports Summary" item is clicked
+	document.getElementById('us-guided-fnac-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'usguidedfnacReports.html';
+	});
+
+	// Reload erprReports.html when the "ERPR Reports" item is clicked
+	document.getElementById('erpr-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'erprReports.html';
+	});
+
+	// Reload cancerReports.html when the "Cancer Reports" item is clicked
+	document.getElementById('cancer-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'cancerReports.html';
+	});
+
+	// Reload pendingReports.html when the "Pending Reports" item is clicked
+	document.getElementById('pending-reports-link').addEventListener('click', function() {
+    	    window.location.href = 'pendingReports.html';
+	});
+
+	// Reload reportstoPrint.html when the "Reports to Print" item is clicked
+	document.getElementById('reports-to-print-link').addEventListener('click', function() {
+    	    window.location.href = 'reportstoPrint.html';
 	});
 
 	// Reload addregistrarConsultant.html when the "Add Consultant / Registrar (Dr.)" item is clicked
