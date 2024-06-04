@@ -204,7 +204,6 @@
                 height: 60px; /* Increase height for better visibility */
                 padding: 0 10px;
                 margin-left: 0; /* Remove margin for top bar */
-		overflow-y: hidden; /* Remove vertical scrolling */
             }
             .logo {
                 height: 40px;
@@ -229,7 +228,6 @@
                 border: none;
                 padding: 10px;
                 cursor: pointer;
-		overflow-y: hidden; /* Remove vertical scrolling */
 	    }
     	    .form-container .button-container button {
         	padding: 11px 16px; /* Decrease padding for smaller screens */
@@ -585,12 +583,6 @@
 	typingInput.addEventListener('input', function() {
     	    formatDateInput(typingInput);
 	});
-
-	// Get the height of the menu button
-	const menuButtonHeight = document.getElementById('menu-button').offsetHeight;
-
-	// Set the height of the top bar equal to the height of the menu button
-	document.querySelector('.top-bar').style.height = menuButtonHeight + 'px';
 
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
