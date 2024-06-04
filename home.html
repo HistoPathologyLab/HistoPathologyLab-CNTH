@@ -429,15 +429,6 @@
                     <button class="new-custom-button">Summary</button>
                 </div>
             </div>
-            <div id="pinModal" class="modal">
-    		<div class="modal-content">
-        	    <span class="close">&times;</span>
-                    <h2>Enter PIN</h2>
-                    <input type="password" id="pinInput" placeholder="Enter PIN">
-                    <button id="pinSubmit">Submit</button>
-                    <p id="pinError" style="color: red; display: none;">Incorrect PIN. Please try again.</p>
-    		</div>
-            </div>
         </div>
     </div>
 
@@ -619,5 +610,16 @@
         script.crossOrigin = 'anonymous';
         document.head.appendChild(script);
     </script>
+
+    <div id="pinModal" class="modal">
+    	<div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enter PIN</h2>
+            <input type="password" id="pinInput" placeholder="Enter PIN">
+            <button id="pinSubmit">Submit</button>
+            <p id="pinError" style="color: red; display: none;">Incorrect PIN. Please try again.</p>
+    	</div>
+    </div>
+</div>
 </body>
 </html>
