@@ -120,7 +120,6 @@
         }
         .menu-button {
             display: none; /* Initially hidden */
-	    height: 60px; /* Increase height for better visibility on 320px screens */
         }
 
 	.form-container {
@@ -291,8 +290,15 @@
                 font-size: 8px;
 	    }
 	    .menu-button {
-		top: 10px; /* Adjust top position for better visibility */
-		left: 10px;
+        	display: block; /* Show menu button on mobile */
+        	position: absolute;
+        	top: 10px; /* Adjust top position for better visibility */
+        	left: 10px;
+        	background-color: darkblue;
+        	color: white;
+        	border: none;
+        	padding: 10px;
+        	cursor: pointer;
 	    }
     	    .form-container .button-container button {
             	padding: 8px 12px; /* Adjust padding for 320px screens in portrait orientation */
