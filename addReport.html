@@ -586,6 +586,12 @@
     	    formatDateInput(typingInput);
 	});
 
+	// Get the height of the menu button
+	const menuButtonHeight = document.getElementById('menu-button').offsetHeight;
+
+	// Set the height of the top bar equal to the height of the menu button
+	document.querySelector('.top-bar').style.height = menuButtonHeight + 'px';
+
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
             sessionStorage.removeItem('isLoggedIn');
