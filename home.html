@@ -591,16 +591,19 @@
     	    }
 	}
 
-	// Auto focus on the next input field
-	document.querySelectorAll('.pin-input').forEach((input, index, inputs) => {
-    	    input.addEventListener('input', () => {
-                if (input.value.length === input.maxLength) {
-                    if (index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-            	    }
-        	}
-    	    });
-	});
+	document.addEventListener('DOMContentLoaded', function() {
+
+	    // Auto focus on the next input field
+	    document.querySelectorAll('.pin-input').forEach((input, index, inputs) => {
+    	        input.addEventListener('input', () => {
+                    if (input.value.length === input.maxLength) {
+                        if (index < inputs.length - 1) {
+                            inputs[index + 1].focus();
+            	            }
+        	        }
+    	            }
+    	        }
+	    });
 
     	    // Event listeners for modal
 	    document.querySelector('.close').addEventListener('click', function() {
