@@ -444,6 +444,48 @@
                 sidebar.classList.remove('visible');
             }
         });
+
+        // Add and remove doctor functions
+        function saveDoctor(name, profession) {
+            let doctors = JSON.parse(localStorage.getItem('doctors')) || [];
+            doctors.push({ name, profession });
+            localStorage.setItem('doctors', JSON.stringify(doctors));
+        }
+
+        function removeDoctor(name) {
+            let doctors = JSON.parse(localStorage.getItem('doctors')) || [];
+            doctors = doctors.filter(doctor => doctor.name !== name);
+            localStorage.setItem('doctors', JSON.stringify(doctors));
+        }
+
+        // Add button event listener
+        document.getElementById('add').addEventListener('click', function() {
+            const name = document.getElementById('doctor-name').value.trim();
+            const profession = document.getElementById('profession').value;
+
+            if (name && profession) {
+                saveDoctor(name, profession);
+                alert(Doctor ${name} added as ${profession}.);
+                document.getElementById('doctor-name').value = '';
+                document.getElementById('profession').selectedIndex = 0;
+            } else {
+                alert('Please enter both the doctor\'s name and profession.');
+            }
+        });
+
+        // Remove button event listener
+        document.getElementById('remove').addEventListener('click', function() {
+            const name = document.getElementById('doctor-name').value.trim();
+
+            if (name) {
+                removeDoctor(name);
+                alert(Doctor ${name} removed.);
+                document.getElementById('doctor-name').value = '';
+                document.getElementById('profession').selectedIndex = 0;
+            } else {
+                alert('Please enter the doctor\'s name to remove.');
+            }
+        });
     </script>
 </body>
 </html>
