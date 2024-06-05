@@ -568,26 +568,29 @@
     	    }
 	}
 
-	// Event listeners for modal
-	document.querySelector('.close').addEventListener('click', function() {
-    	    hidePinModal();
-	});
+	document.addEventListener('DOMContentLoaded', function() {
 
-	document.getElementById('pinSubmit').addEventListener('click', function() {
-    	    validatePin();
-	});
+    	    // Event listeners for modal
+	    document.querySelector('.close').addEventListener('click', function() {
+    	        hidePinModal();
+    	    });
 
-	// Close modal when clicking outside of it
-	window.addEventListener('click', function(event) {
-    	    const pinModal = document.getElementById('pinModal');
-    	    if (event.target === pinModal) {
-        	hidePinModal();
-    	    }
-	});
+	    document.getElementById('pinSubmit').addEventListener('click', function() {
+    	    	validatePin();
+	    });
 
-	// Prevent the modal from closing if the user clicks inside it
-	document.querySelector('.modal-content').addEventListener('click', 	function(event) {
-    	    event.stopPropagation();
+	    // Close modal when clicking outside of it
+	    window.addEventListener('click', function(event) {
+    	    	const pinModal = document.getElementById('pinModal');
+    	    	if (event.target === pinModal) {
+        	    hidePinModal();
+    	    	}
+	    });
+
+	    // Prevent the modal from closing if the user clicks inside it
+	    document.querySelector('.modal-content').addEventListener('click', 	function(event) {
+    	    	event.stopPropagation();
+	    });
 	});
 
         // Toggle sidebar visibility for mobile
