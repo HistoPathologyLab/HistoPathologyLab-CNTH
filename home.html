@@ -230,12 +230,30 @@
     	    cursor: pointer;
 	}
 
-	#pinInput {
-    	    width: 100%;
-    	    padding: 5px;
-    	    margin: 10px 0;
-    	    box-sizing: border-box;
-    	    border-radius: 10px; /* Rounded edges */
+	.pin-input {
+	    width: 50px; /* Adjust width for each input */
+ 	    padding: 10px;
+	    margin: 0 5px; /* Add margin between inputs */
+	    box-sizing: border-box;
+	    border-radius: 10px; /* Rounded edges */
+ 	    font-size: 24px; /* Increase font size for better visibility */
+	    text-align: center; /* Center align the numbers */
+	    letter-spacing: 5px; /* Space between numbers */
+	}
+
+	#pinSubmit {
+	    background-color: darkblue;
+	    color: white;
+	    border: none;
+	    padding: 10px 20px;
+	    cursor: pointer;
+	    border-radius: 10px; /* Rounded edges */
+	    font-weight: bold; /* Bold font */
+	    font-size: 16px; /* Font size */
+	}
+
+	#pinSubmit:hover {
+	    background-color: #FFBF00; /* Amber color on hover */
 	}
 
 	@media (min-width: 769px) and (max-width: 1024px) {
@@ -558,7 +576,11 @@
 
 	// Function to validate the PIN
 	function validatePin() {
-    	    const pinInput = document.getElementById('pinInput').value;
+    	    const pinInput1 = document.getElementById('pinInput1').value;
+	    const pinInput2 = document.getElementById('pinInput2').value;
+	    const pinInput3 = document.getElementById('pinInput3').value;
+	    const pinInput4 = document.getElementById('pinInput4').value;
+	    const pin = pinInput1 + pinInput2 + pinInput3 + pinInput4;
     	    const correctPin = '0709';
     	    const pinError = document.getElementById('pinError');
 
@@ -569,7 +591,16 @@
     	    }
 	}
 
-	document.addEventListener('DOMContentLoaded', function() {
+	// Auto focus on the next input field
+	document.querySelectorAll('.pin-input').forEach((input, index, inputs) => {
+    	    input.addEventListener('input', () => {
+                if (input.value.length === input.maxLength) {
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+            	    }
+        	}
+    	    });
+	});
 
     	    // Event listeners for modal
 	    document.querySelector('.close').addEventListener('click', function() {
@@ -620,7 +651,12 @@
     	<div class="modal-content">
             <span class="close">&times;</span>
             <h2>Enter PIN</h2>
-            <input type="password" id="pinInput" placeholder="Enter PIN">
+            <div>
+                <input type="password" class="pin-input" maxlength="1" id="pinInput1">
+      	        <input type="password" class="pin-input" maxlength="1" id="pinInput2">
+                <input type="password" class="pin-input" maxlength="1" id="pinInput3">
+                <input type="password" class="pin-input" maxlength="1" id="pinInput4">
+            </div>
             <button id="pinSubmit">Submit</button>
             <p id="pinError" style="color: red; display: none;">Incorrect PIN. Please try again.</p>
     	</div>
