@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Histopathology Lab System</title>
-    <title>PIN Validation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
     <style>
         body {
@@ -209,12 +208,12 @@
 	.modal-content {
     	    background-color: #fefefe;
     	    margin: 15% auto; /* 15% from the top and centered */
-    	    padding: 15px;
+    	    padding: 20px;
     	    border: 1px solid #888;
     	    width: 80%; /* Could be more or less, depending on screen size */
     	    max-width: 400px; /* Add a max-width for better responsiveness */
      	    text-align: center;
-    	    border-radius: 15px; /* Rounded edges */
+    	    border-radius: 10px; /* Rounded edges */
 	}
 
 	.close {
@@ -231,30 +230,11 @@
     	    cursor: pointer;
 	}
 
-	.pin-input {
-	    width: 50px; /* Adjust width for each input */
- 	    padding: 10px;
-	    margin: 0 5px; /* Add margin between inputs */
-	    box-sizing: border-box;
-	    border-radius: 10px; /* Rounded edges */
- 	    font-size: 24px; /* Increase font size for better visibility */
-	    text-align: center; /* Center align the numbers */
-	    letter-spacing: 5px; /* Space between numbers */
-	}
-
-	#pinSubmit {
-	    background-color: darkblue;
-	    color: white;
-	    border: none;
-	    padding: 10px 20px;
-	    cursor: pointer;
-	    border-radius: 10px; /* Rounded edges */
-	    font-weight: bold; /* Bold font */
-	    font-size: 16px; /* Font size */
-	}
-
-	#pinSubmit:hover {
-	    background-color: #FFBF00; /* Amber color on hover */
+	#pinInput {
+    	    width: 100%;
+    	    padding: 10px;
+    	    margin: 10px 0;
+    	    box-sizing: border-box;
 	}
 
 	@media (min-width: 769px) and (max-width: 1024px) {
@@ -577,11 +557,7 @@
 
 	// Function to validate the PIN
 	function validatePin() {
-    	    const pinInput1 = document.getElementById('pinInput1').value;
-	    const pinInput2 = document.getElementById('pinInput2').value;
-	    const pinInput3 = document.getElementById('pinInput3').value;
-	    const pinInput4 = document.getElementById('pinInput4').value;
-	    const pin = pinInput1 + pinInput2 + pinInput3 + pinInput4;
+    	    const pinInput = document.getElementById('pinInput').value;
     	    const correctPin = '0709';
     	    const pinError = document.getElementById('pinError');
 
@@ -592,38 +568,29 @@
     	    }
 	}
 
-	// Auto focus on the next input field
-	document.querySelectorAll('.pin-input').forEach((input, index, inputs) => {
-    	    input.addEventListener('input', () => {
-                if (input.value.length === input.maxLength) {
-                    if (index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-            	        }
-        	    }
-    	        }
-	    });
-	});
+	document.addEventListener('DOMContentLoaded', function() {
 
-    	// Event listeners for modal
-	document.querySelector('.close').addEventListener('click', function() {
-    	    hidePinModal();
-    	});
+    	    // Event listeners for modal
+	    document.querySelector('.close').addEventListener('click', function() {
+    	        hidePinModal();
+    	    });
 
-	document.getElementById('pinSubmit').addEventListener('click', function() {
+	    document.getElementById('pinSubmit').addEventListener('click', function() {
     	    	validatePin();
-	});
+	    });
 
-	// Close modal when clicking outside of it
-	window.addEventListener('click', function(event) {
-    	    const pinModal = document.getElementById('pinModal');
-    	    if (event.target === pinModal) {
-        	hidePinModal();
-    	    }
-	});
+	    // Close modal when clicking outside of it
+	    window.addEventListener('click', function(event) {
+    	    	const pinModal = document.getElementById('pinModal');
+    	    	if (event.target === pinModal) {
+        	    hidePinModal();
+    	    	}
+	    });
 
-	// Prevent the modal from closing if the user clicks inside it
-	document.querySelector('.modal-content').addEventListener('click', 	function(event) {
-    	    event.stopPropagation();
+	    // Prevent the modal from closing if the user clicks inside it
+	    document.querySelector('.modal-content').addEventListener('click', 	function(event) {
+    	    	event.stopPropagation();
+	    });
 	});
 
         // Toggle sidebar visibility for mobile
@@ -647,18 +614,12 @@
         script.crossOrigin = 'anonymous';
         document.head.appendChild(script);
     </script>
-</head>
-<body>
+
     <div id="pinModal" class="modal">
     	<div class="modal-content">
             <span class="close">&times;</span>
             <h2>Enter PIN</h2>
-            <div>
-                <input type="password" class="pin-input" maxlength="1" id="pinInput1">
-      	        <input type="password" class="pin-input" maxlength="1" id="pinInput2">
-                <input type="password" class="pin-input" maxlength="1" id="pinInput3">
-                <input type="password" class="pin-input" maxlength="1" id="pinInput4">
-            </div>
+            <input type="password" id="pinInput" placeholder="Enter PIN">
             <button id="pinSubmit">Submit</button>
             <p id="pinError" style="color: red; display: none;">Incorrect PIN. Please try again.</p>
     	</div>
