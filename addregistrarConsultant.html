@@ -464,7 +464,7 @@
 
             if (name && profession) {
                 saveDoctor(name, profession);
-                alert(Doctor ${name} added as ${profession}.);
+                alert(`Doctor ${name} added as ${profession}.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
