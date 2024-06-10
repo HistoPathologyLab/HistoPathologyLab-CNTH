@@ -485,6 +485,22 @@
                 alert('Please enter the doctor\'s name to remove.');
             }
         });
+
+        // Add the MSAL configuration script here
+        // Configure MSAL with your client ID, tenant ID, and redirect URI
+        const msalConfig = {
+            auth: {
+                clientId: "1e883c40-b944-4804-a1e0-80be711e9ca1", // Your client ID
+                authority: "https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a", // Your tenant ID
+                redirectUri: "https://histo-pathology-lab-cnth.vercel.app/", // Your redirect URI
+            },
+        };
+
+        // Initialize MSAL instance
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+        // Add your MSAL instance to the global scope to use it in other scripts
+        window.msalInstance = msalInstance;
     </script>
 </body>
 </html>
