@@ -367,10 +367,11 @@
                     <button id="remove">Remove</button>
                     <button id="add">Add</button>
                 </div>
-	    </div>
+	        </div>
         </div>
     </div>
 
+    <script src="https://alcdn.msauth.net/browser/2.13.1/js/msal-browser.min.js"></script>
     <script>
         // Function to update time and date
         function updateTime() {
@@ -444,50 +445,7 @@
             }
         });
 
-        // Add and remove doctor functions
-        function saveDoctor(name, profession) {
-            let doctors = JSON.parse(localStorage.getItem('doctors')) || [];
-            doctors.push({ name, profession });
-            localStorage.setItem('doctors', JSON.stringify(doctors));
-        }
-
-        function removeDoctor(name) {
-            let doctors = JSON.parse(localStorage.getItem('doctors')) || [];
-            doctors = doctors.filter(doctor => doctor.name !== name);
-            localStorage.setItem('doctors', JSON.stringify(doctors));
-        }
-
-        // Add button event listener
-        document.getElementById('add').addEventListener('click', function() {
-            const name = document.getElementById('doctor-name').value.trim();
-            const profession = document.getElementById('profession').value;
-
-            if (name && profession) {
-                saveDoctor(name, profession);
-                alert(`Doctor ${name} added as ${profession}.`);
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('profession').selectedIndex = 0;
-            } else {
-                alert('Please enter both the doctor\'s name and profession.');
-            }
-        });
-
-        // Remove button event listener
-        document.getElementById('remove').addEventListener('click', function() {
-            const name = document.getElementById('doctor-name').value.trim();
-
-            if (name) {
-                removeDoctor(name);
-                alert(`Doctor ${name} removed.`);
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('profession').selectedIndex = 0;
-            } else {
-                alert('Please enter the doctor\'s name to remove.');
-            }
-        });
-
-        // Add the MSAL configuration script here
-        // Configure MSAL with your client ID, tenant ID, and redirect URI
+        // MSAL configuration
         const msalConfig = {
             auth: {
                 clientId: "1e883c40-b944-4804-a1e0-80be711e9ca1", // Your client ID
@@ -499,8 +457,103 @@
         // Initialize MSAL instance
         const msalInstance = new msal.PublicClientApplication(msalConfig);
 
-        // Add your MSAL instance to the global scope to use it in other scripts
-        window.msalInstance = msalInstance;
+        const loginRequest = {
+            scopes: ["Files.ReadWrite", "User.Read"]
+        };
+
+        function getToken() {
+            return msalInstance.acquireTokenSilent(loginRequest)
+                .catch(error => {
+                    console.warn("Silent token acquisition failed, acquiring token using popup");
+                    return msalInstance.acquireTokenPopup(loginRequest);
+                });
+        }
+
+        async function saveDoctor(name, profession) {
+            const data = {
+                name: name,
+                profession: profession
+            };
+
+            try {
+                const tokenResponse = await getToken();
+                const graphClient = MicrosoftGraph.Client.init({
+                    authProvider: done => {
+                        done(null, tokenResponse.accessToken);
+                    }
+                });
+
+                await graphClient.api('/me/drive/root/children')
+                    .post({
+                        name: 'doctorData.json',
+                        file: {},
+                        "@microsoft.graph.conflictBehavior": "replace"
+                    });
+
+                await graphClient.api('/me/drive/root/children/doctorData.json/content')
+                    .put(JSON.stringify(data));
+
+                alert(`Doctor ${name} added as ${profession}.`);
+            } catch (error) {
+                console.error(error);
+                alert('Error saving doctor.');
+            }
+        }
+
+        async function removeDoctor(name) {
+            try {
+                const tokenResponse = await getToken();
+                const graphClient = MicrosoftGraph.Client.init({
+                    authProvider: done => {
+                        done(null, tokenResponse.accessToken);
+                    }
+                });
+
+                const doctors = await graphClient.api('/me/drive/root/children/doctorData.json/content').get();
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    let data = JSON.parse(event.target.result);
+                    data = data.filter(doctor => doctor.name !== name);
+
+                    graphClient.api('/me/drive/root/children/doctorData.json/content')
+                        .put(JSON.stringify(data));
+                };
+                reader.readAsText(doctors);
+
+                alert(`Doctor ${name} removed.`);
+            } catch (error) {
+                console.error(error);
+                alert('Error removing doctor.');
+            }
+        }
+
+        // Add button event listener
+        document.getElementById('add').addEventListener('click', async function() {
+            const name = document.getElementById('doctor-name').value.trim();
+            const profession = document.getElementById('profession').value;
+
+            if (name && profession) {
+                await saveDoctor(name, profession);
+                document.getElementById('doctor-name').value = '';
+                document.getElementById('profession').selectedIndex = 0;
+            } else {
+                alert('Please enter both the doctor\'s name and profession.');
+            }
+        });
+
+        // Remove button event listener
+        document.getElementById('remove').addEventListener('click', async function() {
+            const name = document.getElementById('doctor-name').value.trim();
+
+            if (name) {
+                await removeDoctor(name);
+                document.getElementById('doctor-name').value = '';
+                document.getElementById('profession').selectedIndex = 0;
+            } else {
+                alert('Please enter the doctor\'s name to remove.');
+            }
+        });
     </script>
 </body>
 </html>
