@@ -206,14 +206,14 @@
 	}
 
 	.modal-content {
-    	    background-color: #fefefe;
+    	    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
     	    margin: 15% auto; /* 15% from the top and centered */
-    	    padding: 20px;
+    	    padding: 15px;
     	    border: 1px solid #888;
     	    width: 80%; /* Could be more or less, depending on screen size */
     	    max-width: 400px; /* Add a max-width for better responsiveness */
      	    text-align: center;
-    	    border-radius: 10px; /* Rounded edges */
+    	    border-radius: 15px; /* Rounded edges */
 	}
 
 	.close {
@@ -230,11 +230,31 @@
     	    cursor: pointer;
 	}
 
-	#pinInput {
-    	    width: 100%;
-    	    padding: 10px;
-    	    margin: 10px 0;
-    	    box-sizing: border-box;
+	.pin-input {
+	    width: 40px; /* Adjust width for each input */
+ 	    padding: 20px; /* Adjust padding for better visibility */
+	    margin: 0 10px; /* Add margin between inputs */
+	    box-sizing: border-box;
+	    border-radius: 20px; /* Rounded edges */
+ 	    font-size: 28px; /* Increase font size for better visibility */
+	    text-align: center; /* Center align the numbers */
+	    letter-spacing: 5px; /* Space between numbers */
+	    height: 60px; /* Set the height */
+	}
+
+	#pinSubmit {
+	    background-color: darkblue;
+	    color: white;
+	    border: none;
+	    padding: 10px 20px;
+	    cursor: pointer;
+	    border-radius: 10px; /* Rounded edges */
+	    font-weight: bold; /* Bold font */
+	    font-size: 16px; /* Font size */
+	}
+
+	#pinSubmit:hover {
+	    background-color: #FFBF00; /* Amber color on hover */
 	}
 
 	@media (min-width: 769px) and (max-width: 1024px) {
@@ -429,15 +449,6 @@
                     <button class="new-custom-button">Summary</button>
                 </div>
             </div>
-            <div id="pinModal" class="modal">
-    		<div class="modal-content">
-        	    <span class="close">&times;</span>
-                    <h2>Enter PIN</h2>
-                    <input type="password" id="pinInput" placeholder="Enter PIN">
-                    <button id="pinSubmit">Submit</button>
-                    <p id="pinError" style="color: red; display: none;">Incorrect PIN. Please try again.</p>
-    		</div>
-            </div>
         </div>
     </div>
 
@@ -536,9 +547,10 @@
     	    window.location.href = 'reportstoPrint.html';
 	});
 
-	// Reload addregistrarConsultant.html when the "Add Consultant / Registrar (Dr.)" item is clicked
-	document.getElementById('add-registrar-consultant-link').addEventListener('click', function() {
-    	    window.location.href = 'addregistrarConsultant.html';
+	// Event listener for the "Add Consultant / Registrar (Dr.)" link
+	document.getElementById('add-registrar-consultant-link').addEventListener('click', function(event) {
+    	    event.preventDefault(); // Prevent default action
+            showPinModal(); // Show the PIN modal
 	});
 
 	// Add event listener to the "Add / Remove Specimen" button
@@ -576,26 +588,29 @@
     	    }
 	}
 
-	// Event listeners for modal
-	document.getElementById('add-registrar-consultant-link').addEventListener('click', 	function(event) {
-    	    event.preventDefault(); // Prevent default action
-    	    showPinModal();
-	});
+	document.addEventListener('DOMContentLoaded', function() {
 
-	document.querySelector('.close').addEventListener('click', function() {
-    	    hidePinModal();
-	});
+    	    // Event listeners for modal
+	    document.querySelector('.close').addEventListener('click', function() {
+    	        hidePinModal();
+    	    });
 
-	document.getElementById('pinSubmit').addEventListener('click', function() {
-    	    validatePin();
-	});
+	    document.getElementById('pinSubmit').addEventListener('click', function() {
+    	    	validatePin();
+	    });
 
-	// Close modal when clicking outside of it
-	window.addEventListener('click', function(event) {
-    	    const pinModal = document.getElementById('pinModal');
-    	    if (event.target === pinModal) {
-        	hidePinModal();
-    	    }
+	    // Close modal when clicking outside of it
+	    window.addEventListener('click', function(event) {
+    	    	const pinModal = document.getElementById('pinModal');
+    	    	if (event.target === pinModal) {
+        	    hidePinModal();
+    	    	}
+	    });
+
+	    // Prevent the modal from closing if the user clicks inside it
+	    document.querySelector('.modal-content').addEventListener('click', 	function(event) {
+    	    	event.stopPropagation();
+	    });
 	});
 
         // Toggle sidebar visibility for mobile
@@ -619,5 +634,15 @@
         script.crossOrigin = 'anonymous';
         document.head.appendChild(script);
     </script>
+
+    <div id="pinModal" class="modal">
+    	<div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enter PIN</h2>
+            <input type="password" id="pinInput" placeholder="Enter PIN">
+            <button id="pinSubmit">Submit</button>
+            <p id="pinError" style="color: red; display: none;">Incorrect PIN. Please try again.</p>
+    	</div>
+    </div>
 </body>
 </html>

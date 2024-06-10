@@ -522,10 +522,15 @@
     	window.onload = function() {
             checkSession();
             populateYearDropdown();
-            document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
+            
+	    document.getElementById('type').selectedIndex = 0; // Select the placeholder option by default
+	    
 	    document.getElementById('gender').selectedIndex = 0; // Select the placeholder option by default
+	    
 	    document.getElementById('relevant-registrar-dr.').selectedIndex = 0; // Select the placeholder option by default
+	    
 	    document.getElementById('relevant-consultant-dr.').selectedIndex = 0; // Select the placeholder option by default
+	    	populateDoctorDropdowns();
     	};
 
 	// Function to format date input
@@ -577,6 +582,29 @@
 	typingInput.addEventListener('input', function() {
     	    formatDateInput(typingInput);
 	});
+
+	// Populate doctor dropdowns
+        function populateDoctorDropdowns() {
+            const doctors = JSON.parse(localStorage.getItem('doctors')) || [];
+            const consultantSelect = document.getElementById('relevant-consultant-dr.');
+            const registrarSelect = document.getElementById('relevant-registrar-dr.');
+
+            // Clear existing options
+            consultantSelect.innerHTML = '<option value="" selected disabled>Select Consultant</option>';
+            registrarSelect.innerHTML = '<option value="" selected disabled>Select Registrar</option>';
+
+            doctors.forEach(doctor => {
+                const option = document.createElement('option');
+                option.value = doctor.name;
+                option.textContent = doctor.name;
+
+                if (doctor.profession === 'Consultant') {
+                    consultantSelect.appendChild(option);
+                } else if (doctor.profession.includes('Registrar')) {
+                    registrarSelect.appendChild(option);
+                }
+            });
+	}
 
         // Log out functionality
         document.getElementById('logout').addEventListener('click', function() {
