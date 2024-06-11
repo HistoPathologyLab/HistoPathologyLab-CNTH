@@ -2,7 +2,7 @@ const fs = require('fs');
 const { Client } = require('@microsoft/microsoft-graph-client');
 const { getAccessToken } = require('./auth');
 
-async function uploadFileToOneDrive(filePath, fileName) {
+async function uploadFileToOneDrive(data, fileName) {
   try {
     const accessToken = await getAccessToken();
 
@@ -12,7 +12,10 @@ async function uploadFileToOneDrive(filePath, fileName) {
       },
     });
 
-    const fileStream = fs.createReadStream(filePath);
+    // Convert data to a readable stream
+    const fileStream = new Readable();
+    fileStream.push(data);
+    fileStream.push(null);
 
     const uploadResponse = await client
       .api(`/me/drive/root:/${fileName}:/content`)
@@ -25,7 +28,26 @@ async function uploadFileToOneDrive(filePath, fileName) {
   }
 }
 
-// Example usage:
-// uploadFileToOneDrive('path/to/your/file.txt', 'file.txt').catch((error) => console.error(error));
+async function removeFileFromOneDrive(fileName) {
+  try {
+    const accessToken = await getAccessToken();
 
-module.exports = { uploadFileToOneDrive };
+    const client = Client.init({
+      authProvider: (done) => {
+        done(null, accessToken);
+      },
+    });
+
+    // Make API call to delete the file
+    await client
+      .api(`/me/drive/root:/${fileName}`)
+      .delete();
+
+    console.log('File removed successfully from OneDrive:', fileName);
+  } catch (error) {
+    console.error('Error removing file from OneDrive:', error);
+    throw error;
+  }
+}
+
+module.exports = { uploadFileToOneDrive, removeFileFromOneDrive };
