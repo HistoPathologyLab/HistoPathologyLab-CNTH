@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@azure/msal-node": "^2.9.2",
     "express": "^4.19.2"
   }
 }
