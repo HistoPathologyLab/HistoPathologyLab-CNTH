@@ -444,26 +444,41 @@
             }
         });
 
-        // Add and remove doctor functions
-        function saveDoctor(name, profession) {
-            let doctors = JSON.parse(localStorage.getItem('doctors')) || [];
-            doctors.push({ name, profession });
-            localStorage.setItem('doctors', JSON.stringify(doctors));
+        // Import required modules for OneDrive integration
+        const { uploadFileToOneDrive, removeFileFromOneDrive } = require('./uploadToOneDrive');
+
+        // Function to save doctor's data to OneDrive
+        async function saveDoctorToOneDrive(name, profession) {
+            try {
+                const fileName = `Doctors/${name}_${profession}.json`;
+                const data = JSON.stringify({ name, profession });
+                await uploadFileToOneDrive(data, fileName);
+                console.log('Doctor data saved to OneDrive:', { name, profession });
+            } catch (error) {
+                console.error('Error saving doctor data to OneDrive:', error);
+                throw error;
+            }
         }
 
-        function removeDoctor(name) {
-            let doctors = JSON.parse(localStorage.getItem('doctors')) || [];
-            doctors = doctors.filter(doctor => doctor.name !== name);
-            localStorage.setItem('doctors', JSON.stringify(doctors));
+        // Function to remove doctor's data from OneDrive
+        async function removeDoctorFromOneDrive(name, profession) {
+            try {
+                const fileName = `Doctors/${name}_${profession}.json`;
+                await removeFileFromOneDrive(fileName);
+                console.log('Doctor data removed from OneDrive:', { name, profession });
+            } catch (error) {
+                console.error('Error removing doctor data from OneDrive:', error);
+                throw error;
+            }
         }
 
         // Add button event listener
-        document.getElementById('add').addEventListener('click', function() {
+        document.getElementById('add').addEventListener('click', async function() {
             const name = document.getElementById('doctor-name').value.trim();
             const profession = document.getElementById('profession').value;
 
             if (name && profession) {
-                saveDoctor(name, profession);
+                await saveDoctorToOneDrive(name, profession);
                 alert(`Doctor ${name} added as ${profession}.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
@@ -473,16 +488,17 @@
         });
 
         // Remove button event listener
-        document.getElementById('remove').addEventListener('click', function() {
+        document.getElementById('remove').addEventListener('click', async function() {
             const name = document.getElementById('doctor-name').value.trim();
+            const profession = document.getElementById('profession').value;
 
-            if (name) {
-                removeDoctor(name);
+            if (name && profession) {
+                await removeDoctorFromOneDrive(name, profession);
                 alert(`Doctor ${name} removed.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
-                alert('Please enter the doctor\'s name to remove.');
+                alert('Please enter both the doctor\'s name and profession.');
             }
         });
     </script>
