@@ -4,7 +4,7 @@ const msalConfig = {
   auth: {
     clientId: process.env.CLIENT_ID,
     authority: `https://login.microsoftonline.com/${process.env.TENANT_ID}`,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientSecret: 'LeR8Q~x~GPxi2~bZOkfSO.nNhe_g2KDHgkfHdarG', // Replace with your actual client secret value
   },
 };
 
