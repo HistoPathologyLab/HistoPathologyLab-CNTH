@@ -8,15 +8,19 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-const doctorsFilePath = path.join(__dirname, 'D:/HistoPathology Lab/Doctor Details/doctors.json');
+const doctorsFilePath = path.join('D:/HistoPathology Lab/Doctor Details', 'doctors.json');
 
 app.post('/api/doctors', (req, res) => {
     const { name, profession } = req.body;
     const doctorData = { name, profession };
 
+    console.log('Received POST request:', doctorData);
+
     fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
         if (err) {
-            if (err.code !== 'ENOENT') {
+            if (err.code === 'ENOENT') {
+                console.warn('File not found, creating a new one.');
+            } else {
                 console.error('Error reading file:', err);
                 return res.status(500).json({ error: 'Failed to read data file' });
             }
@@ -40,6 +44,7 @@ app.post('/api/doctors', (req, res) => {
                 return res.status(500).json({ error: 'Failed to save doctor data' });
             }
 
+            console.log('Doctor data saved successfully');
             res.status(201).json({ message: 'Doctor data saved successfully' });
         });
     });
@@ -48,9 +53,13 @@ app.post('/api/doctors', (req, res) => {
 app.delete('/api/doctors', (req, res) => {
     const { name } = req.body;
 
+    console.log('Received DELETE request:', { name });
+
     fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
         if (err) {
-            if (err.code !== 'ENOENT') {
+            if (err.code === 'ENOENT') {
+                console.warn('File not found.');
+            } else {
                 console.error('Error reading file:', err);
                 return res.status(500).json({ error: 'Failed to read data file' });
             }
@@ -74,6 +83,7 @@ app.delete('/api/doctors', (req, res) => {
                 return res.status(500).json({ error: 'Failed to delete doctor data' });
             }
 
+            console.log('Doctor data deleted successfully');
             res.status(200).json({ message: 'Doctor data deleted successfully' });
         });
     });
