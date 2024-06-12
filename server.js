@@ -18,12 +18,8 @@ app.post('/api/doctors', (req, res) => {
 
     fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
         if (err) {
-            if (err.code === 'ENOENT') {
-                console.warn('File not found, creating a new one.');
-            } else {
-                console.error('Error reading file:', err);
-                return res.status(500).json({ error: 'Failed to read data file' });
-            }
+            console.error('Error reading file:', err);
+            return res.status(500).json({ error: 'Failed to read data file', details: err.message });
         }
 
         let doctors = [];
@@ -32,7 +28,7 @@ app.post('/api/doctors', (req, res) => {
                 doctors = JSON.parse(data);
             } catch (parseErr) {
                 console.error('Error parsing JSON:', parseErr);
-                return res.status(500).json({ error: 'Failed to parse data file' });
+                return res.status(500).json({ error: 'Failed to parse data file', details: parseErr.message });
             }
         }
 
@@ -41,7 +37,7 @@ app.post('/api/doctors', (req, res) => {
         fs.writeFile(doctorsFilePath, JSON.stringify(doctors, null, 2), (err) => {
             if (err) {
                 console.error('Error writing file:', err);
-                return res.status(500).json({ error: 'Failed to save doctor data' });
+                return res.status(500).json({ error: 'Failed to save doctor data', details: err.message });
             }
 
             console.log('Doctor data saved successfully');
@@ -57,12 +53,8 @@ app.delete('/api/doctors', (req, res) => {
 
     fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
         if (err) {
-            if (err.code === 'ENOENT') {
-                console.warn('File not found.');
-            } else {
-                console.error('Error reading file:', err);
-                return res.status(500).json({ error: 'Failed to read data file' });
-            }
+            console.error('Error reading file:', err);
+            return res.status(500).json({ error: 'Failed to read data file', details: err.message });
         }
 
         let doctors = [];
@@ -71,7 +63,7 @@ app.delete('/api/doctors', (req, res) => {
                 doctors = JSON.parse(data);
             } catch (parseErr) {
                 console.error('Error parsing JSON:', parseErr);
-                return res.status(500).json({ error: 'Failed to parse data file' });
+                return res.status(500).json({ error: 'Failed to parse data file', details: parseErr.message });
             }
         }
 
@@ -80,7 +72,7 @@ app.delete('/api/doctors', (req, res) => {
         fs.writeFile(doctorsFilePath, JSON.stringify(updatedDoctors, null, 2), (err) => {
             if (err) {
                 console.error('Error writing file:', err);
-                return res.status(500).json({ error: 'Failed to delete doctor data' });
+                return res.status(500).json({ error: 'Failed to delete doctor data', details: err.message });
             }
 
             console.log('Doctor data deleted successfully');
