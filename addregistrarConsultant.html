@@ -444,61 +444,54 @@
             }
         });
 
-        // Determine the base URL based on the environment
-        const baseURL = window.location.hostname === 'localhost' ? 'http://localhost:3000/api/doctors' : 'https://histo-pathology-lab-cnth.vercel.app/api/doctors';
-
         // Function to save doctor's data
         async function saveDoctor(name, profession) {
             try {
-                console.log('Sending POST request:', { name, profession });
-                const response = await fetch(baseURL, {
+		const response = await fetch('/api/doctors', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ name, profession })
-                });
-                if (!response.ok) {
+            	});
+            	if (!response.ok) {
                     throw new Error('Failed to save doctor data.');
-                }
-                console.log('Doctor data saved successfully:', { name, profession });
+            	}
             } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to save doctor data.');
+            	console.error('Error:', error);
+            	alert('Failed to save doctor data.');
             }
-        }
+    	}
 
         // Function to remove doctor's data
         async function removeDoctor(name) {
             try {
-                console.log('Sending DELETE request:', { name });
-                const response = await fetch(baseURL, {
+		const response = await fetch('/api/doctors', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ name })
-                });
-                if (!response.ok) {
+            	});
+            	if (!response.ok) {
                     throw new Error('Failed to remove doctor data.');
-                }
-                console.log('Doctor data removed successfully:', { name });
+            	}
             } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to remove doctor data.');
+            	console.error('Error:', error);
+            	alert('Failed to remove doctor data.');
             }
-        }
+    	}
 
         // Add button event listener
         document.getElementById('add').addEventListener('click', async function() {
-            const name = document.getElementById('doctor-name').value.trim();
+            const name = document.getElementById("doctor's-name-dr.").value.trim();
             const profession = document.getElementById('profession').value;
 
             if (name && profession) {
                 await saveDoctor(name, profession);
-                alert(`Doctor ${name} added as ${profession}.`);
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('profession').selectedIndex = 0;
+            	alert(`Doctor ${name} added as ${profession}.`);
+            	document.getElementById("doctor's-name-dr.").value = '';
+            	document.getElementById('profession').selectedIndex = 0;
             } else {
                 alert('Please enter both the doctor\'s name and profession.');
             }
@@ -506,13 +499,13 @@
 
         // Remove button event listener
         document.getElementById('remove').addEventListener('click', async function() {
-            const name = document.getElementById('doctor-name').value.trim();
+            const name = document.getElementById("doctor's-name-dr.").value.trim();
 
             if (name) {
                 await removeDoctor(name);
-                alert(`Doctor ${name} removed.`);
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('profession').selectedIndex = 0;
+            	alert(`Doctor ${name} removed.`);
+            	document.getElementById("doctor's-name-dr.").value = '';
+            	document.getElementById('profession').selectedIndex = 0;
             } else {
                 alert('Please enter the doctor\'s name to remove.');
             }
