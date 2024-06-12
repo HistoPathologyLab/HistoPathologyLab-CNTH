@@ -1,6 +1,6 @@
-const fs = require('fs');
 const { Client } = require('@microsoft/microsoft-graph-client');
 const { getAccessToken } = require('./auth');
+const { Readable } = require('stream');
 
 async function uploadFileToOneDrive(data, fileName) {
   try {
