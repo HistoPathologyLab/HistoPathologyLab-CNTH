@@ -10,7 +10,17 @@ app.use(express.json());
 
 const doctorsFilePath = path.join('D:/HistoPathology Lab/Doctor Details', 'doctors.json');
 
-// POST endpoint to add a doctor
+// Ensure the directory exists
+const directoryPath = path.dirname(doctorsFilePath);
+if (!fs.existsSync(directoryPath)) {
+    fs.mkdirSync(directoryPath, { recursive: true });
+}
+
+// Ensure the file exists
+if (!fs.existsSync(doctorsFilePath)) {
+    fs.writeFileSync(doctorsFilePath, '[]', 'utf8');
+}
+
 app.post('/api/doctors', (req, res) => {
     const { name, profession } = req.body;
     const doctorData = { name, profession };
@@ -18,7 +28,7 @@ app.post('/api/doctors', (req, res) => {
     console.log('Received POST request:', doctorData);
 
     fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
-        if (err && err.code !== 'ENOENT') {
+        if (err) {
             console.error('Error reading file:', err);
             return res.status(500).json({ error: 'Failed to read data file', details: err.message });
         }
@@ -47,14 +57,13 @@ app.post('/api/doctors', (req, res) => {
     });
 });
 
-// DELETE endpoint to remove a doctor
 app.delete('/api/doctors', (req, res) => {
     const { name } = req.body;
 
     console.log('Received DELETE request:', { name });
 
     fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
-        if (err && err.code !== 'ENOENT') {
+        if (err) {
             console.error('Error reading file:', err);
             return res.status(500).json({ error: 'Failed to read data file', details: err.message });
         }
