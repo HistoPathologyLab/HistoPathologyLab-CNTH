@@ -1,39 +1,55 @@
 const express = require('express');
-const { uploadFileToOneDrive, removeFileFromOneDrive } = require('./uploadToOneDrive');
+const fs = require('fs');
+const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 3000; // Use port 3000 by default
+const PORT = process.env.PORT || 3000;
+const doctorDetailsPath = "D:\\HistoPathology Lab\\Doctor Details";
 
 // Middleware to parse JSON requests
 app.use(express.json());
 
-// Define a route to handle POST requests
-app.post('/api/doctors', async (req, res) => {
-    const { name, profession } = req.body;
-    const fileName = `HistoPathology Lab/Doctors/${name}.txt`;
+// Ensure the directory exists
+if (!fs.existsSync(doctorDetailsPath)){
+    fs.mkdirSync(doctorDetailsPath, { recursive: true });
+}
 
-    try {
-        // Save the doctor data to OneDrive
-        await uploadFileToOneDrive(`Name: ${name}\nProfession: ${profession}`, fileName);
-        res.status(200).json({ message: 'Data received and saved successfully' });
-    } catch (error) {
-        console.error('Error saving data to OneDrive:', error);
-        res.status(500).json({ message: 'Error saving data to OneDrive' });
+// Route to handle POST requests for saving doctor details
+app.post('/api/doctors', (req, res) => {
+    const { name, profession } = req.body;
+
+    if (!name || !profession) {
+        return res.status(400).json({ message: 'Name and profession are required.' });
     }
+
+    const filePath = path.join(doctorDetailsPath, `${name}.json`);
+    const data = { name, profession };
+
+    fs.writeFile(filePath, JSON.stringify(data, null, 2), (err) => {
+        if (err) {
+            console.error('Error writing file:', err);
+            return res.status(500).json({ message: 'Failed to save doctor data.' });
+        }
+        res.status(200).json({ message: 'Doctor data saved successfully.' });
+    });
 });
 
-// Define a route to handle DELETE requests
-app.delete('/api/doctors', async (req, res) => {
+// Route to handle DELETE requests for removing doctor details
+app.delete('/api/doctors', (req, res) => {
     const { name } = req.body;
-    const fileName = `HistoPathology Lab/Doctors/${name}.txt`;
 
-    try {
-        // Remove the doctor data from OneDrive
-        await removeFileFromOneDrive(fileName);
-        res.status(200).json({ message: 'Data removed successfully' });
-    } catch (error) {
-        console.error('Error removing data from OneDrive:', error);
-        res.status(500).json({ message: 'Error removing data from OneDrive' });
+    if (!name) {
+        return res.status(400).json({ message: 'Name is required.' });
     }
+
+    const filePath = path.join(doctorDetailsPath, `${name}.json`);
+
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            console.error('Error deleting file:', err);
+            return res.status(500).json({ message: 'Failed to remove doctor data.' });
+        }
+        res.status(200).json({ message: 'Doctor data removed successfully.' });
+    });
 });
 
 // Start the server
