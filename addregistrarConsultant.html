@@ -444,33 +444,43 @@
             }
         });
 
-        // Import required modules for OneDrive integration
-        const { uploadFileToOneDrive, removeFileFromOneDrive } = require('./uploadToOneDrive');
-
-        // Function to save doctor's data to OneDrive
-        async function saveDoctorToOneDrive(name, profession) {
+    	// Function to save doctor's data
+    	async function saveDoctor(name, profession) {
             try {
-                const fileName = `Doctors/${name}_${profession}.json`;
-                const data = JSON.stringify({ name, profession });
-                await uploadFileToOneDrive(data, fileName);
-                console.log('Doctor data saved to OneDrive:', { name, profession });
+            	const response = await fetch('/api/doctors', {
+                    method: 'POST',
+                    headers: {
+                    	'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, profession })
+            	});
+            	if (!response.ok) {
+                    throw new Error('Failed to save doctor data.');
+            	}
             } catch (error) {
-                console.error('Error saving doctor data to OneDrive:', error);
-                throw error;
+                console.error('Error:', error);
+                alert('Failed to save doctor data.');
             }
-        }
-
-        // Function to remove doctor's data from OneDrive
-        async function removeDoctorFromOneDrive(name, profession) {
+    	}
+	
+    	// Function to remove doctor's data
+    	async function removeDoctor(name) {
             try {
-                const fileName = `Doctors/${name}_${profession}.json`;
-                await removeFileFromOneDrive(fileName);
-                console.log('Doctor data removed from OneDrive:', { name, profession });
+            	const response = await fetch('/api/doctors', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name })
+            	});
+            	if (!response.ok) {
+                    throw new Error('Failed to remove doctor data.');
+            	}
             } catch (error) {
-                console.error('Error removing doctor data from OneDrive:', error);
-                throw error;
+            	console.error('Error:', error);
+            	alert('Failed to remove doctor data.');
             }
-        }
+    	}
 
         // Add button event listener
         document.getElementById('add').addEventListener('click', async function() {
@@ -490,15 +500,14 @@
         // Remove button event listener
         document.getElementById('remove').addEventListener('click', async function() {
             const name = document.getElementById('doctor-name').value.trim();
-            const profession = document.getElementById('profession').value;
 
-            if (name && profession) {
-                await removeDoctorFromOneDrive(name, profession);
+            if (name) {
+                await removeDoctor(name);
                 alert(`Doctor ${name} removed.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
-                alert('Please enter both the doctor\'s name and profession.');
+                alert('Please enter the doctor\'s name to remove.');
             }
         });
     </script>
