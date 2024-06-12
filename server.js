@@ -1,66 +1,70 @@
 const express = require('express');
+const cors = require('cors'); // Import the CORS package
 const fs = require('fs');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const doctorDetailsPath = "D:\\HistoPathologyLab-CNTH\\Doctor Details";
 
-// Middleware to parse JSON requests
+app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 
-// Ensure the directory exists
-if (!fs.existsSync(doctorDetailsPath)){
-    fs.mkdirSync(doctorDetailsPath, { recursive: true });
-}
+const doctorsFilePath = path.join(__dirname, 'D:/HistoPathology Lab/Doctor Details/doctors.json');
 
-// Route to handle POST requests for saving doctor details
 app.post('/api/doctors', (req, res) => {
     const { name, profession } = req.body;
+    const doctorData = { name, profession };
 
-    console.log('Received POST request:', req.body);
-
-    if (!name || !profession) {
-        console.error('Name and profession are required.');
-        return res.status(400).json({ message: 'Name and profession are required.' });
-    }
-
-    const filePath = path.join(doctorDetailsPath, `${name}.json`);
-    const data = { name, profession };
-
-    fs.writeFile(filePath, JSON.stringify(data, null, 2), (err) => {
-        if (err) {
-            console.error('Error writing file:', err);
-            return res.status(500).json({ message: 'Failed to save doctor data.' });
+    fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
+        if (err && err.code !== 'ENOENT') {
+            console.error('Error reading file:', err);
+            return res.status(500).json({ error: 'Failed to read data file' });
         }
-        console.log('Doctor data saved successfully:', filePath);
-        res.status(200).json({ message: 'Doctor data saved successfully.' });
+
+        let doctors = [];
+        if (data) {
+            doctors = JSON.parse(data);
+        }
+
+        doctors.push(doctorData);
+
+        fs.writeFile(doctorsFilePath, JSON.stringify(doctors, null, 2), (err) => {
+            if (err) {
+                console.error('Error writing file:', err);
+                return res.status(500).json({ error: 'Failed to save doctor data' });
+            }
+
+            res.status(201).json({ message: 'Doctor data saved successfully' });
+        });
     });
 });
 
-// Route to handle DELETE requests for removing doctor details
 app.delete('/api/doctors', (req, res) => {
     const { name } = req.body;
 
-    console.log('Received DELETE request:', req.body);
-
-    if (!name) {
-        console.error('Name is required.');
-        return res.status(400).json({ message: 'Name is required.' });
-    }
-
-    const filePath = path.join(doctorDetailsPath, `${name}.json`);
-
-    fs.unlink(filePath, (err) => {
-        if (err) {
-            console.error('Error deleting file:', err);
-            return res.status(500).json({ message: 'Failed to remove doctor data.' });
+    fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
+        if (err && err.code !== 'ENOENT') {
+            console.error('Error reading file:', err);
+            return res.status(500).json({ error: 'Failed to read data file' });
         }
-        console.log('Doctor data removed successfully:', filePath);
-        res.status(200).json({ message: 'Doctor data removed successfully.' });
+
+        let doctors = [];
+        if (data) {
+            doctors = JSON.parse(data);
+        }
+
+        const updatedDoctors = doctors.filter(doctor => doctor.name !== name);
+
+        fs.writeFile(doctorsFilePath, JSON.stringify(updatedDoctors, null, 2), (err) => {
+            if (err) {
+                console.error('Error writing file:', err);
+                return res.status(500).json({ error: 'Failed to delete doctor data' });
+            }
+
+            res.status(200).json({ message: 'Doctor data deleted successfully' });
+        });
     });
 });
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
