@@ -1,11 +1,11 @@
 const express = require('express');
-const cors = require('cors'); // Import the CORS package
+const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
 app.use(express.json());
 
 const doctorsFilePath = path.join(__dirname, 'D:/HistoPathology Lab/Doctor Details/doctors.json');
@@ -15,14 +15,21 @@ app.post('/api/doctors', (req, res) => {
     const doctorData = { name, profession };
 
     fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
-        if (err && err.code !== 'ENOENT') {
-            console.error('Error reading file:', err);
-            return res.status(500).json({ error: 'Failed to read data file' });
+        if (err) {
+            if (err.code !== 'ENOENT') {
+                console.error('Error reading file:', err);
+                return res.status(500).json({ error: 'Failed to read data file' });
+            }
         }
 
         let doctors = [];
         if (data) {
-            doctors = JSON.parse(data);
+            try {
+                doctors = JSON.parse(data);
+            } catch (parseErr) {
+                console.error('Error parsing JSON:', parseErr);
+                return res.status(500).json({ error: 'Failed to parse data file' });
+            }
         }
 
         doctors.push(doctorData);
@@ -42,14 +49,21 @@ app.delete('/api/doctors', (req, res) => {
     const { name } = req.body;
 
     fs.readFile(doctorsFilePath, 'utf8', (err, data) => {
-        if (err && err.code !== 'ENOENT') {
-            console.error('Error reading file:', err);
-            return res.status(500).json({ error: 'Failed to read data file' });
+        if (err) {
+            if (err.code !== 'ENOENT') {
+                console.error('Error reading file:', err);
+                return res.status(500).json({ error: 'Failed to read data file' });
+            }
         }
 
         let doctors = [];
         if (data) {
-            doctors = JSON.parse(data);
+            try {
+                doctors = JSON.parse(data);
+            } catch (parseErr) {
+                console.error('Error parsing JSON:', parseErr);
+                return res.status(500).json({ error: 'Failed to parse data file' });
+            }
         }
 
         const updatedDoctors = doctors.filter(doctor => doctor.name !== name);
