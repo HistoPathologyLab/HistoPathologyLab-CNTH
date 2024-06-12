@@ -447,26 +447,29 @@
         // Function to save doctor's data
         async function saveDoctor(name, profession) {
             try {
-		const response = await fetch('/api/doctors', {
+        	console.log('Sending POST request:', { name, profession });
+        	const response = await fetch('http://localhost:3000/api/doctors', {  // updated URL
                     method: 'POST',
-                    headers: {
+            	    headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ name, profession })
-            	});
-            	if (!response.ok) {
-                    throw new Error('Failed to save doctor data.');
-            	}
+            	    },
+            	    body: JSON.stringify({ name, profession })
+        	});
+        	if (!response.ok) {
+            	    throw new Error('Failed to save doctor data.');
+        	}
+        	console.log('Doctor data saved successfully:', { name, profession });
             } catch (error) {
-            	console.error('Error:', error);
-            	alert('Failed to save doctor data.');
-            }
-    	}
+        	console.error('Error:', error);
+        	alert('Failed to save doctor data.');
+    	    }
+	}
 
         // Function to remove doctor's data
         async function removeDoctor(name) {
             try {
-		const response = await fetch('/api/doctors', {
+		console.log('Sending DELETE request:', { name });
+        	const response = await fetch('http://localhost:3000/api/doctors', {  // updated URL
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -484,13 +487,13 @@
 
         // Add button event listener
         document.getElementById('add').addEventListener('click', async function() {
-            const name = document.getElementById("doctor's-name-dr.").value.trim();
+            const name = document.getElementById('doctor-name').value.trim();
             const profession = document.getElementById('profession').value;
 
             if (name && profession) {
                 await saveDoctor(name, profession);
             	alert(`Doctor ${name} added as ${profession}.`);
-            	document.getElementById("doctor's-name-dr.").value = '';
+            	document.getElementById('doctor-name').value = '';
             	document.getElementById('profession').selectedIndex = 0;
             } else {
                 alert('Please enter both the doctor\'s name and profession.');
@@ -499,12 +502,12 @@
 
         // Remove button event listener
         document.getElementById('remove').addEventListener('click', async function() {
-            const name = document.getElementById("doctor's-name-dr.").value.trim();
+            const name = document.getElementById('doctor-name').value.trim();
 
             if (name) {
                 await removeDoctor(name);
             	alert(`Doctor ${name} removed.`);
-            	document.getElementById("doctor's-name-dr.").value = '';
+            	document.getElementById('doctor-name').value = '';
             	document.getElementById('profession').selectedIndex = 0;
             } else {
                 alert('Please enter the doctor\'s name to remove.');
