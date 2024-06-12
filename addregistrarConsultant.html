@@ -444,13 +444,13 @@
             }
         });
 
-    	// Function to save doctor's data
-    	async function saveDoctor(name, profession) {
+        // Function to save doctor's data
+        async function saveDoctor(name, profession) {
             try {
-            	const response = await fetch('/api/doctors', {
+		const response = await fetch('/api/doctors', {
                     method: 'POST',
                     headers: {
-                    	'Content-Type': 'application/json'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ name, profession })
             	});
@@ -458,15 +458,15 @@
                     throw new Error('Failed to save doctor data.');
             	}
             } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to save doctor data.');
+            	console.error('Error:', error);
+            	alert('Failed to save doctor data.');
             }
     	}
-	
-    	// Function to remove doctor's data
-    	async function removeDoctor(name) {
+
+        // Function to remove doctor's data
+        async function removeDoctor(name) {
             try {
-            	const response = await fetch('/api/doctors', {
+		const response = await fetch('/api/doctors', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -484,14 +484,14 @@
 
         // Add button event listener
         document.getElementById('add').addEventListener('click', async function() {
-            const name = document.getElementById('doctor-name').value.trim();
+            const name = document.getElementById("doctor's-name-dr.").value.trim();
             const profession = document.getElementById('profession').value;
 
             if (name && profession) {
-                await saveDoctorToOneDrive(name, profession);
-                alert(`Doctor ${name} added as ${profession}.`);
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('profession').selectedIndex = 0;
+                await saveDoctor(name, profession);
+            	alert(`Doctor ${name} added as ${profession}.`);
+            	document.getElementById("doctor's-name-dr.").value = '';
+            	document.getElementById('profession').selectedIndex = 0;
             } else {
                 alert('Please enter both the doctor\'s name and profession.');
             }
@@ -499,13 +499,13 @@
 
         // Remove button event listener
         document.getElementById('remove').addEventListener('click', async function() {
-            const name = document.getElementById('doctor-name').value.trim();
+            const name = document.getElementById("doctor's-name-dr.").value.trim();
 
             if (name) {
                 await removeDoctor(name);
-                alert(`Doctor ${name} removed.`);
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('profession').selectedIndex = 0;
+            	alert(Doctor ${name} removed.);
+            	document.getElementById("doctor's-name-dr.").value = '';
+            	document.getElementById('profession').selectedIndex = 0;
             } else {
                 alert('Please enter the doctor\'s name to remove.');
             }
