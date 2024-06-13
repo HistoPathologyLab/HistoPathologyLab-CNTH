@@ -8,7 +8,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-const doctorsFilePath = path.join('C:\Users\USER\OneDrive\HistoPathology Lab\Doctor Details', 'doctors.json');
+// Use the OneDrive-synced folder path
+const doctorsFilePath = path.join('C:/Users/USER/OneDrive/HistoPathology Lab/Doctor Details', 'doctors.json');
 
 // Ensure the directory exists
 const directoryPath = path.dirname(doctorsFilePath);
