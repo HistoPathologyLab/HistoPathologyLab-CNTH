@@ -1,4 +1,5 @@
-const { PublicClientApplication } = require('@azure/msal-node');
+const msal = require('@azure/msal-node');
+require('dotenv').config();
 
 const msalConfig = {
   auth: {
@@ -8,18 +9,13 @@ const msalConfig = {
   },
 };
 
-const pca = new PublicClientApplication(msalConfig);
+const cca = new msal.ConfidentialClientApplication(msalConfig);
 
 async function getAccessToken() {
-  try {
-    const authResponse = await pca.acquireTokenByClientCredential({
-      scopes: ['https://graph.microsoft.com/.default'],
-    });
-    return authResponse.accessToken;
-  } catch (error) {
-    console.error('Error acquiring access token:', error);
-    throw error;
-  }
+  const result = await cca.acquireTokenByClientCredential({
+    scopes: ['https://graph.microsoft.com/.default'],
+  });
+  return result.accessToken;
 }
 
 module.exports = { getAccessToken };
