@@ -1,13 +1,13 @@
 const { Client } = require('@microsoft/microsoft-graph-client');
 require('isomorphic-fetch');
-const { getAccessToken, refreshAccessToken } = require('./auth');
+const getAccessToken = require('./auth');
 
 async function saveDoctorToOneDrive(doctor) {
-    let token = await getAccessToken();
+    const accessToken = await getAccessToken();
 
     const client = Client.init({
         authProvider: (done) => {
-            done(null, token);
+            done(null, accessToken);
         },
     });
 
@@ -18,14 +18,8 @@ async function saveDoctorToOneDrive(doctor) {
         await client.api(`/me/drive/root:/${fileName}:/content`).put(fileContent);
         console.log('Doctor data saved successfully to OneDrive');
     } catch (error) {
-        if (error.statusCode === 401) { // If access token expired
-            token = await refreshAccessToken();
-            await client.api(`/me/drive/root:/${fileName}:/content`).put(fileContent);
-            console.log('Doctor data saved successfully to OneDrive after refreshing token');
-        } else {
-            console.error('Error saving doctor data to OneDrive:', error);
-            throw new Error('Failed to save doctor data');
-        }
+        console.error('Error saving doctor data to OneDrive:', error);
+        throw new Error('Failed to save doctor data');
     }
 }
 

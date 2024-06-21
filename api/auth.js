@@ -11,45 +11,18 @@ const config = {
 
 const cca = new msal.ConfidentialClientApplication(config);
 
-let accessToken;
-let refreshToken;
-
 async function getAccessToken() {
-    if (!accessToken) {
-        const tokenRequest = {
-            scopes: ["https://graph.microsoft.com/.default"],
-            redirectUri: process.env.REDIRECT_URI,
-        };
-
-        try {
-            const authResponse = await cca.acquireTokenByClientCredential(tokenRequest);
-            accessToken = authResponse.accessToken;
-            refreshToken = authResponse.refreshToken;
-        } catch (error) {
-            console.error("Error in acquireTokenByClientCredential:", error);
-            throw new Error('Failed to get access token');
-        }
-    }
-
-    return accessToken;
-}
-
-async function refreshAccessToken() {
-    const tokenRequest = {
-        refreshToken: refreshToken,
+    const clientCredentialRequest = {
         scopes: ["https://graph.microsoft.com/.default"],
-        redirectUri: process.env.REDIRECT_URI,
     };
 
     try {
-        const authResponse = await cca.acquireTokenByRefreshToken(tokenRequest);
-        accessToken = authResponse.accessToken;
-        refreshToken = authResponse.refreshToken;
-        return accessToken;
+        const authResponse = await cca.acquireTokenByClientCredential(clientCredentialRequest);
+        return authResponse.accessToken;
     } catch (error) {
-        console.error("Error in acquireTokenByRefreshToken:", error);
-        throw new Error('Failed to refresh access token');
+        console.error("Failed to acquire token:", error);
+        throw new Error('Failed to get access token');
     }
 }
 
-module.exports = { getAccessToken, refreshAccessToken };
+module.exports = getAccessToken;
