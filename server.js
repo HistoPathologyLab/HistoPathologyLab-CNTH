@@ -1,29 +1,53 @@
 require('dotenv').config();
-console.log('CLIENT_ID:', process.env.CLIENT_ID);
-console.log('TENANT_ID:', process.env.TENANT_ID);
-console.log('CLIENT_SECRET:', process.env.CLIENT_SECRET);
-console.log('REDIRECT_URI:', process.env.REDIRECT_URI);
-console.log('ONE_DRIVE_FOLDER_PATH:', process.env.ONE_DRIVE_FOLDER_PATH);
-
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const msal = require('@azure/msal-node');
 const saveDoctorToOneDrive = require('./api/saveDoctor');
 const removeDoctorFromOneDrive = require('./api/removeDoctor');
 
-// CORS settings
+const msalConfig = {
+    auth: {
+        clientId: process.env.CLIENT_ID,
+        authority: `https://login.microsoftonline.com/common`,
+        clientSecret: process.env.CLIENT_SECRET,
+    },
+};
+
+const cca = new msal.ConfidentialClientApplication(msalConfig);
+
+let token = null;
+
 app.use(cors({
-    origin: ['https://histo-pathology-lab-cnth.vercel.app', 'http://localhost:3000'],
-    methods: ['GET', 'POST', 'DELETE'],
-    allowedHeaders: ['Content-Type']
+    origin: '*', // Adjust this for security if needed
 }));
 app.use(express.json());
 
+app.get('/auth/callback', async (req, res) => {
+    const tokenRequest = {
+        code: req.query.code,
+        scopes: ["https://graph.microsoft.com/.default"],
+        redirectUri: process.env.REDIRECT_URI,
+    };
+
+    try {
+        const response = await cca.acquireTokenByCode(tokenRequest);
+        token = response.accessToken;
+        res.send('Authentication successful! You can close this tab and return to the app.');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error during authentication');
+    }
+});
+
 app.post('/api/doctors', async (req, res) => {
     try {
+        if (!token) {
+            return res.status(401).json({ message: 'Not authenticated' });
+        }
         const doctor = req.body;
         console.log('Received doctor data:', doctor);
-        const response = await saveDoctorToOneDrive(doctor);
+        const response = await saveDoctorToOneDrive(doctor, token);
         res.status(200).json({ message: 'Doctor data saved successfully', response });
     } catch (error) {
         console.error('Failed to save doctor data:', error);
@@ -33,9 +57,12 @@ app.post('/api/doctors', async (req, res) => {
 
 app.delete('/api/doctors', async (req, res) => {
     try {
+        if (!token) {
+            return res.status(401).json({ message: 'Not authenticated' });
+        }
         const doctor = req.body;
-        const fileName = `${process.env.ONE_DRIVE_FOLDER_PATH}/${doctor.name}_${doctor.profession}.json`;
-        await removeDoctorFromOneDrive(fileName);
+        const fileName = `HistoPathology Lab/Doctors/${doctor.name}_${doctor.profession}.json`;
+        await removeDoctorFromOneDrive(fileName, token);
         res.status(200).json({ message: 'Doctor data removed successfully' });
     } catch (error) {
         console.error('Failed to remove doctor data:', error);
