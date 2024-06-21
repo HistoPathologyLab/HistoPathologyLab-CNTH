@@ -448,7 +448,7 @@
         async function saveDoctor(name, profession) {
             try {
                 console.log('Sending POST request:', { name, profession });
-                const response = await fetch('http://localhost:3000/api/doctors', {
+                const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/doctors', {  // Updated URL
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -469,7 +469,7 @@
         async function removeDoctor(name) {
             try {
                 console.log('Sending DELETE request:', { name });
-                const response = await fetch('http://localhost:3000/api/doctors', {
+                const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/doctors', {  // Updated URL
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
