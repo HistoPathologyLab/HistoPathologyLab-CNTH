@@ -1,55 +1,27 @@
 const { Client } = require('@microsoft/microsoft-graph-client');
-const { getAccessToken } = require('./auth');
+require('isomorphic-fetch');
+const getAccessToken = require('./auth');
 
-async function uploadFileToOneDrive(data, fileName) {
-  const accessToken = await getAccessToken();
+async function saveDoctorToOneDrive(doctor) {
+    try {
+        const accessToken = await getAccessToken();
+        console.log("Access token in saveDoctorToOneDrive:", accessToken);
 
-  const client = Client.init({
-    authProvider: (done) => {
-      done(null, accessToken);
-    },
-  });
+        const client = Client.init({
+            authProvider: (done) => {
+                done(null, accessToken);
+            },
+        });
 
-  const folderPath = `HistoPathology Lab/Doctor Details`;
-  try {
-    await client
-      .api(`/me/drive/root:/${folderPath}`)
-      .get();
-  } catch (error) {
-    if (error.code === 'itemNotFound') {
-      await client
-        .api(`/me/drive/root/children`)
-        .post({ name: 'HistoPathology Lab', folder: {}, '@microsoft.graph.conflictBehavior': 'rename' });
-      await client
-        .api(`/me/drive/root:/HistoPathology Lab/children`)
-        .post({ name: 'Doctor Details', folder: {}, '@microsoft.graph.conflictBehavior': 'rename' });
-    } else {
-      throw error;
+        const fileName = `${process.env.ONE_DRIVE_FOLDER_PATH}/${doctor.name}_${doctor.profession}.json`;
+        const fileContent = JSON.stringify(doctor);
+
+        await client.api(`/me/drive/root:/${fileName}:/content`).put(fileContent);
+        console.log('Doctor data saved successfully to OneDrive');
+    } catch (error) {
+        console.error('Error saving doctor data to OneDrive:', error);
+        throw new Error('Failed to save doctor data');
     }
-  }
-
-  const uploadResponse = await client
-    .api(`/me/drive/root:/${fileName}:/content`)
-    .put(data);
-  return uploadResponse;
 }
 
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { name, profession } = req.body;
-
-  try {
-    const fileName = `HistoPathology Lab/Doctor Details/${name}_${profession}.json`;
-    const data = JSON.stringify({ name, profession });
-
-    await uploadFileToOneDrive(data, fileName);
-
-    res.status(200).json({ message: 'Doctor data saved successfully' });
-  } catch (error) {
-    console.error('Error saving doctor data to OneDrive:', error);
-    res.status(500).json({ error: 'Failed to save doctor data' });
-  }
-};
+module.exports = saveDoctorToOneDrive;
