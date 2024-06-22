@@ -4,11 +4,14 @@ const cors = require('cors');
 const app = express();
 const saveDoctorToOneDrive = require('./api/saveDoctor');
 const removeDoctorFromOneDrive = require('./api/removeDoctor');
+const authRouter = require('./api/authRouter');
 
 app.use(cors({
     origin: '*', // Adjust this for security if needed
 }));
 app.use(express.json());
+
+app.use('/auth', authRouter); // Add this line to use the auth router
 
 app.post('/api/doctors', async (req, res) => {
     try {
