@@ -1,10 +1,7 @@
 const { Client } = require('@microsoft/microsoft-graph-client');
 require('isomorphic-fetch');
-const getAccessToken = require('./auth');
 
-async function saveDoctorToOneDrive(doctor) {
-    const accessToken = await getAccessToken();
-
+async function saveDoctorToOneDrive(doctor, accessToken) {
     const client = Client.init({
         authProvider: (done) => {
             done(null, accessToken);
