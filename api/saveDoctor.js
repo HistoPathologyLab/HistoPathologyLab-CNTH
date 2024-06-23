@@ -1,23 +1,19 @@
-const { Client } = require('@microsoft/microsoft-graph-client');
-require('isomorphic-fetch');
+const axios = require('axios');
 
 async function saveDoctorToOneDrive(doctor, accessToken) {
-    const client = Client.init({
-        authProvider: (done) => {
-            done(null, accessToken);
-        },
-    });
-
-    const fileName = `${process.env.ONE_DRIVE_FOLDER_PATH}/${doctor.name}_${doctor.profession}.json`;
+    const fileName = `${doctor.name}_${doctor.profession}.json`;
     const fileContent = JSON.stringify(doctor);
 
-    try {
-        await client.api(`/me/drive/root:/${fileName}:/content`).put(fileContent);
-        console.log('Doctor data saved successfully to OneDrive');
-    } catch (error) {
-        console.error('Error saving doctor data to OneDrive:', error);
-        throw new Error('Failed to save doctor data');
-    }
+    const url = `https://graph.microsoft.com/v1.0/me/drive/root:/${process.env.ONE_DRIVE_FOLDER_PATH}/${fileName}:/content`;
+
+    const response = await axios.put(url, fileContent, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return response.data;
 }
 
 module.exports = saveDoctorToOneDrive;

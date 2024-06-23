@@ -3,8 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const msal = require('@azure/msal-node');
-const saveDoctorToOneDrive = require('./saveDoctor');
-const removeDoctorFromOneDrive = require('./removeDoctor');
+const saveDoctorToOneDrive = require('./api/saveDoctor');
+const removeDoctorFromOneDrive = require('./api/removeDoctor');
 
 const app = express();
 
