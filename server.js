@@ -64,7 +64,7 @@ app.get('/auth/callback', (req, res) => {
     });
 });
 
-async function getAccessToken() {
+async function getAccessToken(req) {
     if (!req.session.accessToken) {
         throw new Error('No access token in session. Please authenticate.');
     }
@@ -75,7 +75,7 @@ app.post('/api/doctors', async (req, res) => {
     try {
         const doctor = req.body;
         console.log('Received doctor data:', doctor);
-        const accessToken = await getAccessToken();
+        const accessToken = await getAccessToken(req);
         const response = await saveDoctorToOneDrive(doctor, accessToken);
         res.status(200).json({ message: 'Doctor data saved successfully', response });
     } catch (error) {
@@ -88,7 +88,7 @@ app.delete('/api/doctors', async (req, res) => {
     try {
         const doctor = req.body;
         const fileName = `${process.env.ONE_DRIVE_FOLDER_PATH}/${doctor.name}_${doctor.profession}.json`;
-        const accessToken = await getAccessToken();
+        const accessToken = await getAccessToken(req);
         await removeDoctorFromOneDrive(fileName, accessToken);
         res.status(200).json({ message: 'Doctor data removed successfully' });
     } catch (error) {
