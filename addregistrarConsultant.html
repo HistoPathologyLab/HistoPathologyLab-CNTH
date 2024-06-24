@@ -487,10 +487,12 @@
 
         // Add button event listener
         document.getElementById('add').addEventListener('click', async function() {
+	    console.log('Add button clicked');
             const name = document.getElementById('doctor-name').value.trim();
             const profession = document.getElementById('profession').value;
 
             if (name && profession) {
+                console.log('Saving doctor:', name, profession);
                 await saveDoctor(name, profession);
                 alert(`Doctor ${name} added as ${profession}.`);
                 document.getElementById('doctor-name').value = '';
@@ -502,10 +504,12 @@
 
         // Remove button event listener
         document.getElementById('remove').addEventListener('click', async function() {
+            console.log('Remove button clicked');
             const name = document.getElementById('doctor-name').value.trim();
 
             if (name) {
                 await removeDoctor(name);
+                console.log('Removing doctor:', name);
                 alert(`Doctor ${name} removed.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
