@@ -1,26 +1,28 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
-const app = express();
-require('dotenv').config();
+const session = require('express-session');
+const cors = require('cors');
+const authRouter = require('./auth');
+const saveDoctor = require('./api/saveDoctor');
+const removeDoctor = require('./api/removeDoctor');
 
-// Middleware
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true,
+}));
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/auth', authRouter);
 
-// Routes
-app.use('/api/doctors', require('./api/saveDoctor'));
-app.use('/api/doctors', require('./api/removeDoctor'));
+app.post('/api/doctors', saveDoctor);
+app.delete('/api/doctors', removeDoctor);
 
-// Catchall handler
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
