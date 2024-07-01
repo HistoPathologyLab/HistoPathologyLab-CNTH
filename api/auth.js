@@ -1,70 +1,61 @@
-require('dotenv').config();
 const express = require('express');
-const msal = require('@azure/msal-node');
-const session = require('express-session');
-
 const router = express.Router();
+const fetch = require('node-fetch');
+const querystring = require('querystring');
 
-const config = {
-    auth: {
-        clientId: process.env.CLIENT_ID,
-        authority: `https://login.microsoftonline.com/${process.env.TENANT_ID}`,
-        clientSecret: process.env.CLIENT_SECRET,
-    },
-    system: {
-        loggerOptions: {
-            loggerCallback(loglevel, message, containsPii) {
-                console.log(message);
-            },
-            piiLoggingEnabled: false,
-            logLevel: msal.LogLevel.Verbose,
-        },
-    },
-};
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const TENANT_ID = process.env.TENANT_ID;
 
-const cca = new msal.ConfidentialClientApplication(config);
-
-router.use(session({
-    secret: 'your_secret_key', // replace with a strong secret key
-    resave: false,
-    saveUninitialized: true,
-}));
+let token = null;
 
 router.get('/login', (req, res) => {
-    const authCodeUrlParameters = {
-        scopes: ["https://graph.microsoft.com/.default"],
-        redirectUri: process.env.REDIRECT_URI,
-    };
-
-    cca.getAuthCodeUrl(authCodeUrlParameters).then((response) => {
-        res.redirect(response);
-    }).catch((error) => console.log(JSON.stringify(error)));
+    const authUrl = `https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&response_mode=query&scope=offline_access%20user.read%20files.readwrite.all`;
+    res.redirect(authUrl);
 });
 
-router.get('/callback', (req, res) => {
-    const tokenRequest = {
-        code: req.query.code,
-        scopes: ["https://graph.microsoft.com/.default"],
-        redirectUri: process.env.REDIRECT_URI,
-    };
+router.get('/callback', async (req, res) => {
+    const code = req.query.code;
 
-    cca.acquireTokenByCode(tokenRequest).then((response) => {
-        req.session.accessToken = response.accessToken;
-        res.status(200).send('Authentication successful! You can close this tab and return to the app.');
-    }).catch((error) => {
-        console.log(error);
-        res.status(500).send('Error during authentication. Please try again.');
+    const tokenUrl = `https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/token`;
+    const params = querystring.stringify({
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        redirect_uri: REDIRECT_URI,
+        code: code,
+        grant_type: 'authorization_code'
+    });
+
+    try {
+        const response = await fetch(tokenUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params
+        });
+        const data = await response.json();
+        token = data.access_token;
+        req.session.token = token;
+        res.redirect('/home.html');
+    } catch (error) {
+        res.status(500).send('Authentication failed');
+    }
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
     });
 });
 
-async function getAccessToken(req) {
-    if (!req.session.accessToken) {
-        throw new Error('No access token in session. Please authenticate.');
+function getAuthenticatedClient() {
+    if (!token) {
+        throw new Error('No token found');
     }
-    return req.session.accessToken;
+    return token;
 }
 
-module.exports = {
-    router,
-    getAccessToken
-};
+module.exports = router;
+module.exports.getAuthenticatedClient = getAuthenticatedClient;

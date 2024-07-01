@@ -447,8 +447,7 @@
         // Function to save doctor's data
         async function saveDoctor(name, profession) {
             try {
-                console.log('Sending POST request:', { name, profession });
-                const response = await fetch('/api/doctors', {  // Updated URL
+                const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/doctors', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -468,8 +467,7 @@
         // Function to remove doctor's data
         async function removeDoctor(name) {
             try {
-                console.log('Sending DELETE request:', { name });
-                const response = await fetch('/api/doctors', {  // Updated URL
+                const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/doctors', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -487,34 +485,30 @@
 
         // Add button event listener
         document.getElementById('add').addEventListener('click', async function() {
-	    console.log('Add button clicked');
             const name = document.getElementById('doctor-name').value.trim();
             const profession = document.getElementById('profession').value;
 
             if (name && profession) {
-                console.log('Saving doctor:', name, profession);
                 await saveDoctor(name, profession);
                 alert(`Doctor ${name} added as ${profession}.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
-                alert('Please enter both the doctor's name and profession.');
+                alert('Please enter both the doctor\'s name and profession.');
             }
         });
 
         // Remove button event listener
         document.getElementById('remove').addEventListener('click', async function() {
-            console.log('Remove button clicked');
             const name = document.getElementById('doctor-name').value.trim();
 
             if (name) {
                 await removeDoctor(name);
-                console.log('Removing doctor:', name);
                 alert(`Doctor ${name} removed.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
-                alert('Please enter the doctor's name to remove.');
+                alert('Please enter the doctor\'s name to remove.');
             }
         });
     </script>

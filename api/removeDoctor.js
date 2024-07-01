@@ -1,18 +1,31 @@
-const axios = require('axios');
+const express = require('express');
+const router = express.Router();
+const { getAuthenticatedClient } = require('../auth');
+const fetch = require('node-fetch');
 
-async function removeDoctorFromOneDrive(fileName, accessToken) {
-    const url = `https://graph.microsoft.com/v1.0/me/drive/root:${fileName}`;
+router.delete('/', async (req, res) => {
+    const { name } = req.body;
+    const accessToken = getAuthenticatedClient();
+    const oneDriveFolderPath = process.env.ONE_DRIVE_FOLDER_PATH;
+
+    const url = `https://graph.microsoft.com/v1.0/me/drive/root:${oneDriveFolderPath}/${name}.json`;
 
     try {
-        await axios.delete(url, {
+        const response = await fetch(url, {
+            method: 'DELETE',
             headers: {
-                Authorization: `Bearer ${accessToken}`
+                'Authorization': `Bearer ${accessToken}`
             }
         });
-    } catch (error) {
-        console.error('Error removing doctor from OneDrive:', error);
-        throw error;
-    }
-}
 
-module.exports = removeDoctorFromOneDrive;
+        if (response.ok) {
+            res.status(200).send('Doctor data removed successfully');
+        } else {
+            throw new Error('Failed to remove doctor data');
+        }
+    } catch (error) {
+        res.status(500).send({ error: 'Failed to remove doctor data' });
+    }
+});
+
+module.exports = router;

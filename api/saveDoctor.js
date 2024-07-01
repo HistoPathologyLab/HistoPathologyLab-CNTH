@@ -1,24 +1,35 @@
-const axios = require('axios');
+const express = require('express');
+const router = express.Router();
+const { getAuthenticatedClient } = require('../auth');
+const fetch = require('node-fetch');
 
-async function saveDoctorToOneDrive(doctor, accessToken) {
-    const folderPath = process.env.ONE_DRIVE_FOLDER_PATH;
-    const fileName = `${doctor.name}_${doctor.profession}.json`;
-    const fileContent = JSON.stringify(doctor);
+router.post('/', async (req, res) => {
+    const { name, profession } = req.body;
+    const accessToken = getAuthenticatedClient();
+    const oneDriveFolderPath = process.env.ONE_DRIVE_FOLDER_PATH;
 
-    const url = `https://graph.microsoft.com/v1.0/me/drive/root:${folderPath}/${fileName}:/content`;
+    const url = `https://graph.microsoft.com/v1.0/me/drive/root:${oneDriveFolderPath}/${name}.json:/content`;
+
+    const body = JSON.stringify({ name, profession });
 
     try {
-        const response = await axios.put(url, fileContent, {
+        const response = await fetch(url, {
+            method: 'PUT',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: body
         });
-        return response.data;
-    } catch (error) {
-        console.error('Error saving doctor to OneDrive:', error);
-        throw error;
-    }
-}
 
-module.exports = saveDoctorToOneDrive;
+        if (response.ok) {
+            res.status(200).send('Doctor data saved successfully');
+        } else {
+            throw new Error('Failed to save doctor data');
+        }
+    } catch (error) {
+        res.status(500).send({ error: 'Failed to save doctor data' });
+    }
+});
+
+module.exports = router;
