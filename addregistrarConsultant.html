@@ -457,7 +457,6 @@
                 if (!response.ok) {
                     throw new Error('Failed to save doctor data.');
                 }
-                console.log('Doctor data saved successfully:', { name, profession });
                 alert(`Doctor ${name} added as ${profession}.`);
             } catch (error) {
                 console.error('Error:', error);
