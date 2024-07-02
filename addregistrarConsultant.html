@@ -445,7 +445,7 @@
         });
 
         // Function to save doctor's data
-        async function saveDoctor(name, profession) {
+    	async function saveDoctor(name, profession) {
             try {
                 const response = await fetch('/api/doctors', {
                     method: 'POST',
@@ -458,11 +458,12 @@
                     throw new Error('Failed to save doctor data.');
                 }
                 console.log('Doctor data saved successfully:', { name, profession });
+                alert(`Doctor ${name} added as ${profession}.`);
             } catch (error) {
                 console.error('Error:', error);
                 alert('Failed to save doctor data.');
             }
-        }
+    	}
 
         // Function to remove doctor's data
         async function removeDoctor(name) {
@@ -477,7 +478,7 @@
                 if (!response.ok) {
                     throw new Error('Failed to remove doctor data.');
                 }
-                console.log('Doctor data removed successfully:', { name });
+                alert(`Doctor ${name} removed.`);
             } catch (error) {
                 console.error('Error:', error);
                 alert('Failed to remove doctor data.');
@@ -491,7 +492,6 @@
 
             if (name && profession) {
                 await saveDoctor(name, profession);
-                alert(`Doctor ${name} added as ${profession}.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
@@ -505,7 +505,6 @@
 
             if (name) {
                 await removeDoctor(name);
-                alert(`Doctor ${name} removed.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
