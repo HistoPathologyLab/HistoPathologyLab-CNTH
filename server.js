@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/doctors', require('./api/saveDoctor'));
-app.use('/api/doctors', require('./api/removeDoctor'));
+app.use('/api/saveDoctor', require('./api/saveDoctor'));
+app.use('/api/removeDoctor', require('./api/removeDoctor'));
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
