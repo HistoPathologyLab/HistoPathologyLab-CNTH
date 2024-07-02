@@ -447,7 +447,7 @@
         // Function to save doctor's data
     	async function saveDoctor(name, profession) {
             try {
-                const response = await fetch('/api/doctors', {
+                const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/saveDoctor', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -468,7 +468,7 @@
         // Function to remove doctor's data
         async function removeDoctor(name) {
             try {
-                const response = await fetch('/api/doctors', {
+                const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/removeDoctor', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -492,6 +492,7 @@
 
             if (name && profession) {
                 await saveDoctor(name, profession);
+		alert(`Doctor ${name} added as ${profession}.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
@@ -505,6 +506,7 @@
 
             if (name) {
                 await removeDoctor(name);
+		alert(`Doctor ${name} removed.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
