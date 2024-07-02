@@ -1,30 +1,33 @@
-const express = require('express');
-const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 
-const baseStoragePath = process.env.BASE_STORAGE_PATH || 'C:/Users/USER/OneDrive/HistoPathology Lab';
-const doctorDetailsPath = path.join(baseStoragePath, 'Doctor Details');
+module.exports = async (req, res) => {
+    try {
+        const basePath = process.env.BASE_STORAGE_PATH || 'C:/Users/USER/OneDrive/HistoPathology Lab';
+        const doctorDetailsPath = path.join(basePath, 'Doctor Details');
 
-router.post('/', (req, res) => {
-    const { name, profession } = req.body;
+        console.log(`Base path: ${basePath}`);
+        console.log(`Doctor details path: ${doctorDetailsPath}`);
 
-    if (!name || !profession) {
-        return res.status(400).json({ error: 'Name and profession are required.' });
-    }
+        const { name, profession } = req.body;
 
-    const doctorData = { name, profession };
-    const filePath = path.join(doctorDetailsPath, `${name}.json`);
-
-    fs.writeFile(filePath, JSON.stringify(doctorData, null, 2), (err) => {
-        if (err) {
-            console.error('Failed to save doctor data:', err);
-            return res.status(500).json({ error: 'Failed to save doctor data.' });
+        if (!name || !profession) {
+            console.error('Name or profession missing in request body');
+            return res.status(400).json({ message: 'Name and profession are required' });
         }
 
-        console.log('Doctor data saved successfully:', doctorData);
-        res.status(200).json({ message: 'Doctor data saved successfully' });
-    });
-});
+        const filePath = path.join(doctorDetailsPath, `${name}.txt`);
 
-module.exports = router;
+        console.log(`Saving doctor data to: ${filePath}`);
+
+        const doctorData = `Name: ${name}\nProfession: ${profession}\n`;
+        fs.writeFileSync(filePath, doctorData);
+
+        console.log('Doctor data saved successfully');
+
+        return res.status(200).json({ message: 'Doctor data saved successfully' });
+    } catch (error) {
+        console.error('Error saving doctor data:', error);
+        return res.status(500).json({ message: 'Failed to save doctor data' });
+    }
+};
