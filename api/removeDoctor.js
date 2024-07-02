@@ -1,29 +1,29 @@
-const express = require('express');
-const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 
-const baseStoragePath = process.env.BASE_STORAGE_PATH || 'C:/Users/USER/OneDrive/HistoPathology Lab';
-const doctorDetailsPath = path.join(baseStoragePath, 'Doctor Details');
+const baseStoragePath = process.env.BASE_STORAGE_PATH;
 
-router.delete('/', (req, res) => {
+const removeDoctor = async (req, res) => {
     const { name } = req.body;
 
     if (!name) {
-        return res.status(400).json({ error: 'Name is required.' });
+        return res.status(400).json({ message: 'Name is required' });
     }
 
-    const filePath = path.join(doctorDetailsPath, `${name}.json`);
+    const doctorDetailsPath = path.join(baseStoragePath, 'Doctor Details');
+    const filePath = path.join(doctorDetailsPath, `${name.replace(/\s+/g, '_')}.txt`);
 
-    fs.unlink(filePath, (err) => {
-        if (err) {
-            console.error('Failed to remove doctor data:', err);
-            return res.status(500).json({ error: 'Failed to remove doctor data.' });
+    try {
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            res.status(200).json({ message: `Doctor ${name} removed.` });
+        } else {
+            res.status(404).json({ message: `Doctor ${name} not found.` });
         }
+    } catch (error) {
+        console.error('Error removing doctor data:', error);
+        res.status(500).json({ message: 'Failed to remove doctor data' });
+    }
+};
 
-        console.log(`Doctor data for ${name} removed successfully`);
-        res.status(200).json({ message: `Doctor ${name} removed successfully` });
-    });
-});
-
-module.exports = router;
+module.exports = removeDoctor;
