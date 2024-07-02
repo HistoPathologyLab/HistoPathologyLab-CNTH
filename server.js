@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-// Endpoint to save doctor data
 app.post('/api/doctors', (req, res) => {
     const { name, profession } = req.body;
     const doctorDetailsPath = path.join('C:/Users/USER/OneDrive/HistoPathology Lab/Doctor Details', `${name}.json`);
@@ -26,7 +25,6 @@ app.post('/api/doctors', (req, res) => {
     });
 });
 
-// Endpoint to remove doctor data
 app.delete('/api/doctors', (req, res) => {
     const { name } = req.body;
     const doctorDetailsPath = path.join('C:/Users/USER/OneDrive/HistoPathology Lab/Doctor Details', `${name}.json`);
@@ -42,7 +40,6 @@ app.delete('/api/doctors', (req, res) => {
     });
 });
 
-// Serve static files (if you have a front-end)
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(PORT, () => {
