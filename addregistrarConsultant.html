@@ -447,7 +447,7 @@
         // Function to save doctor's data
         async function saveDoctor(name, profession) {
             try {
-                const response = await fetch('/api/doctors', {
+                const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/doctors', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -467,7 +467,7 @@
         // Function to remove doctor's data
         async function removeDoctor(name) {
             try {
-                const response = await fetch('/api/doctors', {
+                const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/doctors', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -477,6 +477,7 @@
                 if (!response.ok) {
                     throw new Error('Failed to remove doctor data.');
                 }
+                console.log('Doctor data removed successfully:', { name });
             } catch (error) {
                 console.error('Error:', error);
                 alert('Failed to remove doctor data.');
