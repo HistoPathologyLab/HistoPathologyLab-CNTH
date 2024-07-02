@@ -1,26 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const baseStoragePath = process.env.BASE_STORAGE_PATH || 'C:/Users/USER/OneDrive/HistoPathology Lab';
 
 // Middleware setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-    secret: process.env.SESSION_SECRET || 'default_secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-}));
 
 // Routes
-app.use('/api/saveDoctor', require('./api/saveDoctor'));
-app.use('/api/removeDoctor', require('./api/removeDoctor'));
+app.use('/api/doctors', require('./api/saveDoctor'));
+app.use('/api/doctors', require('./api/removeDoctor'));
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
