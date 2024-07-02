@@ -445,7 +445,7 @@
         });
 
         // Function to save doctor's data
-    	async function saveDoctor(name, profession) {
+        async function saveDoctor(name, profession) {
             try {
                 const response = await fetch('https://histo-pathology-lab-cnth.vercel.app/api/saveDoctor', {
                     method: 'POST',
@@ -463,7 +463,7 @@
                 console.error('Error:', error);
                 alert('Failed to save doctor data.');
             }
-    	}
+        }
 
         // Function to remove doctor's data
         async function removeDoctor(name) {
@@ -492,7 +492,6 @@
 
             if (name && profession) {
                 await saveDoctor(name, profession);
-		alert(`Doctor ${name} added as ${profession}.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
@@ -506,7 +505,6 @@
 
             if (name) {
                 await removeDoctor(name);
-		alert(`Doctor ${name} removed.`);
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('profession').selectedIndex = 0;
             } else {
