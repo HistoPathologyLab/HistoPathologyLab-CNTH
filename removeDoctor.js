@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const doctorDetailsDir = path.join("D:/HistoPathology Lab", "Doctor Details");
+const doctorDetailsDir = path.join("C:/Users/USER/OneDrive/HistoPathology Lab", "Doctor Details");
 
 module.exports = (req, res) => {
     const { name, profession } = req.body;
