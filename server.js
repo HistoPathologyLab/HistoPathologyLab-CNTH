@@ -1,36 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const path = require('path');
-const saveDoctor = require('./saveDoctor');
-const removeDoctor = require('./removeDoctor');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware setup
+app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-    secret: 'your_session_secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-}));
 
-// Save doctor route
-app.post('/api/saveDoctor', (req, res) => {
-    const { name, profession } = req.body;
-    saveDoctor(name, profession);
-    res.sendStatus(200);
-});
-
-// Remove doctor route
-app.delete('/api/removeDoctor', (req, res) => {
-    const { name, profession } = req.body;
-    removeDoctor(name, profession);
-    res.sendStatus(200);
-});
+// Routes
+app.post('/api/saveDoctor', require('./saveDoctor'));
+app.delete('/api/removeDoctor', require('./removeDoctor'));
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));

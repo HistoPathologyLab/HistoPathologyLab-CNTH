@@ -1,20 +1,22 @@
 const fs = require('fs');
 const path = require('path');
 
-// Update the path to the OneDrive directory
-const doctorDetailsPath = path.join('C:', 'Users', 'USER', 'OneDrive', 'HistoPathology Lab', 'Doctor Details');
+const doctorDetailsDir = path.join("D:/HistoPathology Lab", "Doctor Details");
 
-function removeDoctor(name, profession) {
-    const fileName = `${name.replace(/ /g, '_')}_${profession}.txt`;
-    const filePath = path.join(doctorDetailsPath, fileName);
+module.exports = (req, res) => {
+    const { name, profession } = req.body;
+    if (!name || !profession) {
+        return res.status(400).json({ message: 'Name and profession are required' });
+    }
+
+    const fileName = `${name.replace(/\s+/g, '_')}_${profession.replace(/\s+/g, '_')}.txt`;
+    const filePath = path.join(doctorDetailsDir, fileName);
 
     fs.unlink(filePath, (err) => {
         if (err) {
-            console.error('Failed to remove doctor data:', err);
-            return;
+            console.error('Error removing doctor data:', err);
+            return res.status(500).json({ message: 'Error removing doctor data' });
         }
-        console.log('Doctor data removed successfully:', { name, profession });
+        res.status(200).json({ message: 'Doctor data removed successfully' });
     });
-}
-
-module.exports = removeDoctor;
+};
