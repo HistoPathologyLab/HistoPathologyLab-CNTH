@@ -1,26 +1,21 @@
 const fs = require('fs');
 const path = require('path');
 
-const doctorDetailsDir = path.join("D:/HistoPathology Lab", "Doctor Details");
+// Update the path to the OneDrive directory
+const doctorDetailsPath = path.join('C:', 'Users', 'USER', 'OneDrive', 'HistoPathology Lab', 'Doctor Details');
 
-if (!fs.existsSync(doctorDetailsDir)) {
-    fs.mkdirSync(doctorDetailsDir, { recursive: true });
+function saveDoctor(name, profession) {
+    const fileName = `${name.replace(/ /g, '_')}_${profession}.txt`;
+    const filePath = path.join(doctorDetailsPath, fileName);
+    const content = `Name: ${name}\nProfession: ${profession}`;
+
+    fs.writeFile(filePath, content, (err) => {
+        if (err) {
+            console.error('Failed to save doctor data:', err);
+            return;
+        }
+        console.log('Doctor data saved successfully:', { name, profession });
+    });
 }
 
-module.exports = (req, res) => {
-    const { name, profession } = req.body;
-    if (!name || !profession) {
-        return res.status(400).json({ message: 'Name and profession are required' });
-    }
-
-    const fileName = `${name.replace(/\s+/g, '_')}_${profession.replace(/\s+/g, '_')}.txt`;
-    const filePath = path.join(doctorDetailsDir, fileName);
-
-    fs.writeFile(filePath, JSON.stringify({ name, profession }), (err) => {
-        if (err) {
-            console.error('Error saving doctor data:', err);
-            return res.status(500).json({ message: 'Error saving doctor data' });
-        }
-        res.status(200).json({ message: 'Doctor data saved successfully' });
-    });
-};
+module.exports = saveDoctor;
