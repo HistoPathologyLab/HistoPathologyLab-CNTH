@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Histopathology Lab System</title>
-    <link rel="manifest" href="/manifest.json"> <!-- Added manifest reference -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -137,17 +136,6 @@
 
         // Check login status on page load
         checkLogin();
-
-        // Register the service worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js').then(registration => {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, err => {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-        }
     </script>
 </body>
 </html>
