@@ -1,25 +1,22 @@
 const fs = require('fs');
 const path = require('path');
 
+const doctorDetailsDir = path.join("D:/HistoPathology Lab", "Doctor Details");
+
 module.exports = (req, res) => {
-    const { name } = req.body;
-
-    if (!name) {
-        return res.status(400).json({ message: 'Name is required.' });
+    const { name, profession } = req.body;
+    if (!name || !profession) {
+        return res.status(400).json({ message: 'Name and profession are required' });
     }
 
-    const baseDir = 'D:/HistoPathology Lab/Doctor Details';
-    const filePath = path.join(baseDir, `${name}.txt`);
+    const fileName = `${name}_${profession}.txt`;
+    const filePath = path.join(doctorDetailsDir, fileName);
 
-    try {
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-            res.status(200).json({ message: 'Doctor data removed successfully' });
-        } else {
-            res.status(404).json({ message: 'Doctor not found' });
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            console.error('Error removing doctor data:', err);
+            return res.status(500).json({ message: 'Error removing doctor data' });
         }
-    } catch (error) {
-        console.error('Error removing doctor data:', error);
-        res.status(500).json({ message: 'Failed to remove doctor data' });
-    }
+        res.status(200).json({ message: 'Doctor data removed successfully' });
+    });
 };
