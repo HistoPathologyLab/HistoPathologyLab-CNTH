@@ -10,19 +10,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/saveDoctor', require('./api/saveDoctor'));
-app.use('/api/removeDoctor', require('./api/removeDoctor'));
+app.post('/api/saveDoctor', require('./saveDoctor'));
+app.delete('/api/removeDoctor', require('./removeDoctor'));
 
 // Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname)));
 
 // Serve the HTML pages
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/addregistrarConsultant.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'addregistrarConsultant.html'));
+    res.sendFile(path.join(__dirname, 'addregistrarConsultant.html'));
 });
 
 app.listen(PORT, () => {
