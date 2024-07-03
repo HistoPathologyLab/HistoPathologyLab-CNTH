@@ -13,7 +13,7 @@ module.exports = (req, res) => {
         return res.status(400).json({ message: 'Name and profession are required' });
     }
 
-    const fileName = `${name}_${profession}.txt`;
+    const fileName = `${name.replace(/\s+/g, '_')}_${profession.replace(/\s+/g, '_')}.txt`;
     const filePath = path.join(doctorDetailsDir, fileName);
 
     fs.writeFile(filePath, JSON.stringify({ name, profession }), (err) => {
