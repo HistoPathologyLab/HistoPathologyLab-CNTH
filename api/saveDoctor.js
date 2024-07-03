@@ -1,23 +1,26 @@
 const fs = require('fs');
 const path = require('path');
+const express = require('express');
+const router = express.Router();
 
-module.exports = function(basePath) {
-    return async (req, res) => {
-        const { name, profession } = req.body;
+const BASE_STORAGE_PATH = 'D:/HistoPathology Lab/Doctor Details';
 
-        if (!name || !profession) {
-            return res.status(400).json({ message: 'Name and profession are required' });
-        }
+// Ensure the base path exists
+if (!fs.existsSync(BASE_STORAGE_PATH)) {
+    fs.mkdirSync(BASE_STORAGE_PATH, { recursive: true });
+}
 
-        const doctorDetailsPath = path.join(basePath, 'Doctor Details');
-        const filePath = path.join(doctorDetailsPath, `${name}.txt`);
+router.post('/', (req, res) => {
+    const { name, profession } = req.body;
+    const fileName = `${BASE_STORAGE_PATH}/${name}.txt`;
 
-        try {
-            fs.writeFileSync(filePath, `Name: ${name}\nProfession: ${profession}`);
-            res.json({ message: 'Doctor data saved successfully' });
-        } catch (error) {
-            console.error('Error saving doctor data:', error);
-            res.status(500).json({ message: 'Failed to save doctor data' });
-        }
-    };
-};
+    try {
+        fs.writeFileSync(fileName, `Name: ${name}\nProfession: ${profession}`);
+        res.status(200).json({ message: 'Doctor data saved successfully' });
+    } catch (error) {
+        console.error('Error saving doctor data:', error);
+        res.status(500).json({ message: 'Failed to save doctor data' });
+    }
+});
+
+module.exports = router;
