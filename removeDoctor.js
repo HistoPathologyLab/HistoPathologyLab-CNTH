@@ -4,7 +4,6 @@ const qs = require('qs');
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const tenantId = process.env.TENANT_ID;
-const redirectUri = process.env.REDIRECT_URI;
 
 async function getAccessToken() {
     const tokenUrl = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`;
@@ -23,7 +22,7 @@ async function getAccessToken() {
         });
         return response.data.access_token;
     } catch (error) {
-        console.error('Error obtaining access token:', error);
+        console.error('Error obtaining access token:', error.response ? error.response.data : error.message);
         throw new Error('Error obtaining access token');
     }
 }
@@ -51,7 +50,7 @@ module.exports = async (req, res) => {
 
         res.status(200).json({ message: 'Doctor data removed successfully' });
     } catch (error) {
-        console.error('Error removing doctor data:', error);
+        console.error('Error removing doctor data:', error.response ? error.response.data : error.message);
         res.status(500).json({ message: 'Error removing doctor data' });
     }
 };
