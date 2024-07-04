@@ -447,7 +447,7 @@
         // Function to save doctor's data
         async function saveDoctor(name, profession) {
             try {
-                const response = await fetch('http://localhost:3000/api/saveDoctor', {
+                const response = await fetch('/api/saveDoctor', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -469,7 +469,7 @@
         // Function to remove doctor's data
         async function removeDoctor(name, profession) {
             try {
-                const response = await fetch('http://localhost:3000/api/removeDoctor', {
+                const response = await fetch('/api/removeDoctor', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
