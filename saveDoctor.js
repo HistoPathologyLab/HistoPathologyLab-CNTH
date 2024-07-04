@@ -16,11 +16,13 @@ async function getAccessToken() {
     };
 
     try {
+        console.log('Requesting access token...'); // Debug log
         const response = await axios.post(tokenUrl, qs.stringify(tokenData), {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
+        console.log('Access token obtained:', response.data.access_token); // Debug log
         return response.data.access_token;
     } catch (error) {
         console.error('Error obtaining access token:', error.response ? error.response.data : error.message);
@@ -41,9 +43,12 @@ module.exports = async (req, res) => {
     const fileContent = JSON.stringify({ name, profession });
 
     try {
+        console.log('Getting access token...'); // Debug log
         const accessToken = await getAccessToken();
+        console.log('Access token:', accessToken); // Debug log
         const createFileUrl = `https://graph.microsoft.com/v1.0/me/drive/root:${filePath}:/content`;
 
+        console.log('Saving file to OneDrive:', filePath); // Debug log
         await axios.put(createFileUrl, fileContent, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
