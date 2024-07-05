@@ -30,10 +30,36 @@ async function getAccessToken() {
     }
 }
 
+async function createFolderIfNotExists(accessToken, folderPath) {
+    const folderUrl = `https://graph.microsoft.com/v1.0/me/drive/root:${folderPath}`;
+    try {
+        await axios.get(folderUrl, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+        console.log(`Folder ${folderPath} already exists.`);
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            console.log(`Folder ${folderPath} does not exist. Creating...`);
+            await axios.put(folderUrl, null, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(`Folder ${folderPath} created.`);
+        } else {
+            throw error;
+        }
+    }
+}
+
 module.exports = async (req, res) => {
     const { name, profession } = req.body;
 
     if (!name || !profession) {
+        console.log('Validation failed: Name and profession are required');
         return res.status(400).json({ message: 'Name and profession are required' });
     }
 
@@ -46,6 +72,9 @@ module.exports = async (req, res) => {
         console.log('Getting access token...');
         const accessToken = await getAccessToken();
         console.log('Access token:', accessToken);
+
+        // Ensure the folder exists
+        await createFolderIfNotExists(accessToken, folderPath);
 
         const createFileUrl = `https://graph.microsoft.com/v1.0/me/drive/root:${filePath}:/content`;
         console.log('Saving file to OneDrive:', filePath);

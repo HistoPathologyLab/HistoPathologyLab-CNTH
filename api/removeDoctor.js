@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
 
     try {
         const accessToken = await getAccessToken();
-        const deleteFileUrl = `https://graph.microsoft.com/v1.0/me/drive/root:${filePath}`;
+        const deleteFileUrl = `https://graph.microsoft.com/v1.0/drives/a14ef30693180bcf/root:${filePath}`;
 
         await axios.delete(deleteFileUrl, {
             headers: {
@@ -52,6 +52,6 @@ module.exports = async (req, res) => {
         res.status(200).json({ message: 'Doctor data removed successfully' });
     } catch (error) {
         console.error('Error removing doctor data:', error.response ? error.response.data : error.message);
-        res.status(500).json({ message: 'Error removing doctor data' });
+        res.status(500).json({ message: 'Error removing doctor data', details: error.response ? error.response.data : error.message });
     }
 };
