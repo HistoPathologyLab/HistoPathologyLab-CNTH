@@ -1,5 +1,6 @@
 const axios = require('axios');
 const qs = require('qs');
+require('dotenv').config();
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
