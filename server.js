@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
-app.post('/api/saveDoctor', require('./saveDoctor'));
-app.delete('/api/removeDoctor', require('./removeDoctor'));
+app.post('/api/saveDoctor', require('./api/saveDoctor'));
+app.delete('/api/removeDoctor', require('./api/removeDoctor'));
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
