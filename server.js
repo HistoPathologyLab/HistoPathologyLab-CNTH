@@ -8,8 +8,10 @@ const app = express();
 app.use(bodyParser.json());
 
 const saveDoctor = require('./api/saveDoctor');
+const removeDoctor = require('./api/removeDoctor');
 
 app.post('/api/saveDoctor', saveDoctor);
+app.post('/api/removeDoctor', removeDoctor);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
