@@ -21,6 +21,7 @@ async function getAccessToken() {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
+        console.log('Access token obtained:', response.data.access_token); // Debug log
         return response.data.access_token;
     } catch (error) {
         console.error('Error obtaining access token:', error.response ? error.response.data : error.message);
@@ -53,6 +54,7 @@ async function createFolderIfNotExist(accessToken, folderPath) {
                 }
             });
         } else {
+            console.error('Error checking folder existence:', error.response ? error.response.data : error.message);
             throw error;
         }
     }
@@ -71,10 +73,16 @@ module.exports = async (req, res) => {
     const fileContent = JSON.stringify({ name, profession });
 
     try {
+        console.log('Getting access token...'); // Debug log
         const accessToken = await getAccessToken();
+        console.log('Access token:', accessToken); // Debug log
+
+        console.log('Creating folder if not exist:', folderPath); // Debug log
         await createFolderIfNotExist(accessToken, folderPath);
+
         const createFileUrl = `https://graph.microsoft.com/v1.0/me/drive/root:${filePath}:/content`;
 
+        console.log('Saving file to OneDrive:', filePath); // Debug log
         await axios.put(createFileUrl, fileContent, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
