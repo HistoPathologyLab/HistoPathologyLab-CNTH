@@ -20,6 +20,7 @@
     "express-session": "^1.18.0",
     "isomorphic-fetch": "^3.0.0",
     "passport": "^0.7.0",
-    "passport-onedrive": "^0.0.4"
+    "passport-onedrive": "^0.0.4",
+    "qs": "^6.12.2"
   }
 }
