@@ -1,6 +1,5 @@
 const axios = require('axios');
 const qs = require('qs');
-
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const tenantId = process.env.TENANT_ID;
@@ -17,11 +16,8 @@ async function getAccessToken() {
 
     try {
         const response = await axios.post(tokenUrl, qs.stringify(tokenData), {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
-        console.log('Access token obtained:', response.data.access_token); // Debug log
         return response.data.access_token;
     } catch (error) {
         console.error('Error obtaining access token:', error.response ? error.response.data : error.message);
@@ -29,33 +25,26 @@ async function getAccessToken() {
     }
 }
 
-async function createFolderIfNotExist(accessToken, folderPath) {
-    const url = `https://graph.microsoft.com/v1.0/me/drive/root:${folderPath}`;
+async function createFolderIfNotExists(folderPath, accessToken) {
+    const createFolderUrl = `https://graph.microsoft.com/v1.0/me/drive/root:${folderPath}`;
+    const folderData = {
+        name: folderPath.split('/').pop(),
+        folder: {},
+        '@microsoft.graph.conflictBehavior': 'rename'
+    };
+
     try {
-        await axios.get(url, {
+        await axios.post(createFolderUrl, folderData, {
             headers: {
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
             }
         });
+        console.log(`Folder ${folderPath} created successfully.`);
     } catch (error) {
-        if (error.response && error.response.status === 404) {
-            const createUrl = `https://graph.microsoft.com/v1.0/me/drive/root/children`;
-            const folderName = folderPath.split('/').pop();
-            const parentFolderPath = folderPath.substring(0, folderPath.lastIndexOf('/'));
-
-            await axios.post(createUrl, {
-                name: folderName,
-                folder: {},
-                "@microsoft.graph.conflictBehavior": "rename"
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-        } else {
-            console.error('Error checking folder existence:', error.response ? error.response.data : error.message);
-            throw error;
+        if (error.response && error.response.status !== 409) {
+            console.error('Error creating folder:', error.response ? error.response.data : error.message);
+            throw new Error('Error creating folder');
         }
     }
 }
@@ -73,26 +62,12 @@ module.exports = async (req, res) => {
     const fileContent = JSON.stringify({ name, profession });
 
     try {
-        console.log('Getting access token...'); // Debug log
         const accessToken = await getAccessToken();
-        console.log('Access token:', accessToken); // Debug log
-
-        console.log('Creating folder if not exist:', folderPath); // Debug log
-        await createFolderIfNotExist(accessToken, folderPath);
-
+        await createFolderIfNotExists(folderPath, accessToken);
         const createFileUrl = `https://graph.microsoft.com/v1.0/me/drive/root:${filePath}:/content`;
 
-        console.log('Saving file to OneDrive:', filePath); // Debug log
         await axios.put(createFileUrl, fileContent, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'text/plain'
             }
-        });
-
-        res.status(200).json({ message: 'Doctor data saved successfully' });
-    } catch (error) {
-        console.error('Error saving doctor data:', error.response ? error.response.data : error.message);
-        res.status(500).json({ message: 'Error saving doctor data' });
-    }
-};

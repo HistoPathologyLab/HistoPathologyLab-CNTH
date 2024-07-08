@@ -1,20 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const cors = require('cors');
+const path = require('path');
+const saveDoctor = require('./api/saveDoctor'); // Adjust this path if necessary
+const removeDoctor = require('./api/removeDoctor'); // Adjust this path if necessary
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routes
-app.post('/api/saveDoctor', require('./api/saveDoctor'));
-app.delete('/api/removeDoctor', require('./api/removeDoctor'));
+app.post('/api/saveDoctor', saveDoctor);
+app.post('/api/removeDoctor', removeDoctor);
 
-// Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -25,6 +25,6 @@ app.get('/addregistrarConsultant.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'addregistrarConsultant.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
