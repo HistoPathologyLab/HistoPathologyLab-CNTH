@@ -22,6 +22,7 @@ async function getAccessToken() {
     });
 
     const { access_token } = response.data;
+    console.log('Access token obtained:', access_token); // Log the access token
     return access_token;
   } catch (error) {
     console.error('Error obtaining access token:', error.response.data);

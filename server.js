@@ -8,8 +8,8 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
-const saveDoctor = require('./api/saveDoctor');
-const removeDoctor = require('./api/removeDoctor');
+const saveDoctor = require('./saveDoctor');
+const removeDoctor = require('./removeDoctor');
 
 app.post('/api/saveDoctor', async (req, res) => {
     try {

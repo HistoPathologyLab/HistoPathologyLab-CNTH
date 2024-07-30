@@ -2,7 +2,7 @@ const axios = require('axios');
 
 module.exports = async (req, res, accessToken) => {
     const { name, profession } = req.body;
-
+    
     if (!name || !profession) {
         return res.status(400).json({ message: 'Name and profession are required.' });
     }
@@ -23,10 +23,11 @@ module.exports = async (req, res, accessToken) => {
     };
 
     try {
-        await axios(config);
+        const response = await axios(config);
+        console.log('Response from OneDrive:', response.data); // Log the response from OneDrive
         res.status(200).json({ message: 'Doctor data saved successfully.' });
     } catch (error) {
-        console.error(error);
+        console.error('Error saving doctor data:', error.response.data);
         res.status(500).json({ message: 'Error saving doctor data' });
     }
 };
