@@ -1,14 +1,11 @@
 const axios = require('axios');
-const qs = require('qs');
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, accessToken) => {
     const { name } = req.body;
-    
+
     if (!name) {
         return res.status(400).json({ message: 'Name is required.' });
     }
-
-    const accessToken = process.env.ACCESS_TOKEN;
 
     const config = {
         method: 'delete',

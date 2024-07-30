@@ -1,14 +1,11 @@
 const axios = require('axios');
-const qs = require('qs');
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, accessToken) => {
     const { name, profession } = req.body;
-    
+
     if (!name || !profession) {
         return res.status(400).json({ message: 'Name and profession are required.' });
     }
-
-    const accessToken = process.env.ACCESS_TOKEN;
 
     const data = {
         name: name,
