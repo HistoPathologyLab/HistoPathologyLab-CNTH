@@ -2,7 +2,7 @@ const axios = require('axios');
 
 module.exports = async (req, res, accessToken) => {
     const { name } = req.body;
-
+    
     if (!name) {
         return res.status(400).json({ message: 'Name is required.' });
     }
@@ -19,7 +19,7 @@ module.exports = async (req, res, accessToken) => {
         await axios(config);
         res.status(200).json({ message: 'Doctor data removed successfully.' });
     } catch (error) {
-        console.error(error);
+        console.error('Error in removeDoctor:', error.response ? error.response.data : error.message); // Added for debugging
         res.status(500).json({ message: 'Error removing doctor data' });
     }
 };

@@ -23,11 +23,10 @@ module.exports = async (req, res, accessToken) => {
     };
 
     try {
-        const response = await axios(config);
-        console.log('Response from OneDrive:', response.data); // Log the response from OneDrive
+        await axios(config);
         res.status(200).json({ message: 'Doctor data saved successfully.' });
     } catch (error) {
-        console.error('Error saving doctor data:', error.response.data);
+        console.error('Error in saveDoctor:', error.response ? error.response.data : error.message); // Added for debugging
         res.status(500).json({ message: 'Error saving doctor data' });
     }
 };
