@@ -8,8 +8,8 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
-const saveDoctor = require('./saveDoctor');
-const removeDoctor = require('./removeDoctor');
+const saveDoctor = require('./api/saveDoctor'); // Adjust path to include api folder
+const removeDoctor = require('./api/removeDoctor'); // Adjust path to include api folder
 
 app.post('/api/saveDoctor', async (req, res) => {
     try {
