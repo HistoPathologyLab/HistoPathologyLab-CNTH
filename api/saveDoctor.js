@@ -7,7 +7,7 @@ module.exports = async (req, res, accessToken) => {
         return res.status(400).json({ message: 'Name and profession are required.' });
     }
 
-    console.log('Access Token in saveDoctor:', accessToken);  // Add this line to debug
+    console.log('Access Token in saveDoctor:', accessToken);  // Log the token
 
     const data = {
         name: name,

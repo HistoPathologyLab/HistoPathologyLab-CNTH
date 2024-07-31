@@ -14,10 +14,10 @@ const removeDoctor = require('./api/removeDoctor');
 app.post('/api/saveDoctor', async (req, res) => {
     try {
         const accessToken = await getAccessToken();
-        console.log('Access Token in server.js:', accessToken);  // Add this line to debug
+        console.log('Access Token retrieved:', accessToken); // Log the retrieved token
         await saveDoctor(req, res, accessToken);
     } catch (error) {
-        console.error('Error in /api/saveDoctor:', error);
+        console.error('Error in /api/saveDoctor:', error.message); // Log the error message
         res.status(500).send('Error saving doctor details');
     }
 });
@@ -25,10 +25,10 @@ app.post('/api/saveDoctor', async (req, res) => {
 app.post('/api/removeDoctor', async (req, res) => {
     try {
         const accessToken = await getAccessToken();
-        console.log('Access Token in server.js:', accessToken);  // Add this line to debug
+        console.log('Access Token retrieved:', accessToken); // Log the retrieved token
         await removeDoctor(req, res, accessToken);
     } catch (error) {
-        console.error('Error in /api/removeDoctor:', error);
+        console.error('Error in /api/removeDoctor:', error.message); // Log the error message
         res.status(500).send('Error removing doctor details');
     }
 });

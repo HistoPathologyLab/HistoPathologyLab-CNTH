@@ -7,7 +7,7 @@ module.exports = async (req, res, accessToken) => {
         return res.status(400).json({ message: 'Name is required.' });
     }
 
-    console.log('Access Token in removeDoctor:', accessToken);  // Add this line to debug
+    console.log('Access Token in removeDoctor:', accessToken);  // Log the token
 
     const config = {
         method: 'delete',
