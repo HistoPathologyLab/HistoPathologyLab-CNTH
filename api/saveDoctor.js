@@ -7,6 +7,8 @@ module.exports = async (req, res, accessToken) => {
         return res.status(400).json({ message: 'Name and profession are required.' });
     }
 
+    console.log('Access Token in saveDoctor:', accessToken);  // Add this line to debug
+
     const data = {
         name: name,
         profession: profession
@@ -26,7 +28,7 @@ module.exports = async (req, res, accessToken) => {
         await axios(config);
         res.status(200).json({ message: 'Doctor data saved successfully.' });
     } catch (error) {
-        console.error('Error saving doctor data:', error.response ? error.response.data : error.message);
+        console.error('Error saving doctor data:', error.response.data);
         res.status(500).json({ message: 'Error saving doctor data' });
     }
 };
