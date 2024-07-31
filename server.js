@@ -1,40 +1,50 @@
 const express = require('express');
-const getAccessToken = require('./getAccessToken');
+const bodyParser = require('body-parser');
 const axios = require('axios');
-require('dotenv').config();
-
+const getAccessToken = require('./getAccessToken');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
-app.use(express.json());
+app.use(bodyParser.json());
 
+// Test endpoint to trigger getAccessToken
+app.get('/test-token', async (req, res) => {
+  try {
+    const token = await getAccessToken();
+    console.log("Access Token:", token);
+    res.send(`Access Token: ${token}`);
+  } catch (error) {
+    console.error("Error getting access token:", error);
+    res.status(500).send("Error getting access token");
+  }
+});
+
+// Endpoint to save doctor data
 app.post('/api/saveDoctor', async (req, res) => {
-    const { name, profession } = req.body;
+  const { name, profession } = req.body;
 
-    try {
-        const accessToken = await getAccessToken();
-        console.log('Access Token in saveDoctor:', accessToken); // Debugging line
+  try {
+    const token = await getAccessToken();
+    console.log("Access Token in saveDoctor:", token);
 
-        const fileName = `${name}.txt`;
-        const fileContent = `Name: ${name}\nProfession: ${profession}`;
+    const response = await axios.put(
+      `https://graph.microsoft.com/v1.0/me/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt:/content`,
+      `Name: ${name}\nProfession: ${profession}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'text/plain'
+        }
+      }
+    );
 
-        const url = `https://graph.microsoft.com/v1.0/me/drive/root:/HistoPathology Lab/Doctor Details/${encodeURIComponent(fileName)}:/content`;
-
-        const response = await axios.put(url, fileContent, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'text/plain'
-            }
-        });
-
-        console.log('File created:', response.data);
-        res.status(200).send('Doctor data saved successfully');
-    } catch (error) {
-        console.error('Error saving doctor data:', error.response ? error.response.data : error.message);
-        res.status(500).send('Failed to save doctor data');
-    }
+    res.send('Doctor data saved successfully');
+  } catch (error) {
+    console.error("Error saving doctor data:", error.response ? error.response.data : error.message);
+    res.status(500).send("Error saving doctor data");
+  }
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
