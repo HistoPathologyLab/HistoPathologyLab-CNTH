@@ -1,33 +1,33 @@
 const axios = require('axios');
 const qs = require('qs');
-require('dotenv').config();
-
-const { CLIENT_ID, CLIENT_SECRET, TENANT_ID } = process.env;
+require('dotenv').config(); // Include dotenv
 
 async function getAccessToken() {
-    const tokenEndpoint = `https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/token`;
+    const tenantID = process.env.TENANT_ID;
+    const clientID = process.env.CLIENT_ID;
+    const clientSecret = process.env.CLIENT_SECRET;
 
-    const requestBody = {
-        client_id: CLIENT_ID,
-        scope: 'https://graph.microsoft.com/.default',
-        client_secret: CLIENT_SECRET,
-        grant_type: 'client_credentials'
+    const url = `https://login.microsoftonline.com/${tenantID}/oauth2/v2.0/token`;
+
+    const data = {
+        grant_type: 'client_credentials',
+        client_id: clientID,
+        client_secret: clientSecret,
+        scope: 'https://graph.microsoft.com/.default'
     };
 
     try {
-        const response = await axios.post(tokenEndpoint, qs.stringify(requestBody), {
+        const response = await axios.post(url, qs.stringify(data), {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-
-        const { access_token } = response.data;
-        console.log('Access Token:', access_token); // Log the access token
-        return access_token;
+        console.log('Access token:', response.data.access_token); // Debugging line
+        return response.data.access_token;
     } catch (error) {
-        console.error('Error obtaining access token:', error.response ? error.response.data : error.message);
-        throw new Error('Could not obtain access token');
+        console.error('Error getting access token:', error.response ? error.response.data : error.message);
+        throw new Error('Failed to get access token');
     }
 }
 
-module.exports = { getAccessToken };
+module.exports = getAccessToken;
