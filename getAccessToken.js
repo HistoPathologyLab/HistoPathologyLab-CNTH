@@ -9,7 +9,7 @@ async function getAccessToken() {
 
   const requestBody = {
     client_id: CLIENT_ID,
-    scope: 'https://graph.microsoft.com/.default',  // Ensure correct scope
+    scope: 'https://graph.microsoft.com/.default',
     client_secret: CLIENT_SECRET,
     grant_type: 'client_credentials'
   };
@@ -22,6 +22,7 @@ async function getAccessToken() {
     });
 
     const { access_token } = response.data;
+    console.log('Access Token Retrieved:', access_token); // Debug log
     return access_token;
   } catch (error) {
     console.error('Error obtaining access token:', error.response.data);
