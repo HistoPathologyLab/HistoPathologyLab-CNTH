@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const { getAccessToken } = require('./getAccessToken'); // Adjust the path if placed in a different folder
+const { getAccessToken } = require('./getAccessToken');
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ const removeDoctor = require('./api/removeDoctor');
 app.post('/api/saveDoctor', async (req, res) => {
     try {
         const accessToken = await getAccessToken();
-        console.log('Access Token in saveDoctor:', accessToken);
+        console.log('Access Token in saveDoctor:', accessToken); // Ensure this logs the token
         await saveDoctor(req, res, accessToken);
     } catch (error) {
         console.error('Error saving doctor data:', error);
@@ -25,7 +25,7 @@ app.post('/api/saveDoctor', async (req, res) => {
 app.post('/api/removeDoctor', async (req, res) => {
     try {
         const accessToken = await getAccessToken();
-        console.log('Access Token in removeDoctor:', accessToken);
+        console.log('Access Token in removeDoctor:', accessToken); // Ensure this logs the token
         await removeDoctor(req, res, accessToken);
     } catch (error) {
         console.error('Error removing doctor data:', error);
