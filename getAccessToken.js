@@ -22,10 +22,10 @@ async function getAccessToken() {
     });
 
     const { access_token } = response.data;
-    console.log('Access Token:', access_token); // Add this line to log the token
+    console.log('Access Token:', access_token);  // Add this line to debug
     return access_token;
   } catch (error) {
-    console.error('Error obtaining access token:', error.response ? error.response.data : error.message);
+    console.error('Error obtaining access token:', error.response.data);
     throw new Error('Could not obtain access token');
   }
 }
