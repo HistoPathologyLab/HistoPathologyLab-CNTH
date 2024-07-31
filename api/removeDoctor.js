@@ -7,7 +7,7 @@ module.exports = async (req, res, accessToken) => {
         return res.status(400).json({ message: 'Name is required.' });
     }
 
-    console.log('Access Token in removeDoctor:', accessToken);  // Log the token
+    console.log('Access Token in removeDoctor:', accessToken);
 
     const config = {
         method: 'delete',
@@ -21,7 +21,7 @@ module.exports = async (req, res, accessToken) => {
         await axios(config);
         res.status(200).json({ message: 'Doctor data removed successfully.' });
     } catch (error) {
-        console.error('Error removing doctor data:', error.response.data);
+        console.error('Error removing doctor data:', error.response ? error.response.data : error.message);
         res.status(500).json({ message: 'Error removing doctor data' });
     }
 };

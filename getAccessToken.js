@@ -9,7 +9,7 @@ async function getAccessToken() {
 
   const requestBody = {
     client_id: CLIENT_ID,
-    scope: 'https://graph.microsoft.com/.default', // Ensure this scope is correct
+    scope: 'https://graph.microsoft.com/.default',  // Ensure correct scope
     client_secret: CLIENT_SECRET,
     grant_type: 'client_credentials'
   };
