@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const { getAccessToken } = require('./getAccessToken'); // Adjust the path if placed in a different folder
+const { getAccessToken } = require('./getAccessToken');
 
 dotenv.config();
 
