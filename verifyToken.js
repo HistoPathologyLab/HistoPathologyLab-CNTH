@@ -1,10 +1,8 @@
 const { getAccessToken } = require('./getAccessToken');
 
-(async () => {
-  try {
+async function verifyToken() {
     const token = await getAccessToken();
-    console.log('Access Token:', token);
-  } catch (error) {
-    console.error('Error:', error.message);
-  }
-})();
+    console.log(`Access token from verifyToken.js: ${token}`);
+}
+
+verifyToken();

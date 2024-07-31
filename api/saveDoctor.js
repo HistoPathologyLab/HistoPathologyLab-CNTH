@@ -2,17 +2,12 @@ const axios = require('axios');
 
 module.exports = async (req, res, accessToken) => {
     const { name, profession } = req.body;
-    
+
     if (!name || !profession) {
         return res.status(400).json({ message: 'Name and profession are required.' });
     }
 
-    console.log('Access Token in saveDoctor:', accessToken);  // Log the token
-
-    const data = {
-        name: name,
-        profession: profession
-    };
+    console.log(`Access Token in saveDoctor: ${accessToken}`); // Log the access token
 
     const config = {
         method: 'put',
