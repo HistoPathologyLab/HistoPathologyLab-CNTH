@@ -1,6 +1,6 @@
 const axios = require('axios');
 const qs = require('qs');
-require('dotenv').config(); // Include dotenv
+require('dotenv').config();
 
 async function getAccessToken() {
     const tenantID = process.env.TENANT_ID;
@@ -22,8 +22,9 @@ async function getAccessToken() {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-        console.log('Access token:', response.data.access_token); // Debugging line
-        return response.data.access_token;
+        const token = response.data.access_token;
+        console.log('Access token retrieved:', token); // Debugging line
+        return token;
     } catch (error) {
         console.error('Error getting access token:', error.response ? error.response.data : error.message);
         throw new Error('Failed to get access token');
