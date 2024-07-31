@@ -2,12 +2,17 @@ const axios = require('axios');
 
 module.exports = async (req, res, accessToken) => {
     const { name, profession } = req.body;
-
+    
     if (!name || !profession) {
         return res.status(400).json({ message: 'Name and profession are required.' });
     }
 
-    console.log(`Access Token in saveDoctor: ${accessToken}`); // Log the access token
+    console.log("Access Token in saveDoctor:", accessToken); // Add this line
+
+    const data = {
+        name: name,
+        profession: profession
+    };
 
     const config = {
         method: 'put',
@@ -23,7 +28,7 @@ module.exports = async (req, res, accessToken) => {
         await axios(config);
         res.status(200).json({ message: 'Doctor data saved successfully.' });
     } catch (error) {
-        console.error('Error saving doctor data:', error.response.data);
+        console.error('Error saving doctor data:', error);
         res.status(500).json({ message: 'Error saving doctor data' });
     }
 };
