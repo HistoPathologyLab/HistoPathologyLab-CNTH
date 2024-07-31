@@ -1,33 +1,28 @@
-const axios = require('axios');
-const qs = require('qs');
+const msal = require('@azure/msal-node');
 require('dotenv').config();
 
+const clientConfig = {
+    auth: {
+        clientId: process.env.CLIENT_ID,
+        authority: `https://login.microsoftonline.com/${process.env.TENANT_ID}`,
+        clientSecret: process.env.CLIENT_SECRET
+    }
+};
+
+const cca = new msal.ConfidentialClientApplication(clientConfig);
+
 async function getAccessToken() {
-    const tenantID = process.env.TENANT_ID;
-    const clientID = process.env.CLIENT_ID;
-    const clientSecret = process.env.CLIENT_SECRET;
-
-    const url = `https://login.microsoftonline.com/${tenantID}/oauth2/v2.0/token`;
-
-    const data = {
-        grant_type: 'client_credentials',
-        client_id: clientID,
-        client_secret: clientSecret,
-        scope: 'https://graph.microsoft.com/.default'
+    const clientCredentialRequest = {
+        scopes: ['https://graph.microsoft.com/.default']
     };
 
     try {
-        const response = await axios.post(url, qs.stringify(data), {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
-        const token = response.data.access_token;
-        console.log('Access token retrieved:', token); // Debugging line
-        return token;
+        const response = await cca.acquireTokenByClientCredential(clientCredentialRequest);
+        console.log('Access Token:', response.accessToken); // Log the token to the console
+        return response.accessToken;
     } catch (error) {
-        console.error('Error getting access token:', error.response ? error.response.data : error.message);
-        throw new Error('Failed to get access token');
+        console.error('Error acquiring token:', error);
+        throw error;
     }
 }
 
