@@ -3,13 +3,18 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const { getAccessToken } = require('./getAccessToken'); // Adjust the path if placed in a different folder
 
-dotenv.config();
+dotenv.config(); // This should be at the top
 
 const app = express();
 app.use(bodyParser.json());
 
 const saveDoctor = require('./api/saveDoctor');
 const removeDoctor = require('./api/removeDoctor');
+
+// Log environment variables to verify they are loaded
+console.log('CLIENT_ID:', process.env.CLIENT_ID);
+console.log('CLIENT_SECRET:', process.env.CLIENT_SECRET);
+console.log('TENANT_ID:', process.env.TENANT_ID);
 
 app.post('/api/saveDoctor', async (req, res) => {
     try {

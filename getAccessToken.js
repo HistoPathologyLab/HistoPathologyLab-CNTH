@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const { CLIENT_ID, CLIENT_SECRET, TENANT_ID } = process.env;
 
+// Log environment variables to verify they are loaded
 console.log('CLIENT_ID:', CLIENT_ID);
 console.log('CLIENT_SECRET:', CLIENT_SECRET);
 console.log('TENANT_ID:', TENANT_ID);
