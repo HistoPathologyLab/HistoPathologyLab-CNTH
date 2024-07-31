@@ -2,12 +2,10 @@ const axios = require('axios');
 
 module.exports = async (req, res, accessToken) => {
     const { name } = req.body;
-    
+
     if (!name) {
         return res.status(400).json({ message: 'Name is required.' });
     }
-
-    console.log('Access Token in removeDoctor:', accessToken);
 
     const config = {
         method: 'delete',

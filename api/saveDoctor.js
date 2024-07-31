@@ -1,9 +1,8 @@
 const axios = require('axios');
 
 module.exports = async (req, res, accessToken) => {
-    console.log('Access Token in saveDoctor:', accessToken); // Debug log
     const { name, profession } = req.body;
-    
+
     if (!name || !profession) {
         return res.status(400).json({ message: 'Name and profession are required.' });
     }
