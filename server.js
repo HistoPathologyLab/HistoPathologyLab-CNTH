@@ -17,6 +17,7 @@ app.post('/api/saveDoctor', async (req, res) => {
         console.log('Access Token in /api/saveDoctor:', accessToken); // Debug log
         await saveDoctor(req, res, accessToken);
     } catch (error) {
+        console.error('Error in /api/saveDoctor:', error);
         res.status(500).send('Error saving doctor details');
     }
 });
@@ -27,6 +28,7 @@ app.post('/api/removeDoctor', async (req, res) => {
         console.log('Access Token in /api/removeDoctor:', accessToken); // Debug log
         await removeDoctor(req, res, accessToken);
     } catch (error) {
+        console.error('Error in /api/removeDoctor:', error);
         res.status(500).send('Error removing doctor details');
     }
 });

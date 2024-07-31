@@ -4,6 +4,10 @@ require('dotenv').config();
 
 const { CLIENT_ID, CLIENT_SECRET, TENANT_ID } = process.env;
 
+console.log('CLIENT_ID:', CLIENT_ID);
+console.log('CLIENT_SECRET:', CLIENT_SECRET);
+console.log('TENANT_ID:', TENANT_ID);
+
 async function getAccessToken() {
   const tokenEndpoint = `https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/token`;
 
