@@ -19,7 +19,7 @@ module.exports = async (req, res, accessToken) => {
         await axios(config);
         res.status(200).json({ message: 'Doctor data removed successfully.' });
     } catch (error) {
-        console.error('Error removing doctor data:', error);
+        console.error('Error in removeDoctor:', error.response ? error.response.data : error.message);
         res.status(500).json({ message: 'Error removing doctor data' });
     }
 };

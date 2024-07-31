@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const { getAccessToken } = require('./getAccessToken');
+const { getAccessToken } = require('./getAccessToken'); // Adjust the path if placed in a different folder
 
 dotenv.config();
 
@@ -16,7 +16,6 @@ app.post('/api/saveDoctor', async (req, res) => {
         const accessToken = await getAccessToken();
         await saveDoctor(req, res, accessToken);
     } catch (error) {
-        console.error('Error in saveDoctor:', error);
         res.status(500).send('Error saving doctor details');
     }
 });
@@ -26,7 +25,6 @@ app.post('/api/removeDoctor', async (req, res) => {
         const accessToken = await getAccessToken();
         await removeDoctor(req, res, accessToken);
     } catch (error) {
-        console.error('Error in removeDoctor:', error);
         res.status(500).send('Error removing doctor details');
     }
 });
