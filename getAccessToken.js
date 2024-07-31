@@ -1,27 +1,27 @@
-const msal = require('@azure/msal-node');
 require('dotenv').config();
+const { ConfidentialClientApplication } = require('@azure/msal-node');
 
-const clientConfig = {
+const config = {
     auth: {
         clientId: process.env.CLIENT_ID,
         authority: `https://login.microsoftonline.com/${process.env.TENANT_ID}`,
-        clientSecret: process.env.CLIENT_SECRET
-    }
+        clientSecret: process.env.CLIENT_SECRET,
+    },
 };
 
-const cca = new msal.ConfidentialClientApplication(clientConfig);
+const cca = new ConfidentialClientApplication(config);
 
 async function getAccessToken() {
-    const clientCredentialRequest = {
-        scopes: ['https://graph.microsoft.com/.default']
+    const tokenRequest = {
+        scopes: ['https://graph.microsoft.com/.default'],
     };
 
     try {
-        const response = await cca.acquireTokenByClientCredential(clientCredentialRequest);
-        console.log('Access Token:', response.accessToken); // Log the token to the console
-        return response.accessToken;
+        const tokenResponse = await cca.acquireTokenByClientCredential(tokenRequest);
+        console.log("Access Token from getAccessToken:", tokenResponse.accessToken);
+        return tokenResponse.accessToken;
     } catch (error) {
-        console.error('Error acquiring token:', error);
+        console.error("Error acquiring access token", error);
         throw error;
     }
 }
