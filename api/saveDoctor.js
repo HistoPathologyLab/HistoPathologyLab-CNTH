@@ -1,5 +1,5 @@
 const axios = require('axios');
-const getAccessToken = require('../getAccessToken');
+const { getAccessToken } = require('./getAccessToken'); // Updated path
 
 async function saveDoctor(req, res) {
     const { name, profession } = req.body;
