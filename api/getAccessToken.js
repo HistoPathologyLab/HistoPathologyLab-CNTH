@@ -21,7 +21,7 @@ async function getAccessToken(authCode) {
         const tokenResponse = await pca.acquireTokenByCode({ ...tokenRequest, code: authCode });
         return tokenResponse.accessToken;
     } catch (error) {
-        console.error('Error acquiring access token:', error);
+        console.error('Error acquiring access token:', error); // Log the specific error
         throw error;
     }
 }
@@ -36,7 +36,7 @@ async function getAuthCodeUrl() {
         const authCodeUrlResponse = await pca.getAuthCodeUrl(authCodeUrlParameters);
         return authCodeUrlResponse;
     } catch (error) {
-        console.error('Error getting auth code URL:', error);
+        console.error('Error getting auth code URL:', error); // Log the specific error
         throw error;
     }
 }

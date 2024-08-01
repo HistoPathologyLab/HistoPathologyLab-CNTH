@@ -16,6 +16,7 @@ app.get('/auth', async (req, res) => {
         const authCodeUrl = await getAuthCodeUrl();
         res.redirect(authCodeUrl);
     } catch (error) {
+        console.error('Error getting auth code URL:', error); // Log the specific error
         res.status(500).send('Error getting auth code URL');
     }
 });
@@ -28,6 +29,7 @@ app.get('/auth/callback', async (req, res) => {
         const accessToken = await getAccessToken(authCode);
         res.send(`Access Token: ${accessToken}`);
     } catch (error) {
+        console.error('Error getting token:', error); // Log the specific error
         res.status(500).send('Error getting token');
     }
 });
