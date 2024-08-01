@@ -1,6 +1,11 @@
 const msal = require('@azure/msal-node');
 require('dotenv').config();
 
+console.log('CLIENT_ID:', process.env.CLIENT_ID);
+console.log('CLIENT_SECRET:', process.env.CLIENT_SECRET);
+console.log('TENANT_ID:', process.env.TENANT_ID);
+console.log('REDIRECT_URI:', process.env.REDIRECT_URI);
+
 const msalConfig = {
     auth: {
         clientId: process.env.CLIENT_ID,
