@@ -1,5 +1,7 @@
 const express = require('express');
 const getAccessToken = require('./getAccessToken');
+const saveDoctor = require('./saveDoctor');
+const removeDoctor = require('./removeDoctor');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,8 +19,11 @@ app.get('/test-token', async (req, res) => {
 });
 
 // Routes
-const saveDoctor = require('./saveDoctor');
 app.post('/api/saveDoctor', saveDoctor);
+app.post('/api/removeDoctor', async (req, res) => {
+    const accessToken = await getAccessToken();
+    await removeDoctor(req, res, accessToken);
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
