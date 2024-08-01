@@ -1,7 +1,7 @@
 const express = require('express');
 const getAccessToken = require('./getAccessToken');
-const saveDoctor = require('./saveDoctor');
-const removeDoctor = require('./removeDoctor');
+const saveDoctor = require('./api/saveDoctor');
+const removeDoctor = require('./api/removeDoctor');
 
 const app = express();
 const port = process.env.PORT || 3000;
