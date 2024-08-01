@@ -1,10 +1,11 @@
 const express = require('express');
-const { getAccessToken, getAuthCodeUrl } = require('./getAccessToken'); // Updated path
+const { getAccessToken, getAuthCodeUrl } = require('./getAccessToken');
 const saveDoctor = require('./saveDoctor');
 const removeDoctor = require('./removeDoctor');
 require('dotenv').config();
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,6 +38,10 @@ app.post('/api/removeDoctor', async (req, res) => {
     const authCode = req.query.code;
     const accessToken = await getAccessToken(authCode);
     await removeDoctor(req, res, accessToken);
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
 
 module.exports = app;
