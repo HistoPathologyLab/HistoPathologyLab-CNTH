@@ -7,13 +7,22 @@ const msalConfig = {
         authority: `https://login.microsoftonline.com/${process.env.TENANT_ID}`,
         clientSecret: process.env.CLIENT_SECRET,
     },
+    system: {
+        loggerOptions: {
+            loggerCallback(loglevel, message, containsPii) {
+                console.log(message);
+            },
+            piiLoggingEnabled: false,
+            logLevel: msal.LogLevel.Verbose,
+        }
+    }
 };
 
-const pca = new msal.PublicClientApplication(msalConfig);
+const pca = new msal.ConfidentialClientApplication(msalConfig);
 
 const tokenRequest = {
     scopes: ["user.read", "Files.ReadWrite.All"],
-    redirectUri: process.env.REDIRECT_URI,
+    redirectUri: process.env.REDIRECT_URI, // Ensure this line is present
 };
 
 async function getAccessToken(authCode) {
@@ -21,7 +30,7 @@ async function getAccessToken(authCode) {
         const tokenResponse = await pca.acquireTokenByCode({ ...tokenRequest, code: authCode });
         return tokenResponse.accessToken;
     } catch (error) {
-        console.error('Error acquiring access token:', error); // Log the specific error
+        console.error('Error acquiring access token:', error);
         throw error;
     }
 }
@@ -29,14 +38,14 @@ async function getAccessToken(authCode) {
 async function getAuthCodeUrl() {
     const authCodeUrlParameters = {
         scopes: ["user.read", "Files.ReadWrite.All"],
-        redirectUri: process.env.REDIRECT_URI,
+        redirectUri: process.env.REDIRECT_URI, // Ensure this line is present
     };
 
     try {
         const authCodeUrlResponse = await pca.getAuthCodeUrl(authCodeUrlParameters);
         return authCodeUrlResponse;
     } catch (error) {
-        console.error('Error getting auth code URL:', error); // Log the specific error
+        console.error('Error getting auth code URL:', error);
         throw error;
     }
 }
