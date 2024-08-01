@@ -9,7 +9,7 @@ module.exports = async (req, res, accessToken) => {
 
     const config = {
         method: 'delete',
-        url: `https://graph.microsoft.com/v1.0/me/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt`,
+        url: `https://graph.microsoft.com/v1.0/drives/a14ef30693180bcf/root:/HistoPathology Lab/Doctor Details/${name}.txt`,
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
