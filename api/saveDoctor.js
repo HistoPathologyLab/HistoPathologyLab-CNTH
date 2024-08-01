@@ -9,7 +9,7 @@ async function saveDoctor(req, res) {
         console.log('Access Token:', accessToken);
 
         const response = await axios.put(
-            `https://graph.microsoft.com/v1.0/me/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt:/content`,
+            `https://graph.microsoft.com/v1.0/drives/{drive-id}/root:/HistoPathology Lab/Doctor Details/${name}.txt:/content`,
             `Name: ${name}\nProfession: ${profession}`,
             {
                 headers: {
