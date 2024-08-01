@@ -1,4 +1,4 @@
-const { ConfidentialClientApplication } = require('@azure/msal-node');
+const msal = require('@azure/msal-node');
 require('dotenv').config();
 
 const msalConfig = {
@@ -9,20 +9,36 @@ const msalConfig = {
     },
 };
 
-const cca = new ConfidentialClientApplication(msalConfig);
+const pca = new msal.PublicClientApplication(msalConfig);
 
-async function getAccessToken() {
-    const clientCredentialRequest = {
-        scopes: ["https://graph.microsoft.com/.default"],
-    };
+const tokenRequest = {
+    scopes: ["user.read", "Files.ReadWrite.All"],
+    redirectUri: process.env.REDIRECT_URI,
+};
 
+async function getAccessToken(authCode) {
     try {
-        const response = await cca.acquireTokenByClientCredential(clientCredentialRequest);
-        return response.accessToken;
+        const tokenResponse = await pca.acquireTokenByCode({ ...tokenRequest, code: authCode });
+        return tokenResponse.accessToken;
     } catch (error) {
         console.error('Error acquiring access token:', error);
         throw error;
     }
 }
 
-module.exports = getAccessToken;
+async function getAuthCodeUrl() {
+    const authCodeUrlParameters = {
+        scopes: ["user.read", "Files.ReadWrite.All"],
+        redirectUri: process.env.REDIRECT_URI,
+    };
+
+    try {
+        const authCodeUrlResponse = await pca.getAuthCodeUrl(authCodeUrlParameters);
+        return authCodeUrlResponse;
+    } catch (error) {
+        console.error('Error getting auth code URL:', error);
+        throw error;
+    }
+}
+
+module.exports = { getAccessToken, getAuthCodeUrl };
