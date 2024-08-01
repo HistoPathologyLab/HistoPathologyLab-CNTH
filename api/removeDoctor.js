@@ -1,14 +1,11 @@
 const axios = require('axios');
-const qs = require('qs');
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, accessToken) => {
     const { name } = req.body;
-    
+
     if (!name) {
         return res.status(400).json({ message: 'Name is required.' });
     }
-
-    const accessToken = process.env.ACCESS_TOKEN;
 
     const config = {
         method: 'delete',
@@ -22,7 +19,7 @@ module.exports = async (req, res) => {
         await axios(config);
         res.status(200).json({ message: 'Doctor data removed successfully.' });
     } catch (error) {
-        console.error(error);
+        console.error('Error removing doctor data:', error.response ? error.response.data : error.message);
         res.status(500).json({ message: 'Error removing doctor data' });
     }
 };

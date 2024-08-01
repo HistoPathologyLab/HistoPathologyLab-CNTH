@@ -1,35 +1,30 @@
 const axios = require('axios');
-const qs = require('qs');
+const { getAccessToken } = require('./getAccessToken'); // Updated path
 
-module.exports = async (req, res) => {
+async function saveDoctor(req, res) {
     const { name, profession } = req.body;
-    
-    if (!name || !profession) {
-        return res.status(400).json({ message: 'Name and profession are required.' });
-    }
-
-    const accessToken = process.env.ACCESS_TOKEN;
-
-    const data = {
-        name: name,
-        profession: profession
-    };
-
-    const config = {
-        method: 'put',
-        url: `https://graph.microsoft.com/v1.0/me/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt:/content`,
-        headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'text/plain'
-        },
-        data: `Name: ${name}\nProfession: ${profession}`
-    };
 
     try {
-        await axios(config);
-        res.status(200).json({ message: 'Doctor data saved successfully.' });
+        const accessToken = await getAccessToken();
+        console.log('Access Token:', accessToken);
+
+        const response = await axios.put(
+            `https://graph.microsoft.com/v1.0/me/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt:/content`,
+            `Name: ${name}\nProfession: ${profession}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'text/plain'
+                }
+            }
+        );
+
+        console.log('Response from OneDrive:', response.data);
+        res.status(200).send('Doctor data saved successfully');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error saving doctor data' });
+        console.error('Error saving doctor data:', error.response ? error.response.data : error.message);
+        res.status(500).send({ error: 'Failed to save doctor data' });
     }
-};
+}
+
+module.exports = saveDoctor;
