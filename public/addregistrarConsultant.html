@@ -467,14 +467,14 @@
         }
 
         // Function to remove doctor's data
-        async function removeDoctor(name, profession) {
+        async function removeDoctor(name) {
             try {
                 const response = await fetch('/api/removeDoctor', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ name, profession })
+                    body: JSON.stringify({ name })
                 });
                 if (!response.ok) {
                     throw new Error('Failed to remove doctor data.');
@@ -503,12 +503,11 @@
         // Remove button event listener
         document.getElementById('remove').addEventListener('click', async function() {
             const name = document.getElementById('doctor-name').value.trim();
-            const profession = document.getElementById('profession').value;
 
-            if (name && profession) {
-                await removeDoctor(name, profession);
+            if (name) {
+                await removeDoctor(name);
             } else {
-                alert('Please enter both the doctor\'s name and profession.');
+                alert('Please enter the doctor\'s name.');
             }
         });
     </script>

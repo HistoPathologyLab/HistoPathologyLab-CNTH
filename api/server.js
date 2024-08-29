@@ -9,8 +9,8 @@ const app = express();
 app.use(bodyParser.json());
 
 // Correct the paths for saveDoctor and removeDoctor
-const saveDoctor = require('./saveDoctor');
-const removeDoctor = require('./removeDoctor');
+const saveDoctor = require('./api/saveDoctor');
+const removeDoctor = require('./api/removeDoctor');
 
 app.post('/api/saveDoctor', saveDoctor);
 app.post('/api/removeDoctor', removeDoctor);
