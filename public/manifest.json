@@ -1,0 +1,21 @@
+{
+  "name": "HistoPathology Lab - CNTH",
+  "short_name": "HistoLab",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000080",
+  "description": "Histopathology Lab Management System for CNTH",
+  "icons": [
+    {
+      "src": "images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
