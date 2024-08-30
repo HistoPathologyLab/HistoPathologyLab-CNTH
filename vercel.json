@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/*.js", // Adjusts to match all JS files in the api directory
+      "src": "api/*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)", // Matches any route starting with /api/
-      "dest": "api/$1" // Routes it to the corresponding file in the api directory
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "src": "/(.*)", // Matches all other routes
-      "dest": "public/$1" // Routes it to the corresponding file in the public directory
+      "src": "/(.*)",
+      "dest": "/public/$1"
     }
   ]
 }
