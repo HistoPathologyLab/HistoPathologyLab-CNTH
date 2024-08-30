@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
 
         const config = {
             method: 'put',
-            url: `https://graph.microsoft.com/v1.0/me/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt:/content`,
+            url: `https://graph.microsoft.com/v1.0/users/a14ef30693180bcf/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt:/content`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'text/plain'
