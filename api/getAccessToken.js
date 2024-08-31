@@ -1,32 +1,25 @@
 const axios = require('axios');
-const qs = require('qs');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 async function getAccessToken() {
     const tenantId = process.env.TENANT_ID;
     const clientId = process.env.CLIENT_ID;
     const clientSecret = process.env.CLIENT_SECRET;
-    const tokenEndpoint = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`;
+    const resource = 'https://graph.microsoft.com/.default';
 
-    const requestBody = qs.stringify({
-        client_id: clientId,
-        scope: 'https://graph.microsoft.com/.default',
-        client_secret: clientSecret,
-        grant_type: 'client_credentials'
-    });
+    const url = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`;
+
+    const params = new URLSearchParams();
+    params.append('grant_type', 'client_credentials');
+    params.append('client_id', clientId);
+    params.append('client_secret', clientSecret);
+    params.append('scope', resource);
 
     try {
-        const response = await axios.post(tokenEndpoint, requestBody, {
-            headers: { 
-                'Content-Type': 'application/x-www-form-urlencoded' 
-            }
-        });
+        const response = await axios.post(url, params);
         return response.data.access_token;
     } catch (error) {
-        console.error('Error fetching access token:', error.response ? error.response.data : error.message);
-        throw new Error('Could not fetch access token');
+        console.error('Failed to get access token:', error);
+        throw error;
     }
 }
 

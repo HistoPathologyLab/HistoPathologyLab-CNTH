@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Histopathology Lab System</title>
-    <link rel="manifest" href="/manifest.json"> <!-- Added manifest reference -->
-    <link rel="icon" href="/icons/icon-192x192.png" type="image/png"> <!-- Optional: add favicon -->
-    <meta name="theme-color" content="#007bff"> <!-- Define theme color for the app -->
+    <link rel="manifest" href="manifest.json">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -109,18 +107,27 @@
 
     <script>
         document.getElementById("login-form").addEventListener("submit", function(event) {
+            // Prevent the form from submitting
             event.preventDefault();
+
+            // Get the user ID and password from the form
             const userId = document.getElementById("user-id").value;
             const password = document.getElementById("password").value;
 
+            // Check if the credentials are correct
             if (userId === "histopath lab" && password === "Histo9876") {
+                // Save login state to session storage
                 sessionStorage.setItem('isLoggedIn', 'true');
+
+                // Redirect to the home page
                 window.location.href = "home.html";
             } else {
+                // Display an error message or perform other actions
                 alert("Invalid credentials. Please try again.");
             }
         });
 
+        // Function to check if the user is already logged in
         function checkLogin() {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
             if (isLoggedIn) {
@@ -128,6 +135,7 @@
             }
         }
 
+        // Check login status on page load
         checkLogin();
 
         // Register the service worker
@@ -135,7 +143,7 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js').then(registration => {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }).catch(err => {
+                }, err => {
                     console.log('ServiceWorker registration failed: ', err);
                 });
             });
