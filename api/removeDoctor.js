@@ -1,5 +1,6 @@
+// api/removeDoctor.js
 const axios = require('axios');
-const getAccessToken = require('./getAccessToken');
+const getAccessToken = require('./getAccessToken'); // Correct path
 
 module.exports = async (req, res) => {
     const { name, profession } = req.body;
@@ -13,14 +14,14 @@ module.exports = async (req, res) => {
 
         const config = {
             method: 'delete',
-            url: `https://graph.microsoft.com/v1.0/users/a14ef30693180bcf/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt`,
+            url: `https://graph.microsoft.com/v1.0/me/drive/root:/HistoPathology Lab/Doctor Details/${name}.txt:/content`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
         };
 
         await axios(config);
-        res.status(200).json({ message: `Doctor ${name} (${profession}) data removed successfully.` });
+        res.status(200).json({ message: 'Doctor data removed successfully.' });
     } catch (error) {
         console.error('Error removing doctor data:', error.response ? error.response.data : error.message);
         res.status(500).json({ message: 'Error removing doctor data' });

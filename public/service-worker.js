@@ -1,12 +1,23 @@
-self.addEventListener('install', function(event) {
-  console.log('[Service Worker] Installing Service Worker ...', event);
+// public/service-worker.js
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open('v1').then((cache) => {
+            return cache.addAll([
+                '/',
+                '/index.html',
+                '/manifest.json',
+                '/home.html',
+                '/addregistrarConsultant.html',
+                '/logo.png' // Include any other assets that should be cached
+            ]);
+        })
+    );
 });
 
-self.addEventListener('activate', function(event) {
-  console.log('[Service Worker] Activating Service Worker ...', event);
-  return self.clients.claim();
-});
-
-self.addEventListener('fetch', function(event) {
-  console.log('[Service Worker] Fetching something ....', event);
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request).then((response) => {
+            return response || fetch(event.request);
+        })
+    );
 });

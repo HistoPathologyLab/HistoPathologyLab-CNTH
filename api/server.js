@@ -1,4 +1,5 @@
-const getAccessToken = require('./getAccessToken');
+// api/server.js
+const getAccessToken = require('./getAccessToken'); // Correct path
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
@@ -8,9 +9,8 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
-// Paths should already be correct
-const saveDoctor = require('./saveDoctor');
-const removeDoctor = require('./removeDoctor');
+const saveDoctor = require('./saveDoctor'); // Correct path
+const removeDoctor = require('./removeDoctor'); // Correct path
 
 app.post('/api/saveDoctor', saveDoctor);
 app.post('/api/removeDoctor', removeDoctor);
