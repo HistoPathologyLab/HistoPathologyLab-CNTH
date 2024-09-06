@@ -4,8 +4,8 @@ const urlsToCache = [
     '/index.html',
     '/home.html',
     '/manifest.json',
-    '/icons/icon-192x192.png', // Updated path to icons
-    '/icons/icon-512x512.png', // Updated path to icons
+    '/icons/icon-192x192.png',
+    '/icons/icon-512x512.png',
     // Add more assets to cache if needed
 ];
 
@@ -14,7 +14,12 @@ self.addEventListener('install', event => {
         caches.open(CACHE_NAME)
             .then(cache => {
                 console.log('Opened cache');
-                return cache.addAll(urlsToCache);
+                return cache.addAll(urlsToCache.map(url => {
+                    return new Request(url, { mode: 'no-cors' });
+                }));
+            })
+            .catch(error => {
+                console.error('Failed to cache assets during install', error);
             })
     );
 });
@@ -23,11 +28,13 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                // Cache hit - return the response from cache
                 if (response) {
                     return response;
                 }
-                return fetch(event.request);
+                return fetch(event.request).catch(error => {
+                    console.error('Fetch failed; returning offline page instead.', error);
+                    return caches.match('/index.html');
+                });
             })
     );
 });
