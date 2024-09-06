@@ -14,9 +14,7 @@ self.addEventListener('install', event => {
         caches.open(CACHE_NAME)
             .then(cache => {
                 console.log('Opened cache');
-                return cache.addAll(urlsToCache.map(url => {
-                    return new Request(url, { mode: 'no-cors' });
-                }));
+                return cache.addAll(urlsToCache);
             })
             .catch(error => {
                 console.error('Failed to cache assets during install', error);
@@ -25,9 +23,14 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+    if (event.request.url.startsWith('https://kit.fontawesome.com/')) {
+        return; // Skip caching for Font Awesome due to CORS issue
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then(response => {
+                // Cache hit - return the response from cache
                 if (response) {
                     return response;
                 }
